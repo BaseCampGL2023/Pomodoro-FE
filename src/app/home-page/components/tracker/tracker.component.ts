@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./tracker.component.scss']
 })
 export class TrackerComponent {
-
+  minutes = '25';
+  seconds = '00';
 }
