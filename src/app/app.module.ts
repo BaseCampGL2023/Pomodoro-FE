@@ -9,7 +9,13 @@ import { WelcomeMessageComponent } from './home-page/components/welcome-message/
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
 
 @NgModule({
-  declarations: [AppComponent, NavMenuComponent, HomePageComponent, WelcomeMessageComponent, TrackerComponent],
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    HomePageComponent,
+    WelcomeMessageComponent,
+    TrackerComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
