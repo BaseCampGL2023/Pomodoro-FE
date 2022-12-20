@@ -1,5 +1,5 @@
 header {
-    height: max(10vh, 100px);
+    height: 90px;
     display: flex;
     align-items: flex-end;
     padding-left: 122px;
@@ -9,7 +9,6 @@ header {
 }
 
 h2 {
-    margin-bottom: 8px;
     font-family: 'DM Sans', serif;
     font-size: 30px;
     font-weight: 700;
@@ -19,7 +18,7 @@ h2 {
 
 a {
     display: inline-flex;
-    padding: 10px 20px;
+    padding: 8px 20px;
     border: solid 1px transparent;
 }
 
@@ -28,7 +27,7 @@ a {
 }
 
 a.menu__button {
-    margin-bottom: 27px;
+    margin-bottom: 19px;
     margin-left: 28px;
     font-family: 'DM Sans', Serif;
     font-style: normal;
