@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { TrackerSettings } from '../../types/tracker-settings';
 import { TrackerSettingsService } from '../../services/tracker-settings.service';
@@ -8,7 +8,10 @@ import { TrackerSettingsService } from '../../services/tracker-settings.service'
   templateUrl: './tracker.component.html',
   styleUrls: ['./tracker.component.scss'],
 })
+
 export class TrackerComponent implements OnInit {
+  @Output() countDownFinished = new EventEmitter<boolean>();
+  
   trackerSettings!: TrackerSettings;
   curMin!: string;
   curSec: string = '00';
@@ -46,7 +49,8 @@ export class TrackerComponent implements OnInit {
 
     if(diff > this.curTimeSpan){
       window.clearInterval(this.timerId);
-      //TODO: emit finish event
+      this.countDownFinished.emit(true);
+      return;
     }
 
     this.updateView(this.curTimeSpan - diff);
