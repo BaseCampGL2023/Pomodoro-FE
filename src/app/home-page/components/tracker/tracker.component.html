@@ -7,11 +7,11 @@
   <div class="fruit">
     <img src="assets/img/pomo.png" alt="piptik" />
     <p class="count-down">
-      <span>{{ minutes }}</span> : <span>{{ seconds }}</span>
+      <span>{{ curMin }}</span> : <span>{{ curSec }}</span>
     </p>
   </div>
   <div class="controls">
-    <span class="start">
+    <span class="start" (click)="onTimerStart()">
       <svg
         width="37"
         height="37"
@@ -35,7 +35,7 @@
         />
       </svg>
     </span>
-    <span class="reload">
+    <span class="reload" (click)="onTimerReload()">
       <svg
         width="32"
         height="32"
