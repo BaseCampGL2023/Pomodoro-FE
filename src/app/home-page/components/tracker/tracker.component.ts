@@ -90,7 +90,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
   }
 
   updateView(timeSpan: number){
-    let seconds = timeSpan  % 60;
+    let seconds = timeSpan % 60;
     let minutes = (timeSpan - seconds) / 60;
     this.curMin = minutes > 9 ? minutes.toString() : '0' + minutes.toString();
     this.curSec = seconds > 9 ? seconds.toString() : '0' + seconds.toString();
