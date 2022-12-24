@@ -7,7 +7,7 @@ import { TrackerSettings } from "../types/tracker-settings";
 export class TrackerSettingsService{
     constructor(){}
     private settings = new BehaviorSubject<TrackerSettings>(
-        {pomoDuration: 25, longBreak: 25, shortBreak: 5}
+        {pomoDuration: 25, longBreak: 15, shortBreak: 5}
         );
     castSettings = this.settings.asObservable();
 

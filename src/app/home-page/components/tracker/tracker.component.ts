@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
 
 import { TrackerSettings } from '../../types/tracker-settings';
 import { TrackerSettingsService } from '../../services/tracker-settings.service';
@@ -11,14 +11,15 @@ import { TrackerSettingsService } from '../../services/tracker-settings.service'
 
 export class TrackerComponent implements OnInit, OnDestroy {
   @Output() countDownFinished = new EventEmitter<boolean>();
-  
+  @ViewChild('actions', {read: ElementRef}) actions!: ElementRef<HTMLElement>;
+
   trackerSettings!: TrackerSettings;
   curMin!: string;
   curSec: string = '00';
   curTimeSpan!: number;
   timerId: number = 0;
   startStamp: number = 0;
-
+ 
   constructor(
     private trackerSettingsService: TrackerSettingsService,
     ){}
@@ -34,6 +35,34 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     window.clearInterval(this.timerId);
+  }
+
+  onSetActivity(event: Event){
+    if(event.target === null){
+      return;
+    }
+
+    this.actions.nativeElement.childNodes.forEach((item) => {
+      let node = item as HTMLElement;
+      node.classList.remove('active');
+    });
+    
+    let target = event.target as HTMLElement;
+
+    switch(target.dataset?.['duration']){
+      case 'pomodoro':
+        this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
+        break;
+      case 'short-break':
+        this.curTimeSpan = this.trackerSettings.shortBreak * 60;
+        break;
+      case 'long-break':
+        this.curTimeSpan = this.trackerSettings.longBreak * 60;
+        break;
+    }
+    this.updateView(this.curTimeSpan);
+
+    target.classList.add('active');
   }
 
   onTimerStart(){
