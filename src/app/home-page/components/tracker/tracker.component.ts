@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 import { TrackerSettings } from '../../types/tracker-settings';
 import { TrackerSettingsService } from '../../services/tracker-settings.service';
@@ -9,7 +9,7 @@ import { TrackerSettingsService } from '../../services/tracker-settings.service'
   styleUrls: ['./tracker.component.scss'],
 })
 
-export class TrackerComponent implements OnInit {
+export class TrackerComponent implements OnInit, OnDestroy {
   @Output() countDownFinished = new EventEmitter<boolean>();
   
   trackerSettings!: TrackerSettings;
@@ -30,6 +30,10 @@ export class TrackerComponent implements OnInit {
     this.curMin = this.trackerSettings.pomoDuration.toString();
     //not magic at all, 60 seconds in 1 minute
     this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
+  }
+
+  ngOnDestroy(): void {
+    window.clearInterval(this.timerId);
   }
 
   onTimerStart(){
