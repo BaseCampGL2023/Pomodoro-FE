@@ -7,6 +7,7 @@ import { NavMenuComponent } from './shared-module/nav-menu/nav-menu.component';
 import { HomePageComponent } from './home-page/components/home-page/home-page.component';
 import { WelcomeMessageComponent } from './home-page/components/welcome-message/welcome-message.component';
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
+import { TrackerSettingsService } from './home-page/services/tracker-settings.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { TrackerComponent } from './home-page/components/tracker/tracker.compone
     TrackerComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  providers: [TrackerSettingsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
