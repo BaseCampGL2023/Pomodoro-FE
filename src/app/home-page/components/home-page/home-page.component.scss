@@ -1,12 +1,23 @@
-main {
-    display: flex;
-    justify-content: flex-end;
-}
+// main {
+//     display: flex;
+//     justify-content: flex-end;
+// }
 
-.tracker {
-    padding-right: 40px;
-}
+// .tracker {
+//     padding-right: 40px;
+// }
 
-.content {
-    width: 780px;
-}
+// .content {
+//     width: 780px;
+// }
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+  
+    > .col,
+    > [class*="col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }

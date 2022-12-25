@@ -1,13 +1,17 @@
-<div class="container">
+<div class="tracker">
   <div #actions class="actions">
-    <button data-duration="pomodoro" class="active" (click)="onSetActivity($event)">Pomodoro</button>
-    <button data-duration="long-break" (click)="onSetActivity($event)">Long Break</button>
-    <button data-duration="short-break" (click)="onSetActivity($event)">Short Break</button>
+    <button data-duration="pomodoro" class="active btn btn-outline-danger" (click)="onSetActivity($event)">Pomodoro</button>
+    <button data-duration="long-break" class="btn btn-outline-danger" (click)="onSetActivity($event)">Long Break</button>
+    <button data-duration="short-break" class="btn btn-outline-danger" (click)="onSetActivity($event)">Short Break</button>
   </div>
   <div class="fruit">
-    <img src="assets/img/pomo.png" alt="piptik" />
+    <!-- <img src="assets/img/pomo.png" alt="piptik" /> -->
     <p class="count-down">
-      <span>{{ curMin }}</span> : <span>{{ curSec }}</span>
+      <span class="first-digit">{{ curMin[0] }}</span>
+      <span>{{ curMin[1] }}</span>
+      <span class="colon">:</span>
+      <span class="first-digit">{{ curSec[0] }}</span>
+      <span>{{ curSec[1] }}</span>
     </p>
   </div>
   <div class="controls">

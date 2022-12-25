@@ -100,13 +100,12 @@ nav.navbar.navbar-expand-lg {
 @media (min-width: 1200px) {
     nav.navbar.navbar-expand-lg {
         padding-top: 28px;
-        padding-left: 130px;
+        padding-left: 118px;
         padding-right: 46px;
         align-items: flex-end;
     }
 
     a.navbar-brand {
-        //padding-top: 15px;
         margin-top: 10px;
     }
 
@@ -116,5 +115,9 @@ nav.navbar.navbar-expand-lg {
 
     div.navbar-collapse a.nav-link {
         margin-left: 52px;
+    }
+
+    li.active {
+        text-decoration: underline;
     }
 }

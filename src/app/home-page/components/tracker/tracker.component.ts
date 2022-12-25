@@ -15,7 +15,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
   trackerSettings!: TrackerSettings;
   curMin!: string;
-  curSec: string = '00';
+  curSec!: string;
   curTimeSpan!: number;
   timerId: number = 0;
   startStamp: number = 0;
@@ -28,9 +28,10 @@ export class TrackerComponent implements OnInit, OnDestroy {
     this.trackerSettingsService.castSettings.subscribe(
       settings => this.trackerSettings = settings
     );
-    this.curMin = this.trackerSettings.pomoDuration.toString();
+    //this.curMin = this.trackerSettings.pomoDuration.toString();
     //not magic at all, 60 seconds in 1 minute
     this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
+    this.updateView(this.curTimeSpan);
   }
 
   ngOnDestroy(): void {

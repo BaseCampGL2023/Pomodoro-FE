@@ -1,34 +1,30 @@
-.container {
-    width: 600px; 
+$base-color: #CC5B53;
+$base-font: 'DM Sans', serif;
+
+.tracker {
+    font-family: $base-font;
+    color: #2B0300;
 }
 
 .actions {
+    // margin: 0 auto;
+    // padding-top: 1px;
+    // padding-right: 8px;
     margin: 0 auto;
-    padding-top: 1px;
-    padding-right: 8px;
+    padding: 0 16px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
+    max-width: 590px;
+}
 
-    button {
-        display: inline-flex;
-        margin-left: 40px;
-        padding: 10px 24px;
-        border-radius: 45px 45px;
-        background-color: transparent;
-        font-family: 'DM Sans', serif;
-        font-style: normal;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 26px;
-        color: #2B0300;
-        border: solid 1px transparent;
-    }
-    
-    button.active {
-        color: #fff;
-        background-color: #CC5B53;
-        border: solid 1px #CC5B53;
-    }
+.btn-outline-danger {
+    border: 0px solid transparent;
+}
+
+.actions button.btn-outline-danger:hover,
+.actions button.btn-outline-danger.active{
+    background-color: #CC5B53;
+    color: #fff;
 }
 
 .fruit {
@@ -41,24 +37,42 @@
     position: relative;
     border-radius: 50%;
     background-color: #CC5B53;
+}
 
-    img {
-        width: 275px;
-        height: 113px;
-        position: absolute;
-        top: -33px;
-        left: 60px;
-    }
+.fruit::before {
+    content: '';
+    background-image: url('../../../../assets/img/pomo.png');
+    background-size: cover;
+    width: 275px;
+    height: 113px;
+    position: absolute;
+    top: -8%;
+}
 
-    .count-down{
-        padding-left: 12px;
-        font-family: 'DM Sans', serif;
-        font-style: normal;
-        font-weight: 700;
-        font-size: 36px;
-        line-height: 47px;
-        color: #fff;
-    }
+.count-down {
+    padding-left: 12px;
+    padding-top: 16px;
+    font-family: 'DM Sans', serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 47px;
+    color: #fff;
+}
+
+.count-down span {
+    display: inline-block;
+    width: 26px;
+    text-align: start;
+}
+
+.count-down span.first-digit {
+    text-align: end;
+}
+
+.count-down span.colon {
+    margin: 0 2px;
+    width: 14px;
 }
 
 .controls {
@@ -76,6 +90,135 @@
     }
 
     span.start{
-        margin-right: 42px;
+        margin-right: 40px;
     }
 }
+
+
+@media (min-width: 576px) { 
+    // button {
+    //     margin-left: 10px;
+    // }
+ }
+
+ @media(max-width: 1200px){
+    .fruit {
+        width: 350px;
+        height: 350px;
+    }
+ }
+
+ @media(max-width: 992px){
+    .fruit {
+        width: 300px;
+        height: 300px;
+    }
+ }
+
+@media (min-width: 1440px) {
+    .actions {
+        padding-left: 16px;
+        padding-top: 2px;
+        padding-right: 48px;  
+        justify-content: space-between;   
+    }
+    .actions button.btn{
+        font-size: 20px;
+        line-height: 26px;
+        color: #2B0300;
+        font-style: normal;
+        font-weight: 700;
+    }
+
+    button {
+        margin-left: 2px;
+    }
+
+    .fruit {
+        width: 400px;
+        height: 400px;
+        margin-top: 38px;
+        margin-right: 130px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: 50%;
+        background-color: #CC5B53;
+    }
+
+    .controls {
+        margin-right: 68px;
+    }
+}
+
+//     button {
+//         display: inline-flex;
+//         margin-left: 40px;
+//         padding: 10px 24px;
+//         border-radius: 45px 45px;
+//         background-color: transparent;
+//         font-family: 'DM Sans', serif;
+//         font-style: normal;
+//         font-weight: 700;
+//         font-size: 20px;
+//         line-height: 26px;
+//         color: #2B0300;
+//         border: solid 1px transparent;
+//     }
+    
+//     button.active {
+//         color: #fff;
+//         background-color: #CC5B53;
+//         border: solid 1px #CC5B53;
+//     }
+// }
+
+// .fruit {
+//     width: 400px;
+//     height: 400px;
+//     margin: 34px auto;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     position: relative;
+//     border-radius: 50%;
+//     background-color: #CC5B53;
+
+//     img {
+//         width: 275px;
+//         height: 113px;
+//         position: absolute;
+//         top: -33px;
+//         left: 60px;
+//     }
+
+//     .count-down{
+//         padding-left: 12px;
+//         font-family: 'DM Sans', serif;
+//         font-style: normal;
+//         font-weight: 700;
+//         font-size: 36px;
+//         line-height: 47px;
+//         color: #fff;
+//     }
+// }
+
+// .controls {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     padding-top: 2px;
+
+//     span {
+//         width: 37px;
+//         height: 37px;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//     }
+
+//     span.start{
+//         margin-right: 42px;
+//     }
+// }
