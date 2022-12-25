@@ -1,6 +1,8 @@
+@import '../../../../assets/styles/variables';
+
 h3 {
-    color: #2B0300;
-    font-family: 'DM Sans', serif;
+    color: $secondary-color;
+    font-family: $font-family;
     font-style: normal;
     font-weight: 500;
     letter-spacing: normal;
