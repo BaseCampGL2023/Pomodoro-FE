@@ -1,6 +1,7 @@
 @import '../../../../assets/styles/variables';
 
 .tracker {
+    margin-top: 25px;
     font-family: $font-family;
     color: $secondary-color;
 }
@@ -8,9 +9,15 @@
 .actions {
     margin: 0 auto;
     padding: 0 16px;
+    max-width: 590px;
     display: flex;
     justify-content: space-around;
-    max-width: 590px;
+}
+
+.actions button.btn{
+    color: $secondary-color;
+    font-style: normal;
+    font-weight: 700;
 }
 
 .btn-outline-danger {
@@ -88,20 +95,13 @@
 
     span:hover {
         cursor: pointer;
-        box-shadow: 0px 0px 5px 5px rgba(167, 37, 32, 0.4);
+        box-shadow: 0px 0px 5px 5px rgba($base-color, 0.4);
     }
 
     span.start{
         margin-right: 40px;
     }
 }
-
-
-@media (min-width: 576px) { 
-    // button {
-    //     margin-left: 10px;
-    // }
- }
 
  @media(max-width: 1200px){
     .fruit {
@@ -115,9 +115,16 @@
         width: 300px;
         height: 300px;
     }
+    .actions button.btn{
+        padding: 2px 6px;
+    }
  }
 
 @media (min-width: 1440px) {
+    .tracker {
+        margin-top: 0;
+    }
+    
     .actions {
         padding-left: 16px;
         padding-top: 2px;
