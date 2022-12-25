@@ -17,7 +17,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
   curMin!: string;
   curSec!: string;
   curTimeSpan!: number;
-  timerId: number = 0;
+  timerId: number = NaN;
   startStamp: number = 0;
  
   constructor(
@@ -34,6 +34,9 @@ export class TrackerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if(isNaN(this.timerId)){
+      return;
+    }
     window.clearInterval(this.timerId);
   }
 
@@ -66,13 +69,20 @@ export class TrackerComponent implements OnInit, OnDestroy {
   }
 
   onTimerStart(){
+    if(!isNaN(this.timerId)){
+      return;
+    }
     this.startStamp = new Date().getTime();
     this.timerId = window.setInterval(this.countDown.bind(this), 1000);
   }
 
   onTimerReload(){
+    if(isNaN(this.timerId)){
+      return;
+    }
     window.clearInterval(this.timerId);
     this.updateView(this.curTimeSpan);
+    this.timerId = NaN;
   }
 
   countDown(){
@@ -82,6 +92,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
     if(diff > this.curTimeSpan){
       window.clearInterval(this.timerId);
+      this.timerId = NaN;
       this.countDownFinished.emit(true);
       return;
     }
