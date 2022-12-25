@@ -7,9 +7,6 @@ $base-font: 'DM Sans', serif;
 }
 
 .actions {
-    // margin: 0 auto;
-    // padding-top: 1px;
-    // padding-right: 8px;
     margin: 0 auto;
     padding: 0 16px;
     display: flex;
@@ -151,74 +148,3 @@ $base-font: 'DM Sans', serif;
         margin-right: 68px;
     }
 }
-
-//     button {
-//         display: inline-flex;
-//         margin-left: 40px;
-//         padding: 10px 24px;
-//         border-radius: 45px 45px;
-//         background-color: transparent;
-//         font-family: 'DM Sans', serif;
-//         font-style: normal;
-//         font-weight: 700;
-//         font-size: 20px;
-//         line-height: 26px;
-//         color: #2B0300;
-//         border: solid 1px transparent;
-//     }
-    
-//     button.active {
-//         color: #fff;
-//         background-color: #CC5B53;
-//         border: solid 1px #CC5B53;
-//     }
-// }
-
-// .fruit {
-//     width: 400px;
-//     height: 400px;
-//     margin: 34px auto;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     position: relative;
-//     border-radius: 50%;
-//     background-color: #CC5B53;
-
-//     img {
-//         width: 275px;
-//         height: 113px;
-//         position: absolute;
-//         top: -33px;
-//         left: 60px;
-//     }
-
-//     .count-down{
-//         padding-left: 12px;
-//         font-family: 'DM Sans', serif;
-//         font-style: normal;
-//         font-weight: 700;
-//         font-size: 36px;
-//         line-height: 47px;
-//         color: #fff;
-//     }
-// }
-
-// .controls {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     padding-top: 2px;
-
-//     span {
-//         width: 37px;
-//         height: 37px;
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//     }
-
-//     span.start{
-//         margin-right: 42px;
-//     }
-// }
