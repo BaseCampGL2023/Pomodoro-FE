@@ -78,6 +78,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
   onTimerReload(){
     if(isNaN(this.timerId)){
+      this.updateView(this.curTimeSpan);
       return;
     }
     window.clearInterval(this.timerId);
