@@ -1,0 +1,58 @@
+<div class="tracker">
+  <div #actions class="actions">
+    <button data-duration="pomodoro" class="active btn btn-outline-danger" (click)="onSetActivity($event)">Pomodoro</button>
+    <button data-duration="long-break" class="btn btn-outline-danger" (click)="onSetActivity($event)">Long Break</button>
+    <button data-duration="short-break" class="btn btn-outline-danger" (click)="onSetActivity($event)">Short Break</button>
+  </div>
+  <div class="fruit">
+    <p class="count-down">
+      <span class="first-digit">{{ curMin[0] }}</span>
+      <span>{{ curMin[1] }}</span>
+      <span class="colon">:</span>
+      <span class="first-digit">{{ curSec[0] }}</span>
+      <span>{{ curSec[1] }}</span>
+    </p>
+  </div>
+  <div class="controls">
+    <span class="start" (click)="onTimerStart()">
+      <svg
+        width="37"
+        height="37"
+        viewBox="0 0 37 37"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          x="2.5"
+          y="2.5"
+          width="32"
+          height="32"
+          rx="4.5"
+          stroke="#CC5B53"
+          stroke-width="5"
+        />
+        <path
+          d="M24.3151 17.8004C24.6957 18.1892 24.6957 18.8108 24.3151 19.1996L16.9646 26.7079C16.3377 27.3482 
+                15.25 26.9044 15.25 26.0084L15.25 10.9916C15.25 10.0956 16.3377 9.6518 16.9646 10.2921L24.3151 17.8004Z"
+          fill="#CC5B53"
+        />
+      </svg>
+    </span>
+    <span class="reload" (click)="onTimerReload()">
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32C20.3665 32 24.3244 30.2509 27.2114 27.4151L23.2214
+                 24.2979C21.2891 25.9809 18.7636 27 16 27C9.92487 27 5 22.0751 5 16C5 9.92487 9.92487 5 16 5C19.6435 5 22.8733 
+                 6.77142 24.875 9.5H18V14H26.8186H31.8762V0H28V5.4167C25.0682 2.09502 20.7788 0 16 0Z"
+          fill="#CC5B53"
+        />
+      </svg>
+    </span>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+@import '../../../../assets/styles/variables';
+
+h3 {
+    margin-top: 25px;
+    color: $secondary-color;
+    font-family: $font-family;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: normal;
+}
+
+@media (min-width: 768px){
+    h3 {
+        margin-top: min(156px, 20%);
+        margin-left: min(130px, 20%);
+        max-width: 520px;
+        font-size: 36px;
+        line-height: 47px;
+    }
+}

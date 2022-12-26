@@ -1,0 +1,162 @@
+@import '../../../../assets/styles/variables';
+
+.tracker {
+    margin-top: 25px;
+    font-family: $font-family;
+    color: $secondary-color;
+}
+
+.actions {
+    margin: 0 auto;
+    padding: 0 16px;
+    max-width: 590px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.actions button.btn{
+    color: $secondary-color;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.btn-outline-danger {
+    border: 0px solid transparent;
+}
+
+.actions button.btn-outline-danger:hover,
+.actions button.btn-outline-danger.active{
+    background-color: $base-color;
+    color: $background-color;
+}
+
+.fruit {
+    width: 400px;
+    height: 400px;
+    margin: 34px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 50%;
+    background-color: $base-color;
+}
+
+.fruit::before {
+    content: '';
+    background-image: url('../../../../assets/img/pomo.png');
+    background-size: cover;
+    width: 275px;
+    height: 113px;
+    position: absolute;
+    top: -8%;
+}
+
+.count-down {
+    padding-left: 12px;
+    padding-top: 16px;
+    font-family: $font-family;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 47px;
+    color: $background-color;
+}
+
+.count-down span {
+    display: inline-block;
+    width: 26px;
+    text-align: start;
+}
+
+.count-down span.first-digit {
+    text-align: end;
+}
+
+.count-down span.colon {
+    margin: 0 2px;
+    width: 14px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2px;
+
+    span {
+        width: 37px;
+        height: 37px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 7px;
+    }
+
+    span:hover {
+        cursor: pointer;
+        box-shadow: 0px 0px 5px 5px rgba($base-color, 0.4);
+    }
+
+    span.start{
+        margin-right: 40px;
+    }
+}
+
+ @media(max-width: 1200px){
+    .fruit {
+        width: 350px;
+        height: 350px;
+    }
+ }
+
+ @media(max-width: 992px){
+    .fruit {
+        width: 300px;
+        height: 300px;
+    }
+    .actions button.btn{
+        padding: 2px 6px;
+    }
+ }
+
+@media (min-width: 1440px) {
+    .tracker {
+        margin-top: 0;
+    }
+    
+    .actions {
+        padding-left: 16px;
+        padding-top: 2px;
+        padding-right: 48px;  
+        justify-content: space-between;   
+    }
+    .actions button.btn{
+        font-size: 20px;
+        line-height: 26px;
+        color: $secondary-color;
+        font-style: normal;
+        font-weight: 700;
+    }
+
+    button {
+        margin-left: 2px;
+    }
+
+    .fruit {
+        width: 400px;
+        height: 400px;
+        margin-top: 38px;
+        margin-right: 130px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: 50%;
+        background-color: $base-color;
+    }
+
+    .controls {
+        margin-right: 68px;
+    }
+}
