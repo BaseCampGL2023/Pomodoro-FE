@@ -17,7 +17,7 @@
     </p>
   </div>
   <div class="controls">
-    <span class="start" (click)="onTimerStart()">
+    <span class="start" *ngIf="!timerId" (click)="onTimerStart()">
       <svg
         width="37"
         height="37"
@@ -39,6 +39,27 @@
                 15.25 26.9044 15.25 26.0084L15.25 10.9916C15.25 10.0956 16.3377 9.6518 16.9646 10.2921L24.3151 17.8004Z"
           fill="#CC5B53"
         />
+      </svg>
+    </span>
+    <span class="pause" *ngIf="timerId" (click)="onTimerPause()">
+      <svg
+        width="37"
+        height="37"
+        viewBox="0 0 37 37"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          x="2.5"
+          y="2.5"
+          width="32"
+          height="32"
+          rx="4.5"
+          stroke="#CC5B53"
+          stroke-width="5"
+        />
+        <line x1="14" y1="10" x2="14" y2="27" style="stroke:#CC5B53; stroke-width:4"/>
+        <line x1="23" y1="10" x2="23" y2="27" style="stroke:#CC5B53; stroke-width:4"/>
       </svg>
     </span>
     <span class="reload" (click)="onTimerReload()">

@@ -1,5 +1,5 @@
 export enum TrackerDurationEnum {
-    pomodoro,
-    longBreak,
-    shortBreak
+    pomodoro = "pomoDuration",
+    longBreak = "longBreak",
+    shortBreak = "shortBreak"
 }

@@ -52,17 +52,18 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
     this.currentTimerDuration = duration;
 
-    switch(duration){
-      case TrackerDurationEnum.pomodoro:
-        this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
-        break;
-      case TrackerDurationEnum.shortBreak:
-        this.curTimeSpan = this.trackerSettings.shortBreak * 60;
-        break;
-      case TrackerDurationEnum.longBreak:
-        this.curTimeSpan = this.trackerSettings.longBreak * 60;
-        break;
-    }
+    this.curTimeSpan = this.trackerSettings[this.currentTimerDuration] * 60;
+    // switch(duration){
+    //   case TrackerDurationEnum.pomodoro:
+    //     this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
+    //     break;
+    //   case TrackerDurationEnum.shortBreak:
+    //     this.curTimeSpan = this.trackerSettings.shortBreak * 60;
+    //     break;
+    //   case TrackerDurationEnum.longBreak:
+    //     this.curTimeSpan = this.trackerSettings.longBreak * 60;
+    //     break;
+    // }
     this.updateView(this.curTimeSpan);
   }
 
@@ -76,11 +77,21 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
   onTimerReload(){
     if(isNaN(this.timerId)){
+      this.curTimeSpan = this.trackerSettings[this.currentTimerDuration] * 60;
       this.updateView(this.curTimeSpan);
       return;
     }
     window.clearInterval(this.timerId);
+    this.curTimeSpan = this.trackerSettings[this.currentTimerDuration] * 60;
     this.updateView(this.curTimeSpan);
+    this.timerId = NaN;
+  }
+
+  onTimerPause(){
+    window.clearInterval(this.timerId);
+    let curStamp = new Date().getTime();
+    let diff = Math.round((curStamp - this.startStamp) / 1000);
+    this.curTimeSpan -= diff;
     this.timerId = NaN;
   }
 
@@ -92,6 +103,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
     if(diff > this.curTimeSpan){
       window.clearInterval(this.timerId);
       this.timerId = NaN;
+      this.curTimeSpan = this.trackerSettings[this.currentTimerDuration] * 60;
       this.countDownFinished.emit(true);
       return;
     }
