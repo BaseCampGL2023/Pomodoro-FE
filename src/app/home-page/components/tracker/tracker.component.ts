@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, ElementR
 
 import { TrackerSettings } from '../../types/tracker-settings';
 import { TrackerSettingsService } from '../../services/tracker-settings.service';
+import { TrackerDurationEnum } from '../../types/tracker-duration.enum';
 
 @Component({
   selector: 'app-tracker',
@@ -11,7 +12,6 @@ import { TrackerSettingsService } from '../../services/tracker-settings.service'
 
 export class TrackerComponent implements OnInit, OnDestroy {
   @Output() countDownFinished = new EventEmitter<boolean>();
-  @ViewChild('actions', {read: ElementRef}) actions!: ElementRef<HTMLElement>;
 
   trackerSettings!: TrackerSettings;
   curMin!: string;
@@ -19,6 +19,8 @@ export class TrackerComponent implements OnInit, OnDestroy {
   curTimeSpan!: number;
   timerId: number = NaN;
   startStamp: number = 0;
+  timerDuration: typeof TrackerDurationEnum = TrackerDurationEnum;
+  currentTimerDuration: TrackerDurationEnum = TrackerDurationEnum.pomodoro;
  
   constructor(
     private trackerSettingsService: TrackerSettingsService,
@@ -40,32 +42,28 @@ export class TrackerComponent implements OnInit, OnDestroy {
     window.clearInterval(this.timerId);
   }
 
-  onSetActivity(event: Event){
-    if(event.target === null){
+  onSetActivity(duration: TrackerDurationEnum){
+    
+    if(duration == this.currentTimerDuration){
       return;
     }
 
-    this.actions.nativeElement.childNodes.forEach((item) => {
-      let node = item as HTMLElement;
-      node.classList.remove('active');
-    });
-    
-    let target = event.target as HTMLElement;
+    this.onTimerReload();
 
-    switch(target.dataset?.['duration']){
-      case 'pomodoro':
+    this.currentTimerDuration = duration;
+
+    switch(duration){
+      case TrackerDurationEnum.pomodoro:
         this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
         break;
-      case 'short-break':
+      case TrackerDurationEnum.shortBreak:
         this.curTimeSpan = this.trackerSettings.shortBreak * 60;
         break;
-      case 'long-break':
+      case TrackerDurationEnum.longBreak:
         this.curTimeSpan = this.trackerSettings.longBreak * 60;
         break;
     }
     this.updateView(this.curTimeSpan);
-
-    target.classList.add('active');
   }
 
   onTimerStart(){
@@ -101,7 +99,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
     this.updateView(this.curTimeSpan - diff);
   }
 
-  updateView(timeSpan: number){
+  private updateView(timeSpan: number){
     let seconds = timeSpan % 60;
     let minutes = (timeSpan - seconds) / 60;
     this.curMin = minutes > 9 ? minutes.toString() : '0' + minutes.toString();
