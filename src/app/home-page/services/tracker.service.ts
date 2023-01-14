@@ -4,8 +4,10 @@ import { BehaviorSubject } from "rxjs";
 import { TrackerSettings } from "../types/tracker-settings";
 
 @Injectable()
-export class TrackerSettingsService{
+export class TrackerService{
+    
     constructor(){}
+    
     private settings = new BehaviorSubject<TrackerSettings>(
         {pomoDuration: 25, longBreak: 15, shortBreak: 5}
         );
@@ -14,5 +16,13 @@ export class TrackerSettingsService{
 
     editSettings(newSettings: TrackerSettings){
         this.settings.next(newSettings);
+    }
+
+    private countdownFinished = new BehaviorSubject<boolean>(false);
+
+    castFinished = this.countdownFinished.asObservable();
+
+    emitFinished(done: boolean){
+        this.countdownFinished.next(done);
     }
 }

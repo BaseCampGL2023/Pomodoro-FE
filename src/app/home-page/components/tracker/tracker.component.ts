@@ -1,7 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { TrackerSettings } from '../../types/tracker-settings';
-import { TrackerSettingsService } from '../../services/tracker-settings.service';
+import { TrackerService } from '../../services/tracker.service';
 import { TrackerDurationEnum } from '../../types/tracker-duration.enum';
 
 @Component({
@@ -11,8 +11,6 @@ import { TrackerDurationEnum } from '../../types/tracker-duration.enum';
 })
 
 export class TrackerComponent implements OnInit, OnDestroy {
-  @Output() countDownFinished = new EventEmitter<boolean>();
-
   trackerSettings!: TrackerSettings;
   curMin!: string;
   curSec!: string;
@@ -20,14 +18,14 @@ export class TrackerComponent implements OnInit, OnDestroy {
   timerId: number = NaN;
   startStamp: number = 0;
   timerDuration: typeof TrackerDurationEnum = TrackerDurationEnum;
-  currentTimerDuration: TrackerDurationEnum = TrackerDurationEnum.pomodoro;
+  curTimerDuration: TrackerDurationEnum = TrackerDurationEnum.pomodoro;
  
   constructor(
-    private trackerSettingsService: TrackerSettingsService,
+    private trackerService: TrackerService,
     ){}
 
   ngOnInit(){
-    this.trackerSettingsService.castSettings.subscribe(
+    this.trackerService.castSettings.subscribe(
       settings => this.trackerSettings = settings
     );
     //not magic at all, 60 seconds in 1 minute
@@ -44,26 +42,12 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
   onSetActivity(duration: TrackerDurationEnum){
     
-    if(duration == this.currentTimerDuration){
+    if(duration == this.curTimerDuration){
       return;
     }
-
     this.onTimerReload();
-
-    this.currentTimerDuration = duration;
-
-    this.curTimeSpan = this.trackerSettings[this.currentTimerDuration] * 60;
-    // switch(duration){
-    //   case TrackerDurationEnum.pomodoro:
-    //     this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
-    //     break;
-    //   case TrackerDurationEnum.shortBreak:
-    //     this.curTimeSpan = this.trackerSettings.shortBreak * 60;
-    //     break;
-    //   case TrackerDurationEnum.longBreak:
-    //     this.curTimeSpan = this.trackerSettings.longBreak * 60;
-    //     break;
-    // }
+    this.curTimerDuration = duration;
+    this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
     this.updateView(this.curTimeSpan);
   }
 
@@ -77,12 +61,12 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
   onTimerReload(){
     if(isNaN(this.timerId)){
-      this.curTimeSpan = this.trackerSettings[this.currentTimerDuration] * 60;
+      this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
       this.updateView(this.curTimeSpan);
       return;
     }
     window.clearInterval(this.timerId);
-    this.curTimeSpan = this.trackerSettings[this.currentTimerDuration] * 60;
+    this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
     this.updateView(this.curTimeSpan);
     this.timerId = NaN;
   }
@@ -103,8 +87,8 @@ export class TrackerComponent implements OnInit, OnDestroy {
     if(diff > this.curTimeSpan){
       window.clearInterval(this.timerId);
       this.timerId = NaN;
-      this.curTimeSpan = this.trackerSettings[this.currentTimerDuration] * 60;
-      this.countDownFinished.emit(true);
+      this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
+      this.trackerService.emitFinished(true);
       return;
     }
 

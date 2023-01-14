@@ -1,10 +1,10 @@
 <div class="tracker">
   <div #actions class="actions">
-    <button class="btn btn-outline-danger" [class.active]="currentTimerDuration == timerDuration.pomodoro"
+    <button class="btn btn-outline-danger" [class.active]="curTimerDuration == timerDuration.pomodoro"
       (click)="onSetActivity(timerDuration.pomodoro)">Pomodoro</button>
-    <button class="btn btn-outline-danger" [class.active]="currentTimerDuration == timerDuration.longBreak"
+    <button class="btn btn-outline-danger" [class.active]="curTimerDuration == timerDuration.longBreak"
       (click)="onSetActivity(timerDuration.longBreak)">Long Break</button>
-    <button class="btn btn-outline-danger" [class.active]="currentTimerDuration == timerDuration.shortBreak"
+    <button class="btn btn-outline-danger" [class.active]="curTimerDuration == timerDuration.shortBreak"
       (click)="onSetActivity(timerDuration.shortBreak)">Short Break</button>
   </div>
   <div class="fruit">
