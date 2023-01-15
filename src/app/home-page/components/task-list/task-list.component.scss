@@ -1,0 +1,128 @@
+@import "../../../../assets/styles/variables";
+
+.container {
+  margin-top: 130px;
+  margin-left: 130px;
+  padding-right: 130px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    margin-top: min(130px, 20%);
+    margin-left: min(130px, 20%);
+  }
+}
+
+.list-title {
+  font-family: $font-family;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.create-task-button {
+  margin-bottom: 10px;
+  border-radius: 4px;
+  padding: 8px;
+  border: none;
+  background-color: $base-color;
+}
+
+.create-task-button span {
+  font-family: $font-family;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  color: $background-color;
+}
+
+.create-task-button:hover {
+  border-color: $base-color;
+  background-color: $background-color;
+}
+
+.create-task-button:hover span {
+  color: $secondary-color;
+  font-weight: 700;
+}
+
+.info {
+  text-align: center;
+}
+
+.task-item {
+  position: relative;
+  display: flex;
+  margin-top: 10px;
+  padding: 12px;
+  height: 45px;
+  border: 1px solid $green-color;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    $green-color 0%,
+    $green-color var(--prog),
+    $background-color var(--prog),
+    $background-color 100%
+  );
+}
+
+.task-title {
+  font-family: $font-family;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: $secondary-color;
+}
+
+.task-frequency {
+  font-family: $font-family;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  color: $secondary-color;
+}
+
+.task-time {
+  font-family: $font-family;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  color: $base-color;
+}
+
+.show-all-tasks-button {
+  margin-top: 14px;
+  border-radius: 4px;
+  border-color: $green-color;
+  border-style: solid;
+  padding: 4px 8px;
+  background-color: $background-color;
+}
+
+.show-all-tasks-button span {
+  font-family: $font-family;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: $green-color;
+}
+
+.show-all-tasks-button:hover {
+  border-color: $background-color;
+  background-color: $green-color;
+}
+
+.show-all-tasks-button:hover span {
+  color: $background-color;
+}
+
+.general-time {
+  margin-top: 12px;
+  padding: 0 13px;
+}

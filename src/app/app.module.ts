@@ -10,6 +10,7 @@ import { HomePageComponent } from './home-page/components/home-page/home-page.co
 import { WelcomeMessageComponent } from './home-page/components/welcome-message/welcome-message.component';
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
 import { TrackerSettingsService } from './home-page/services/tracker-settings.service';
+import { TaskListComponent } from './home-page/components/task-list/task-list.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TrackerSettingsService } from './home-page/services/tracker-settings.se
     HomePageComponent,
     WelcomeMessageComponent,
     TrackerComponent,
+    TaskListComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, CollapseModule.forRoot(),],
   providers: [TrackerSettingsService],
