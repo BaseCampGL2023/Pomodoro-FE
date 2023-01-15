@@ -19,7 +19,12 @@ import { TrackerService } from './home-page/services/tracker.service';
     WelcomeMessageComponent,
     TrackerComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, CollapseModule.forRoot(),],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    CollapseModule.forRoot(),
+  ],
   providers: [TrackerService],
   bootstrap: [AppComponent],
 })

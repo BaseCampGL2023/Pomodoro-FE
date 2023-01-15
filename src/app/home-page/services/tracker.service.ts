@@ -1,28 +1,27 @@
-import { Injectable } from "@angular/core"
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
-import { TrackerSettings } from "../types/tracker-settings";
+import { TrackerSettings } from '../types/tracker-settings';
 
 @Injectable()
-export class TrackerService{
-    
-    constructor(){}
-    
-    private settings = new BehaviorSubject<TrackerSettings>(
-        {pomoDuration: 25, longBreak: 15, shortBreak: 5}
-        );
-        
-    castSettings = this.settings.asObservable();
+export class TrackerService {
+  private settings = new BehaviorSubject<TrackerSettings>({
+    pomoDuration: 25,
+    longBreak: 15,
+    shortBreak: 5,
+  });
 
-    editSettings(newSettings: TrackerSettings){
-        this.settings.next(newSettings);
-    }
+  castSettings = this.settings.asObservable();
 
-    private countdownFinished = new BehaviorSubject<boolean>(false);
+  editSettings(newSettings: TrackerSettings) {
+    this.settings.next(newSettings);
+  }
 
-    castFinished = this.countdownFinished.asObservable();
+  private countdownFinished = new BehaviorSubject<boolean>(false);
 
-    emitFinished(done: boolean){
-        this.countdownFinished.next(done);
-    }
+  castFinished = this.countdownFinished.asObservable();
+
+  emitFinished(done: boolean) {
+    this.countdownFinished.next(done);
+  }
 }
