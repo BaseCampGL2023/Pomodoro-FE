@@ -5,7 +5,6 @@ import { TrackerSettings } from "../types/tracker-settings";
 
 @Injectable()
 export class TrackerSettingsService{
-    constructor(){}
     private settings = new BehaviorSubject<TrackerSettings>(
         {pomoDuration: 25, longBreak: 15, shortBreak: 5}
         );
