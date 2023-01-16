@@ -9,7 +9,7 @@ import { NavMenuComponent } from './shared-module/nav-menu/nav-menu.component';
 import { HomePageComponent } from './home-page/components/home-page/home-page.component';
 import { WelcomeMessageComponent } from './home-page/components/welcome-message/welcome-message.component';
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
-import { TrackerSettingsService } from './home-page/services/tracker-settings.service';
+import { TrackerService } from './home-page/services/tracker.service';
 
 @NgModule({
   declarations: [
@@ -19,8 +19,13 @@ import { TrackerSettingsService } from './home-page/services/tracker-settings.se
     WelcomeMessageComponent,
     TrackerComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule, CollapseModule.forRoot(),],
-  providers: [TrackerSettingsService],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    CollapseModule.forRoot(),
+  ],
+  providers: [TrackerService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
