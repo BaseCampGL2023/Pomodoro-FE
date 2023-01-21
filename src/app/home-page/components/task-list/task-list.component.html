@@ -6,13 +6,7 @@
     </button>
   </div>
 
-  <div
-    class="info"
-    *ngIf="
-      taskList === undefined || taskList.length === 0;
-      else listNotEmptyBlock
-    "
-  >
+  <div class="info" *ngIf="taskList.length === 0; else listNotEmptyBlock">
     <span class="list-title"
       >You don't have any tasks. Please create a new task!
     </span>
@@ -20,93 +14,40 @@
 
   <ng-template #listNotEmptyBlock>
     <div
-      *ngIf="
-        taskList.length <= initionalCountOfTasksForShow;
-        else listWithSeeAllButtonBlock
+      *ngFor="
+        let task of isShowAllTasks
+          ? taskList
+          : (taskList | slice : 0 : initionalCountOfTasksForShow)
       "
+      class="task-item"
+      style="--prog: {{ task.progress }}%"
     >
-      <div
-        *ngFor="let task of taskList"
-        class="task-item"
-        style="--prog: {{ task.progress }}%"
-      >
-        <div class="mr-auto">
-          <span class="task-title">{{ task.title }}</span>
-        </div>
-        <div class="m-auto">
-          <span class="task-frequency">{{ task.frequency }}</span>
-        </div>
-        <div class="ml-auto">
-          <span class="task-time">{{
-            task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
-          }}</span>
-        </div>
+      <div class="mr-auto">
+        <span class="task-title">{{ task.title }}</span>
+      </div>
+      <div class="m-auto">
+        <span class="task-frequency">{{ task.frequency }}</span>
+      </div>
+      <div class="ml-auto">
+        <span class="task-time">{{
+          task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
+        }}</span>
       </div>
     </div>
 
-    <ng-template #listWithSeeAllButtonBlock>
-      <div *ngIf="isShowAllTasks; else showInitionalCountOfTasksBlock">
-        <div
-          *ngFor="let task of taskList"
-          class="task-item"
-          style="--prog: {{ task.progress }}%"
-        >
-          <div class="mr-auto">
-            <span class="task-title">{{ task.title }}</span>
-          </div>
-          <div class="m-auto">
-            <span class="task-frequency">{{ task.frequency }}</span>
-          </div>
-          <div class="ml-auto">
-            <span class="task-time">{{
-              task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
-            }}</span>
-          </div>
-        </div>
-
-        <div class="d-flex justify-content-center">
-          <button
-            type="button"
-            class="show-all-tasks-button"
-            (click)="showAllTasks()"
-          >
-            <span>See less tasks</span>
-          </button>
-        </div>
-      </div>
-
-      <ng-template #showInitionalCountOfTasksBlock>
-        <div
-          *ngFor="
-            let task of taskList | slice : 0 : initionalCountOfTasksForShow
-          "
-          class="task-item"
-          style="--prog: {{ task.progress }}%"
-        >
-          <div class="mr-auto">
-            <span class="task-title">{{ task.title }}</span>
-          </div>
-          <div class="m-auto">
-            <span class="task-frequency">{{ task.frequency }}</span>
-          </div>
-          <div class="ml-auto">
-            <span class="task-time">{{
-              task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
-            }}</span>
-          </div>
-        </div>
-
-        <div class="d-flex justify-content-center">
-          <button
-            type="button"
-            class="show-all-tasks-button"
-            (click)="showAllTasks()"
-          >
-            <span>See all tasks</span>
-          </button>
-        </div>
-      </ng-template>
-    </ng-template>
+    <div
+      *ngIf="taskList.length > initionalCountOfTasksForShow"
+      class="d-flex justify-content-center"
+    >
+      <button
+        type="button"
+        class="show-all-tasks-button"
+        (click)="showAllTasks()"
+      >
+        <span *ngIf="!isShowAllTasks">See all tasks</span>
+        <span *ngIf="isShowAllTasks">See less tasks</span>
+      </button>
+    </div>
 
     <div class="d-flex justify-content-between general-time">
       <span class="task-title">Your tasks for today:</span>
