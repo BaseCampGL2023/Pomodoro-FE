@@ -42,7 +42,7 @@
       <button
         type="button"
         class="show-all-tasks-button"
-        (click)="showAllTasks()"
+        (click)="isShowAllTasks = !isShowAllTasks"
       >
         <span *ngIf="!isShowAllTasks">See all tasks</span>
         <span *ngIf="isShowAllTasks">See less tasks</span>

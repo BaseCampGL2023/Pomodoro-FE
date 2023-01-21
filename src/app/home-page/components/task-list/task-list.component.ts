@@ -21,10 +21,6 @@ export class TaskListComponent implements OnInit {
     this.taskService.getTasks().subscribe(tasks => this.taskList = tasks);
   }
 
-  showAllTasks() {
-    this.isShowAllTasks = !this.isShowAllTasks;
-  }
-
   getTotalAllocatedTime() {
     return this.taskList
       .map((task) => task.allocatedTime)
