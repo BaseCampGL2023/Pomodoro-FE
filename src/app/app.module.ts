@@ -11,6 +11,7 @@ import { WelcomeMessageComponent } from './home-page/components/welcome-message/
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
 import { TaskListComponent } from './home-page/components/task-list/task-list.component';
 import { TrackerService } from './home-page/services/tracker.service';
+import { TaskService } from './home-page/services/task.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { TrackerService } from './home-page/services/tracker.service';
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
   ],
-  providers: [TrackerService],
+  providers: [TrackerService, TaskService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

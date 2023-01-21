@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskService } from '../../services/task.service';
 import { Task } from '../../types/task';
 
 @Component({
@@ -7,6 +8,9 @@ import { Task } from '../../types/task';
   styleUrls: ['./task-list.component.scss'],
 })
 export class TaskListComponent implements OnInit {
+
+  constructor(private taskService: TaskService) { }
+
   initionalCountOfTasksForShow = 3;
 
   isShowAllTasks = false;
@@ -14,18 +18,7 @@ export class TaskListComponent implements OnInit {
   taskList: Task[] = [];
 
   ngOnInit() {
-    this.taskList = [
-      { title: 'task1', frequency: 'dayly', allocatedTime: 100, progress: 50 },
-      { title: 'task2', frequency: '', allocatedTime: 350, progress: 10 },
-      {
-        title: 'task3',
-        frequency: 'mounthly',
-        allocatedTime: 30,
-        progress: 25,
-      },
-      { title: 'task4', frequency: 'dayly', allocatedTime: 150, progress: 100 },
-      { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 },
-    ];
+    this.taskService.getTasks().subscribe(tasks => this.taskList = tasks);
   }
 
   showAllTasks() {
