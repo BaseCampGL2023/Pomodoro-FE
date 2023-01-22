@@ -20,18 +20,26 @@
           : (taskList | slice : 0 : initionalCountOfTasksForShow)
       "
       class="task-item"
-      style="--prog: {{ task.progress }}%"
+      style="--prog: {{ task.progress }}; --prog-proc: {{ task.progress }}%"
     >
-      <div class="mr-auto">
-        <span class="task-title">{{ task.title }}</span>
+      <div class="right">
+        <div class="inner">
+          <span class="task-title">{{ task.title }}</span>
+          <span class="task-frequency">{{ task.frequency }}</span>
+          <span class="task-time">{{
+            task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
+          }}</span>
+        </div>
       </div>
-      <div class="m-auto">
-        <span class="task-frequency">{{ task.frequency }}</span>
-      </div>
-      <div class="ml-auto">
-        <span class="task-time">{{
-          task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
-        }}</span>
+
+      <div class="left">
+        <div class="inner">
+          <span class="task-title">{{ task.title }}</span>
+          <span class="task-frequency">{{ task.frequency }}</span>
+          <span class="task-time">{{
+            task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
+          }}</span>
+        </div>
       </div>
     </div>
 

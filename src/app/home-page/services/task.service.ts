@@ -18,7 +18,13 @@ export class TaskService {
                     progress: 25,
                 },
                 { title: 'task4', frequency: 'dayly', allocatedTime: 150, progress: 100 },
-                { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 }
+                { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 },
+                { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 },
+                { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 },
+                { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 },
+                { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 },
+                { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 },
+                { title: 'task5', frequency: 'dayly', allocatedTime: 110, progress: 75 },
             ]);
         });
     }

@@ -59,42 +59,71 @@
 
 .task-item {
   position: relative;
-  display: flex;
   margin-top: 10px;
-  padding: 12px;
+  padding: 12px 0;
   height: 45px;
   border: 1px solid $green-color;
   border-radius: 4px;
   background: linear-gradient(
     to right,
     $green-color 0%,
-    $green-color var(--prog),
-    $background-color var(--prog),
+    $green-color var(--prog-proc),
+    $background-color var(--prog-proc),
     $background-color 100%
   );
 }
 
+.right,
+.left {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.task-item .right {
+  color: $secondary-color;
+  width: 100%;
+}
+
+.task-item .left {
+  color: $background-color;
+  width: var(--prog-proc);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0 12px;
+}
+
+.left .inner {
+  width: calc(10000% / var(--prog));
+}
+
+.right .inner {
+  width: 100%;
+}
+
 .task-title {
-  font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
-  color: $secondary-color;
+  text-align: left;
 }
 
 .task-frequency {
-  font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 18px;
-  color: $secondary-color;
+  text-align: center;
 }
 
 .task-time {
-  font-style: normal;
   font-weight: 500;
   font-size: 20px;
   line-height: 26px;
+  text-align: right;
   color: $base-color;
 }
 
