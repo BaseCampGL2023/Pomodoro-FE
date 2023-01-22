@@ -18,12 +18,18 @@ export class TaskListComponent implements OnInit {
   taskList: Task[] = [];
 
   ngOnInit() {
-    this.taskService.getTasks().subscribe(tasks => this.taskList = tasks);
+    this.taskService.getTasks().subscribe(tasks => this.taskList = this.moveDoneTaskToEnd(tasks));
   }
 
   getTotalAllocatedTime() {
     return this.taskList
       .map((task) => task.allocatedTime)
       .reduce((sum, curr) => sum + curr);
+  }
+
+  moveDoneTaskToEnd(arr: Task[]) {
+    let notDone = arr.filter(task => task.progress !== 100);
+    let done = arr.filter(task => task.progress === 100);
+    return notDone.concat(done);
   }
 }
