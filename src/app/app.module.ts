@@ -10,7 +10,10 @@ import { HomePageComponent } from './home-page/components/home-page/home-page.co
 import { WelcomeMessageComponent } from './home-page/components/welcome-message/welcome-message.component';
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
 import { TrackerService } from './home-page/services/tracker.service';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
+import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
+;
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,12 +21,15 @@ import { TrackerService } from './home-page/services/tracker.service';
     HomePageComponent,
     WelcomeMessageComponent,
     TrackerComponent,
+    LoginPopUpComponent,
+    SettingsPopUpComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
+    MatDialogModule
   ],
   providers: [TrackerService],
   bootstrap: [AppComponent],
