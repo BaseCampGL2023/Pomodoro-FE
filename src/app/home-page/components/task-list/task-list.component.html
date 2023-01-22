@@ -22,24 +22,22 @@
       class="task-item"
       style="--prog: {{ task.progress }}; --prog-proc: {{ task.progress }}%"
     >
-      <div class="right">
-        <div class="inner">
+      <ng-template #templateForProgressBar
+        ><div class="inner">
           <span class="task-title">{{ task.title }}</span>
           <span class="task-frequency">{{ task.frequency }}</span>
           <span class="task-time">{{
-            task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
+            task.allocatedTime * 1000 | date : "HH:mm:ss" : "UTC"
           }}</span>
         </div>
+      </ng-template>
+
+      <div class="right">
+        <template [ngTemplateOutlet]="templateForProgressBar"></template>
       </div>
 
       <div class="left">
-        <div class="inner">
-          <span class="task-title">{{ task.title }}</span>
-          <span class="task-frequency">{{ task.frequency }}</span>
-          <span class="task-time">{{
-            task.allocatedTime * 1000 * 60 | date : "HH:mm" : "UTC"
-          }}</span>
-        </div>
+        <template [ngTemplateOutlet]="templateForProgressBar"></template>
       </div>
     </div>
 
@@ -60,7 +58,7 @@
     <div class="d-flex justify-content-between general-time">
       <span class="task-title">Your tasks for today:</span>
       <span class="task-time">{{
-        getTotalAllocatedTime() * 1000 * 60 | date : "HH:mm" : "UTC"
+        getTotalAllocatedTime() * 1000 | date : "HH:mm:ss" : "UTC"
       }}</span>
     </div>
   </ng-template>
