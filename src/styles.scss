@@ -37,6 +37,7 @@ $pomodoro-theme: mat.define-light-theme((
 @import "@fontsource/dm-sans/latin.css";
 .mat-dialog-content {
     max-height: 100% !important;
+    border-radius: 14px;
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -8,6 +8,7 @@ $background-color_3: rgba(240, 240, 240, 1);
 $background-color_4: rgba(204, 91, 83, 1);
 $border-color_1: transparent;
 $border-color_2: rgba(42, 3, 0, 1);
+$radius: 14px;
 
 :host {
 	display: contents;
@@ -53,7 +54,7 @@ div.relative{
 	align-items: flex-start;
 	flex-shrink: 0;
 	border-color: $border-color_1;
-	border-radius: 14px;
+	border-radius: $radius;
 	background-color: $background-color_1;
 }
 .login-pop-up-text {

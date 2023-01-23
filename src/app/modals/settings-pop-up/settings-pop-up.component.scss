@@ -4,6 +4,7 @@ $font-family_1: 'DM Sans';
 $background-color_1: rgba(255, 255, 255, 1);
 $background-color_2: rgba(240, 240, 240, 1);
 $border-color_1: transparent;
+$radius: 14px;
 
 :host {
 	display: contents;
@@ -47,11 +48,9 @@ div.relative{
 	overflow: hidden;
 	position: relative;
 	align-items: flex-start;
-	flex-shrink: 0;
+	border-radius:$radius;
 	border-color: $border-color_1;
-	border-radius: 14px;
 	background-color: $background-color_1;
-	
 }
 .frame9-text {
 	top: 19px;
@@ -215,6 +214,7 @@ input.frame9-frame11 {
 	align-items: flex-start;
 	border-color: $border-color_1;
 	background-color: $background-color_2;
+	border-radius: 4px;
 	padding-top: 2px;
 	padding-left: 9px;
 }
@@ -273,6 +273,7 @@ input.frame9-frame11 {
 	height: 24px;
 	position: absolute;
 	border-color: $border-color_1;
+	border-radius:14px ;
 }
 .switch {
 	position: relative;
