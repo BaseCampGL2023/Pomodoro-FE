@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,7 @@ import { TrackerService } from './home-page/services/tracker.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
+
 ;
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up
     AppRoutingModule,
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   providers: [TrackerService],
   bootstrap: [AppComponent],

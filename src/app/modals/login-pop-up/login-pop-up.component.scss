@@ -13,6 +13,34 @@ $radius: 14px;
 :host {
 	display: contents;
 }
+.login-pop-up-password {
+	top: 22px;
+	left: 0px;
+	width: 380px;
+	height: 42px;
+	display: flex;
+	overflow: hidden;
+	position: absolute;
+	align-items: flex-start;
+	flex-shrink: 0;
+	border-color: $border-color_1;
+	border-radius: 6px;
+	background-color: $background-color_3;
+}
+.login-pop-up-email {
+	top: 22px;
+	left: 0px;
+	width: 380px;
+	height: 42px;
+	display: flex;
+	overflow: hidden;
+	position: absolute;
+	align-items: flex-start;
+	flex-shrink: 0;
+	border-color: $border-color_1;
+	border-radius: 6px;
+	background-color: $background-color_3;
+}
 
 .close {
 	position: absolute;
@@ -149,20 +177,6 @@ a.login-pop-up-text04 {
 	justify-content: flex-start;
 	background-color: $background-color_2;
 }
-input.login-pop-up-frame17 {
-	top: 22px;
-	left: 0px;
-	width: 380px;
-	height: 42px;
-	display: flex;
-	overflow: hidden;
-	position: absolute;
-	align-items: flex-start;
-	flex-shrink: 0;
-	border-color: $border-color_1;
-	border-radius: 6px;
-	background-color: $background-color_3;
-}
 .login-pop-up-text06 {
 	color: $color_2;
 	height: auto;
@@ -199,20 +213,7 @@ input.login-pop-up-frame17 {
 	justify-content: flex-start;
 	background-color: $background-color_2;
 }
-.login-pop-up-frame171 {
-	top: 22px;
-	left: 0px;
-	width: 380px;
-	height: 42px;
-	display: flex;
-	overflow: hidden;
-	position: absolute;
-	align-items: flex-start;
-	flex-shrink: 0;
-	border-color: $border-color_1;
-	border-radius: 6px;
-	background-color: $background-color_3;
-}
+
 .login-pop-up-text08 {
 	color: $color_2;
 	height: auto;
@@ -284,8 +285,8 @@ img.google
 .frame19-google {
 	top: 14.4px;
 	left: 16.4px;
-	width: 19.19999885559082px;
-	height: 19.199996948242188px;
+	width: 19.2px;
+	height: 19.2px;
 	display: flex;
 	padding: 0;
 	position: absolute;
