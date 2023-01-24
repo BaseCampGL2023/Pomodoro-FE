@@ -9,7 +9,9 @@ import { NavMenuComponent } from './shared-module/nav-menu/nav-menu.component';
 import { HomePageComponent } from './home-page/components/home-page/home-page.component';
 import { WelcomeMessageComponent } from './home-page/components/welcome-message/welcome-message.component';
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
+import { TaskListComponent } from './home-page/components/task-list/task-list.component';
 import { TrackerService } from './home-page/services/tracker.service';
+import { TaskService } from './home-page/services/task.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { TrackerService } from './home-page/services/tracker.service';
     HomePageComponent,
     WelcomeMessageComponent,
     TrackerComponent,
+    TaskListComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import { TrackerService } from './home-page/services/tracker.service';
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
   ],
-  providers: [TrackerService],
+  providers: [TrackerService, TaskService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

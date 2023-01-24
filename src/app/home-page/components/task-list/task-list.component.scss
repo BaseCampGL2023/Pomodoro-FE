@@ -1,0 +1,164 @@
+@import "../../../../assets/styles/variables";
+
+.container {
+  padding-top: 70px;
+  padding-left: 130px;
+  font-family: $font-family;
+  height: 70vh;
+  overflow: auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-top: min(70px, 20%);
+    padding-left: min(130px, 20%);
+  }
+}
+
+.list-title {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.create-task-button {
+  margin-bottom: 10px;
+  border-radius: 4px;
+  padding: 8px;
+  border: none;
+  background-color: $base-color;
+}
+
+.create-task-button span {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  color: $background-color;
+}
+
+.create-task-button:hover {
+  border-color: $base-color;
+  background-color: $background-color;
+}
+
+.create-task-button:hover span {
+  color: $secondary-color;
+  font-weight: 700;
+}
+
+.info {
+  height: 40vh;
+  line-height: 40vh;
+  text-align: center;
+}
+
+.info span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.task-item {
+  position: relative;
+  margin-top: 10px;
+  padding: 12px 0;
+  height: 45px;
+  border: 1px solid $green-color;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    $green-color 0%,
+    $green-color var(--prog-proc),
+    $background-color var(--prog-proc),
+    $background-color 100%
+  );
+}
+
+.right,
+.left {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.right {
+  color: $secondary-color;
+  width: 100%;
+}
+
+.left {
+  color: $background-color;
+  width: var(--prog-proc);
+}
+
+.left .task-time {
+  color: $background-color;
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0 12px;
+}
+
+.left .inner {
+  width: calc(10000% / var(--prog));
+}
+
+.right .inner {
+  width: 100%;
+}
+
+.task-title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: left;
+}
+
+.task-frequency {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.task-time {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  text-align: right;
+  color: $base-color;
+}
+
+.show-all-tasks-button {
+  margin-top: 14px;
+  border-radius: 4px;
+  border-color: $green-color;
+  border-style: solid;
+  padding: 4px 8px;
+  background-color: $background-color;
+}
+
+.show-all-tasks-button span {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: $green-color;
+}
+
+.show-all-tasks-button:hover {
+  border-color: $background-color;
+  background-color: $green-color;
+}
+
+.show-all-tasks-button:hover span {
+  color: $background-color;
+}
+
+.general-time {
+  margin-top: 12px;
+  padding: 0 13px;
+}
