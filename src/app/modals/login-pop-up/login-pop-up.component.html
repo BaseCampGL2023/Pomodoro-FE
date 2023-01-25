@@ -10,16 +10,16 @@
     </div>
         <div class="login-pop-up-group6">
           <label class = "login-pop-up-text06" for="email">Your email</label>
-          <input class = "login-pop-up-email" id="email" formControlName="email">
+          <input class = "login-pop-up-email" id="email" type = "email" formControlName="email">
         </div>
         <div class="login-pop-up-group8">
           <label class = "login-pop-up-text08" for = "password">Your password</label>
-          <input class = "login-pop-up-password" id = "password" formControlName="password">
+          <input class = "login-pop-up-password" id = "password" type = "password" formControlName="password">
         </div>
         <button class="login-pop-up-frame2" type="submit" [disabled]="!loginForm.valid">
           <span class="login-pop-up-text10">Sign in</span>
         </button>
-    <button class="login-pop-up-frame19">
+    <button class="login-pop-up-frame19" type="submit">
       <span class="login-pop-up-text12">Sign in with Google</span>
         <div class = "frame19-google">
           <img class = "google" src = "\assets\img\google.png">
