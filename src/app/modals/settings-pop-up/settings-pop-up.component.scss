@@ -1,0 +1,345 @@
+$color_1: rgba(143, 43, 35, 1);
+$color_2: rgba(42, 3, 0, 1);
+$font-family_1: 'DM Sans';
+$background-color_1: rgba(255, 255, 255, 1);
+$background-color_2: rgba(240, 240, 240, 1);
+$border-color_1: transparent;
+$radius: 14px;
+
+:host {
+	display: contents;
+}
+
+div.relative{
+	position: relative;
+	left: 337px;
+	top: 28px;
+	width: 14px;
+	height: 14px;
+}
+.close {
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	
+  }
+  .close:hover {
+	opacity: 1;
+  }
+  .close:before, .close:after {
+	stroke: solid;
+	position: absolute;
+	content: ' ';
+	height: 19px;
+	width: 2px;
+	background-color: #8F2C24;
+  }
+  .close:before {
+	transform: rotate(45deg);
+  }
+  .close:after {
+	transform: rotate(-45deg);
+  }
+  
+.frame9-frame9 {
+	width: 378px;
+	height: 246px;
+	display: flex;
+	overflow: hidden;
+	position: relative;
+	align-items: flex-start;
+	border-radius:$radius;
+	border-color: $border-color_1;
+	background-color: $background-color_1;
+}
+.frame9-text {
+	top: 19px;
+	left: 24px;
+	color: $color_1;
+	height: auto;
+	position: absolute;
+	font-size: 20px;
+	align-self: auto;
+	font-style: Medium;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 500;
+	line-height: 32px;
+	font-stretch: normal;
+	margin-right: 0;
+	margin-bottom: 0;
+	text-decoration: none;
+}
+
+.frame9-text02 {
+	top: 70px;
+	left: 24px;
+	color: $color_2;
+	height: auto;
+	position: absolute;
+	font-size: 12px;
+	align-self: auto;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 400;
+	line-height: normal;
+	font-stretch: normal;
+	margin-right: 0;
+	margin-bottom: 0;
+	text-decoration: none;
+}
+.frame9-text04 {
+	top: 96px;
+	left: 24px;
+	color: $color_2;
+	height: auto;
+	position: absolute;
+	font-size: 16px;
+	align-self: auto;
+	font-style: Regular;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 400;
+	line-height: normal;
+	font-stretch: normal;
+	margin-right: 0;
+	margin-bottom: 0;
+	text-decoration: none;
+}
+.frame9-text06 {
+	top: 200px;
+	left: 24px;
+	color: $color_2;
+	height: auto;
+	position: absolute;
+	font-size: 16px;
+	align-self: auto;
+	font-style: Regular;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 400;
+	line-height: normal;
+	font-stretch: normal;
+	margin-right: 0;
+	margin-bottom: 0;
+	text-decoration: none;
+}
+.frame9-text08 {
+	top: 96px;
+	left: 142px;
+	color: $color_2;
+	height: auto;
+	position: absolute;
+	font-size: 16px;
+	align-self: auto;
+	font-style: Regular;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 400;
+	line-height: normal;
+	font-stretch: normal;
+	margin-right: 0;
+	margin-bottom: 0;
+	text-decoration: none;
+}
+.frame9-text10 {
+	top: 96px;
+	left: 260px;
+	color: $color_2;
+	height: auto;
+	position: absolute;
+	font-size: 16px;
+	align-self: auto;
+	font-style: Regular;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 400;
+	line-height: normal;
+	font-stretch: normal;
+	margin-right: 0;
+	margin-bottom: 0;
+	text-decoration: none;
+}
+.frame9-frame10 {
+	top: 121px;
+	left: 24px;
+	width: 94px;
+	height: 30px;
+	font-size: 14px;
+	align-self: auto;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 400;
+	line-height: 16px;
+	font-stretch: normal;
+	display: flex;
+	position: absolute;
+	align-items: flex-start;
+	flex-shrink: 0;
+	border-color: $border-color_1;
+	border-radius: 4px;
+	background-color: $background-color_2;
+	padding-top: 2px;
+	padding-left: 9px;
+}
+.frame9-text12 {
+	top: 7px;
+	left: 9px;
+	color: $color_2;
+	height: auto;
+	position: absolute;
+	font-size: 14px;
+	align-self: auto;
+	font-style: Regular;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 400;
+	line-height: 16px;
+	font-stretch: normal;
+	margin-right: 0;
+	margin-bottom: 0;
+	text-decoration: none;
+}
+
+input.frame9-frame11 {
+	top: 121px;
+	left: 142px;
+	width: 94px;
+	height: 30px;
+	font-size: 14px;
+	align-self: auto;
+	font-family: $font-family_1;
+	display: flex;
+	position: absolute;
+	align-items: flex-start;
+	border-color: $border-color_1;
+	background-color: $background-color_2;
+	border-radius: 4px;
+	padding-top: 2px;
+	padding-left: 9px;
+}
+
+
+.frame9-frame12 {
+	top: 121px;
+	left: 260px;
+	width: 94px;
+	height: 30px;
+	display: flex;
+	position: absolute;
+	align-items: flex-start;
+	flex-shrink: 0;
+	border-color: $border-color_1;
+	border-radius: 4px;
+	background-color: $background-color_2;
+	font-size: 14px;
+	align-self: auto;
+	text-align: left;
+	font-family: $font-family_1;
+	font-weight: 400;
+	line-height: 16px;
+	font-stretch: normal;
+	padding-top: 2px;
+	padding-left: 9px;
+	
+}
+
+
+.frame9-line1 {
+	top: 183px;
+	left: 23.999267578125px;
+	width: 330px;
+	height: 0px;
+	position: absolute;
+}
+.frame9-frame13 {
+	top: 194px;
+	left: 304px;
+	width: 50px;
+	height: 28px;
+	display: flex;
+	overflow: hidden;
+	position: absolute;
+	align-items: flex-start;
+	flex-shrink: 0;
+	border-color: $border-color_1;
+	border-radius: 100px;
+	background-color: $background-color_2;
+}
+.frame9-ellipse1 {
+	top: 2px;
+	left: 2px;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	border-color: $border-color_1;
+	border-radius:14px ;
+}
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 28px;
+	left:304px;
+	top:194px;
+  }
+  
+  .switch input { 
+	opacity: 0;
+	width: 0;
+	height: 0;
+  }
+  
+  .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #F0F0F0;;
+	-webkit-transition: .4s;
+	transition: .4s;
+  }
+  
+  .slider:before {
+	position: absolute;
+	content: "";
+	height: 24px;
+	width: 24px;
+	left: 2px;
+	bottom: 2px;
+	top:2px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+  }
+  
+  input:checked + .slider {
+	background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+	-webkit-transform: translateX(22px);
+	-ms-transform: translateX(22px);
+	transform: translateX(22px);
+  }
+  
+  .slider.round {
+	border-radius: 100px;
+  }
+  
+  .slider.round:before {
+	border-radius: 100px;
+  }
+hr.sline {
+	width: 330px;
+	height: 0px;
+	margin-left: 24px;
+	margin-top: 152px;
+	border: 2px solid #F1F1F1;
+}
