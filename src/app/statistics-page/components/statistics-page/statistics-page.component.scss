@@ -1,0 +1,149 @@
+@import '../../../../assets/styles/variables';
+
+.fill {
+  background-color: $green-color;
+  border: 1px solid $base-color;
+}
+
+.container {
+  font-family: $font-family;
+  padding: 10px 20px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+}
+
+.label {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.info {
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.label,
+.info {
+  font-weight: 400;
+}
+
+.chart-label {
+  color: #777777;
+}
+
+.date-group {
+  display: flex;
+  margin-top: 28px;
+}
+
+.date-input {
+  align-items: center;
+  background: #F0F0F0;
+  border-radius: 6px;
+  display: flex;
+  height: 42px;
+  justify-content: space-between;
+  margin: 0 10px;
+  padding: 10px;
+  width: 189px;
+}
+
+.statistics {
+  margin-top: 40px;
+}
+
+.chart-group {
+  display: flex;
+  margin-top: 15px;
+}
+
+.y-axis {
+  display: flex;
+  flex-direction: column;
+  height: 165px;
+  justify-content: space-between;
+}
+
+.chart {
+  align-items: flex-end;
+  border: 1px solid #BABABA;
+  display: flex;
+  flex: 1;
+  height: 150px;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  margin-left: 25px;
+}
+
+$shift: 18px;
+
+.bar-group {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: calc(var(--height) + $shift);
+  margin-right: 7px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  > .bar {
+    background-color: $base-color;
+    display: flex;
+    flex: 1;
+    position: relative;
+    top: $shift;
+  }
+
+  .x-val {
+    align-self: center;
+    position: relative;
+    top: $shift + 11px;
+  }
+}
+
+.analytics-item {
+  background: $green-color;
+  border-radius: 4px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  height: 113px;
+  padding-top: 16px;
+  padding-left: 21px;
+  
+  .value {
+    font-size: 36px;
+    line-height: 47px;
+  }
+
+  .unit {
+    font-size: 16px;
+    line-height: 21px;
+    margin-top: 8px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  .analytics-item {
+    height: 81px;
+    padding-top: 11px;
+    padding-left: 12px;
+
+    .value {
+      font-size: 25px;
+      line-height: 33px;
+    }
+
+    .unit {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+}

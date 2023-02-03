@@ -15,6 +15,8 @@ import { TrackerService } from './home-page/services/tracker.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
+import { StatisticsPageComponent } from './statistics-page/components/statistics-page/statistics-page.component';
+import { TaskService } from './home-page/services/task.service';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up
     TaskListComponent,
     LoginPopUpComponent,
     SettingsPopUpComponent,
+    StatisticsPageComponent,
   ],
   imports: [
     BrowserModule,

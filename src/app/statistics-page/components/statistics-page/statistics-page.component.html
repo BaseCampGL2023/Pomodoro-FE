@@ -1,0 +1,229 @@
+<div class="container overflow-hidden">
+  <div class="row row-cols-lg-2 gy-3 gx-5">
+    <div class="col-lg order-lg-1">
+      <div id="daily-statistics">
+        <div class="container">
+          <h2 class="title">My daily statistics</h2>
+          <div class="date-group">
+            <img class="icon"
+              src="assets/icons/left-arrow-active.svg"
+              alt="Left arrow icon">
+            <div class="date-input">
+                <span class="label">8 May 2021</span>
+                <img class="icon"
+                  src="assets/icons/calendar.svg"
+                  alt="Calendar">
+            </div>
+            <img class="icon"
+              src="assets/icons/right-arrow-unactive.svg"
+              alt="Right arrow icon">
+          </div>
+          <div class="statistics">
+            <span class="label">Pomodoro (times)</span>
+            <div class="chart-group">
+              <div class="y-axis">
+                <span class="label chart-label">4</span>
+                <span class="label chart-label">3</span>
+                <span class="label chart-label">2</span>
+                <span class="label chart-label">1</span>
+                <span class="label chart-label">0</span>
+              </div>
+              <div class="chart">
+                <div class="bar-group" style="--height: 1%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">0</span>
+                </div>
+
+                <div class="bar-group" style="--height: 10%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">2</span>
+                </div>
+
+                <div class="bar-group" style="--height: 20%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">4</span>
+                </div>
+
+                <div class="bar-group" style="--height: 40%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">6</span>
+                </div>
+
+                <div class="bar-group" style="--height: 80%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">8</span>
+                </div>
+
+                <div class="bar-group" style="--height: 50%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">10</span>
+                </div>
+
+                <div class="bar-group" style="--height: 30%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">12</span>
+                </div>
+
+                <div class="bar-group" style="--height: 70%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">14</span>
+                </div>
+
+                <div class="bar-group" style="--height: 90%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">16</span>
+                </div>
+
+                <div class="bar-group" style="--height: 30%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">18</span>
+                </div>
+
+                <div class="bar-group" style="--height: 10%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">20</span>
+                </div>
+
+                <div class="bar-group" style="--height: 5%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">22</span>
+                </div>
+              </div>
+            </div>
+            <span class="label d-flex justify-content-end">Hour</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg order-lg-3">
+      <div id="tasks-for-day">
+        <div class="container">
+          <h2 class="title">Tasks I have done that day</h2>
+          <app-task-list></app-task-list>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg order-lg-2">
+      <div id="monthly-statistics">
+        <div class="container">
+          <h2 class="title">My monthly statistics</h2>
+          <div class="date-group">
+            <img class="icon"
+              src="assets/icons/left-arrow-active.svg"
+              alt="Left arrow icon">
+            <div class="date-input">
+                <span class="label">May 2021</span>
+                <img class="icon"
+                  src="assets/icons/calendar.svg"
+                  alt="Calendar">
+            </div>
+            <img class="icon"
+              src="assets/icons/right-arrow-unactive.svg"
+              alt="Right arrow icon">
+          </div>
+          <div class="statistics">
+            <span class="label">Pomodoro (times)</span>
+            <div class="chart-group">
+              <div class="y-axis">
+                <span class="label chart-label">100</span>
+                <span class="label chart-label">50</span>
+                <span class="label chart-label">25</span>
+                <span class="label chart-label">10</span>
+                <span class="label chart-label">5</span>
+                <span class="label chart-label">0</span>
+              </div>
+              <div class="chart">
+                <div class="bar-group" style="--height: 1%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Jan</span>
+                </div>
+
+                <div class="bar-group" style="--height: 10%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Feb</span>
+                </div>
+
+                <div class="bar-group" style="--height: 20%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Mar</span>
+                </div>
+
+                <div class="bar-group" style="--height: 40%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Apr</span>
+                </div>
+
+                <div class="bar-group" style="--height: 80%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">May</span>
+                </div>
+
+                <div class="bar-group" style="--height: 50%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Jun</span>
+                </div>
+
+                <div class="bar-group" style="--height: 30%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Jul</span>
+                </div>
+
+                <div class="bar-group" style="--height: 70%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Aug</span>
+                </div>
+
+                <div class="bar-group" style="--height: 90%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Sep</span>
+                </div>
+
+                <div class="bar-group" style="--height: 30%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Oct</span>
+                </div>
+
+                <div class="bar-group" style="--height: 10%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Nov</span>
+                </div>
+
+                <div class="bar-group" style="--height: 5%;">
+                  <div class="bar"></div>
+                  <span class="label chart-label x-val">Dec</span>
+                </div>
+              </div>
+            </div>
+            <span class="label d-flex justify-content-end">Month</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg order-lg-4">
+      <div id="analytics-for-month">
+        <div class="container">
+          <div class="row gx-3 gy-3">
+            <div class="col-md">
+             <div class="analytics-item">
+              <span class="value">56</span>
+              <span class="unit">tasks completed</span>
+             </div>
+            </div>
+            <div class="col-md">
+              <div class="analytics-item">
+                <span class="value">1256</span>
+                <span class="unit">time spent</span>
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="analytics-item">
+                <span class="value">39</span>
+                <span class="unit">pomodoros done</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
