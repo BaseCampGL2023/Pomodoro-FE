@@ -18,6 +18,10 @@ import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.componen
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
 import { StatisticsPageComponent } from './statistics-page/components/statistics-page/statistics-page.component';
 import { TaskService } from './home-page/services/task.service';
+import { DailyStatisticsComponent } from './statistics-page/components/daily-statistics/daily-statistics.component';
+import { AnnualStatisticsComponent } from './statistics-page/components/annual-statistics/annual-statistics.component';
+import { MonthlyStatisticsComponent } from './statistics-page/components/monthly-statistics/monthly-statistics.component';
+import { StatisticsService } from './statistics-page/services/statistics.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,9 @@ import { TaskService } from './home-page/services/task.service';
     LoginPopUpComponent,
     SettingsPopUpComponent,
     StatisticsPageComponent,
+    DailyStatisticsComponent,
+    AnnualStatisticsComponent,
+    MonthlyStatisticsComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +47,7 @@ import { TaskService } from './home-page/services/task.service';
     ReactiveFormsModule,
     MatTooltipModule,
   ],
-  providers: [TrackerService, TaskService],
+  providers: [TrackerService, TaskService, StatisticsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
