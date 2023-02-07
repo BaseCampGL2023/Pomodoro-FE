@@ -1,18 +1,9 @@
-@import "../../../../assets/styles/variables";
+@import "/src/assets/styles/variables";
 
 .container {
-  padding-top: 70px;
-  padding-left: 130px;
   font-family: $font-family;
-  height: 70vh;
+  height: 100%;
   overflow: auto;
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding-top: min(70px, 20%);
-    padding-left: min(130px, 20%);
-  }
 }
 
 .list-title {
