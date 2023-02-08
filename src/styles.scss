@@ -61,3 +61,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 0;
   }
 }
+
+@import '/src/assets/styles/variables';
+.mat-calendar-body-selected {
+  color: white;
+  background-color: $base-color;
+}

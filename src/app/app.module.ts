@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,8 @@ import { DailyStatisticsComponent } from './statistics-page/components/daily-sta
 import { AnnualStatisticsComponent } from './statistics-page/components/annual-statistics/annual-statistics.component';
 import { MonthlyStatisticsComponent } from './statistics-page/components/monthly-statistics/monthly-statistics.component';
 import { StatisticsService } from './statistics-page/services/statistics.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,10 @@ import { StatisticsService } from './statistics-page/services/statistics.service
     MatDialogModule,
     ReactiveFormsModule,
     MatTooltipModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [TrackerService, TaskService, StatisticsService],
   bootstrap: [AppComponent],

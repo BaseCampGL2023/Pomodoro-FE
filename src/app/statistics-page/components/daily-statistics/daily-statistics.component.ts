@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { StatisticsService } from '../../services/statistics.service';
 import { DailyStatistics } from '../../types/daily-statistics';
 import { secondsToMsFormat } from '../../utils/time-utils';
@@ -9,11 +10,26 @@ import { secondsToMsFormat } from '../../utils/time-utils';
   styleUrls: ['./daily-statistics.component.scss'],
 })
 export class DailyStatisticsComponent implements OnInit {
-  constructor(private statisticsService: StatisticsService) {}
+  @ViewChild('picker') datePicker?: MatDatepicker<Date>;
+
+  maxDate: Date;
+  selectedDay: Date;
 
   dailyStatistics?: DailyStatistics;
+  pomodoroTimesAxis: number[];
 
-  pomodoroTimesAxis: number[] = [4, 3, 2, 1, 0];
+  constructor(private statisticsService: StatisticsService) {
+    this.maxDate = new Date();
+    this.maxDate.setHours(0, 0, 0, 0);
+
+    this.selectedDay = new Date();
+
+    this.pomodoroTimesAxis = [4, 3, 2, 1, 0];
+  }
+
+  get dateInputRightArrowState(): string {
+    return this.selectedDay < this.maxDate ? 'active' : 'unactive';
+  }
 
   ngOnInit(): void {
     this.statisticsService
@@ -27,5 +43,29 @@ export class DailyStatisticsComponent implements OnInit {
 
   formatTime(seconds: number): string {
     return secondsToMsFormat(seconds);
+  }
+
+  openDatePicker() {
+    this.datePicker?.open();
+  }
+
+  dateInputLeftArrowClick() {
+    const currDate = this.selectedDay.getDate();
+    this.selectedDay = new Date(
+      this.selectedDay.getFullYear(),
+      this.selectedDay.getMonth(),
+      currDate - 1
+    );
+  }
+
+  dateInputRightArrowClick() {
+    if (this.selectedDay < this.maxDate) {
+      const currDate = this.selectedDay.getDate();
+      this.selectedDay = new Date(
+        this.selectedDay.getFullYear(),
+        this.selectedDay.getMonth(),
+        currDate + 1
+      );
+    }
   }
 }
