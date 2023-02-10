@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { TrackerSettings } from '../types/tracker-settings';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TrackerService {
   private settings = new BehaviorSubject<TrackerSettings>({
     pomoDuration: 25,
