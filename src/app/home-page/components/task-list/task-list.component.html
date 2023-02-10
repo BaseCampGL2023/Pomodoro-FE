@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="d-flex justify-content-between">
+  <div *ngIf="enableTaskManaging" class="d-flex justify-content-between">
     <p class="list-title">Your tasks for today</p>
     <button type="button" class="create-task-button">
       <span>Create task</span>
@@ -7,7 +7,7 @@
   </div>
 
   <div class="info" *ngIf="taskList.length === 0; else listNotEmptyBlock">
-    <span class="list-title"
+    <span *ngIf="enableTaskManaging" class="list-title"
       >You don't have any tasks. Please create a new task!
     </span>
   </div>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="d-flex justify-content-between general-time">
-      <span class="task-title">Your tasks for today:</span>
+      <span class="task-title">Total for the day:</span>
       <span class="task-time">{{
         getTotalAllocatedTime() * 1000 | date : "HH:mm:ss" : "UTC"
       }}</span>

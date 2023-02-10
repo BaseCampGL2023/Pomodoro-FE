@@ -1,0 +1,48 @@
+@import '/src/assets/styles/variables';
+
+.container {
+  font-family: $font-family;
+  padding: 10px 20px;
+}
+
+
+.analytics-item {
+  background: $green-color;
+  border-radius: 4px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  height: 113px;
+  padding-top: 16px;
+  padding-left: 13px;
+  
+  .value {
+    font-size: 36px;
+    line-height: 47px;
+  }
+
+  .unit {
+    font-size: 16px;
+    line-height: 21px;
+    margin-top: 8px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  .analytics-item {
+    height: 81px;
+    padding-top: 11px;
+    padding-left: 7px;
+
+    .value {
+      font-size: 25px;
+      line-height: 33px;
+    }
+
+    .unit {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+}

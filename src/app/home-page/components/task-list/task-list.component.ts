@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../types/task';
 
@@ -8,8 +8,9 @@ import { Task } from '../../types/task';
   styleUrls: ['./task-list.component.scss'],
 })
 export class TaskListComponent implements OnInit {
+  constructor(private taskService: TaskService) {}
 
-  constructor(private taskService: TaskService) { }
+  @Input() enableTaskManaging = true;
 
   initionalCountOfTasksForShow = 3;
 
@@ -18,7 +19,9 @@ export class TaskListComponent implements OnInit {
   taskList: Task[] = [];
 
   ngOnInit() {
-    this.taskService.getTasks().subscribe(tasks => this.taskList = this.moveDoneTaskToEnd(tasks));
+    this.taskService
+      .getTasks()
+      .subscribe((tasks) => (this.taskList = this.moveDoneTaskToEnd(tasks)));
   }
 
   getTotalAllocatedTime() {
@@ -28,8 +31,8 @@ export class TaskListComponent implements OnInit {
   }
 
   moveDoneTaskToEnd(arr: Task[]) {
-    let notDone = arr.filter(task => task.progress !== 100);
-    let done = arr.filter(task => task.progress === 100);
+    const notDone = arr.filter((task) => task.progress !== 100);
+    const done = arr.filter((task) => task.progress === 100);
     return notDone.concat(done);
   }
 }
