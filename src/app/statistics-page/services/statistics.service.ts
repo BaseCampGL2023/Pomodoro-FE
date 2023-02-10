@@ -5,7 +5,7 @@ import { DailyStatistics } from '../types/daily-statistics';
 import { Month } from '../types/month';
 import { MonthlyStatistics } from '../types/monthly-statistics';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StatisticsService {
   public getDailyStatistics(): Observable<DailyStatistics> {
     return new Observable((observer) => {

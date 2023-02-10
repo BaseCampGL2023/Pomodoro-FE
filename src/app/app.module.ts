@@ -22,7 +22,6 @@ import { TaskService } from './home-page/services/task.service';
 import { DailyStatisticsComponent } from './statistics-page/components/daily-statistics/daily-statistics.component';
 import { AnnualStatisticsComponent } from './statistics-page/components/annual-statistics/annual-statistics.component';
 import { MonthlyStatisticsComponent } from './statistics-page/components/monthly-statistics/monthly-statistics.component';
-import { StatisticsService } from './statistics-page/services/statistics.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 
@@ -54,7 +53,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule,
   ],
-  providers: [TrackerService, TaskService, StatisticsService],
+  providers: [TrackerService, TaskService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
