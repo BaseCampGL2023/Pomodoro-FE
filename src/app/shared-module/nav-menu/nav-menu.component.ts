@@ -10,11 +10,11 @@ import { SettingsPopUpComponent } from 'src/app/modals/settings-pop-up/settings-
 })
 export class NavMenuComponent {
   isCollapsed = true;
-  constructor(private dialogRef:MatDialog){}
-  openLogin(){
+  constructor(private dialogRef: MatDialog) {}
+  openLogin() {
     this.dialogRef.open(LoginPopUpComponent);
   }
-  openSettings(){
+  openSettings() {
     this.dialogRef.open(SettingsPopUpComponent);
   }
 }

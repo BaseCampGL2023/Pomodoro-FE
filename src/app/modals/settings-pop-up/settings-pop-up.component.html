@@ -2,22 +2,49 @@
   <div class="frame9-frame9">
     <span class="frame9-text">Pomodoro settings</span>
     <div class="relative">
-      <a class = "close" mat-button [mat-dialog-close]="true"></a>
+      <a class="close" mat-button [mat-dialog-close]="true"></a>
     </div>
-        <label class="frame9-text02">Time (minutes)</label>
-        <label class="frame9-text04" for = "pomodoro">Pomodoro</label>
-        <input class="frame9-frame10" id = "pomodoro" formControlName="pomodoro" type="number" step="1" min="1" max="60" value="25">
-        <label class="frame9-text08" for = "shortbreak">Short break</label>
-        <input class="frame9-frame11" id = "shortbreak" formControlName="shortbreak" type="number" step="1" min="1" max="60" value="5"/>
-        <label class="frame9-text10" for = "longbreak">Long break</label>
-        <input class="frame9-frame12" id = "pomodoro" formControlName="longbreak" type="number" step="1" min="1" max="60" value="15"/>
-        <label class="frame9-text06">Autostart next round</label>
-    <div class = "frame9-ellipse1">
+    <label class="frame9-text02">Time (minutes)</label>
+    <label class="frame9-text04" for="pomodoro">Pomodoro</label>
+    <input
+      class="frame9-frame10"
+      id="pomodoro"
+      formControlName="pomodoro"
+      type="number"
+      step="1"
+      min="1"
+      max="60"
+      value="25"
+    />
+    <label class="frame9-text08" for="shortbreak">Short break</label>
+    <input
+      class="frame9-frame11"
+      id="shortbreak"
+      formControlName="shortbreak"
+      type="number"
+      step="1"
+      min="1"
+      max="60"
+      value="5"
+    />
+    <label class="frame9-text10" for="longbreak">Long break</label>
+    <input
+      class="frame9-frame12"
+      id="pomodoro"
+      formControlName="longbreak"
+      type="number"
+      step="1"
+      min="1"
+      max="60"
+      value="15"
+    />
+    <label class="frame9-text06">Autostart next round</label>
+    <div class="frame9-ellipse1">
       <label class="switch">
-        <input type="checkbox" checked>
+        <input type="checkbox" checked />
         <span class="slider round"></span>
       </label>
-      <hr class="sline">
-  </div>
+      <hr class="sline" />
+    </div>
   </div>
 </form>

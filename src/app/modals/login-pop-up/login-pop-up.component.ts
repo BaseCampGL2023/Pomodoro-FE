@@ -7,14 +7,12 @@ import { AuthService } from 'src/app/shared-module/auth/auth.service';
 import { LoginRequest } from 'src/app/shared-module/types/login-request';
 import { LoginResult } from 'src/app/shared-module/types/login-result';
 
-
 @Component({
   selector: 'app-login-pop-up',
   templateUrl: './login-pop-up.component.html',
-  styleUrls: ['./login-pop-up.component.scss']
+  styleUrls: ['./login-pop-up.component.scss'],
 })
 export class LoginPopUpComponent {
-  
   loginForm: FormGroup;
   loginResult?: LoginResult;
 
@@ -25,38 +23,32 @@ export class LoginPopUpComponent {
     private dialogRef: MatDialog
   ) {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email
-      ]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(8)
-      ])
-    })
+        Validators.minLength(8),
+      ]),
+    });
   }
 
   onSubmit() {
-    let loginRequest = <LoginRequest>{};
+    const loginRequest = <LoginRequest>{};
     loginRequest.email = this.loginForm.controls['email'].value;
     loginRequest.password = this.loginForm.controls['password'].value;
 
-    this.authService
-      .login(loginRequest)
-      .subscribe({
-        next: (result) => {
-          this.loginResult = result;
-          if (result.success && result.token){
-            localStorage.setItem(this.authService.tokenKey, result.token)
-            this.dialogRef.closeAll();
-          }
-        },
-        error: (error) => {
-          if (error.status == 401) {
-            this.loginResult = error.error;
-            console.log(this.loginResult);
-          }
+    this.authService.login(loginRequest).subscribe({
+      next: (result) => {
+        this.loginResult = result;
+        if (result.success) {
+          this.dialogRef.closeAll();
         }
-      });
+      },
+      error: (error) => {
+        if (error.status == 401) {
+          this.loginResult = error.error;
+          console.log(this.loginResult);
+        }
+      },
+    });
   }
 }

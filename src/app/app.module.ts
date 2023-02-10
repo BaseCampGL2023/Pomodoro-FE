@@ -18,7 +18,6 @@ import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.componen
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
 import { TaskService } from './home-page/services/task.service';
 
-
 @NgModule({
   declarations: [
     AppComponent,
