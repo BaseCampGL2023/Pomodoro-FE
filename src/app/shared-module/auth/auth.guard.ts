@@ -16,9 +16,11 @@ import { LoginPopUpComponent } from 'src/app/modals/login-pop-up/login-pop-up.co
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, 
+  constructor(
+    private authService: AuthService,
     private router: Router,
-    private dialogRef: MatDialog) {}
+    private dialogRef: MatDialog
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
