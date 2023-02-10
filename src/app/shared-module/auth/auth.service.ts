@@ -11,7 +11,7 @@ import { LoginResult } from "../types/login-result";
 export class AuthService {
 
     constructor(
-        protected http: HttpClient
+        private http: HttpClient
     ) {}
 
     public tokenKey: string = "token";

@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+
+import { AuthService } from 'src/app/shared-module/auth/auth.service';
+import { LoginRequest } from 'src/app/shared-module/types/login-request';
+import { LoginResult } from 'src/app/shared-module/types/login-result';
+
 
 @Component({
   selector: 'app-login-pop-up',
@@ -7,12 +14,49 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./login-pop-up.component.scss']
 })
 export class LoginPopUpComponent {
-  loginForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl('')
-})
+  
+  loginForm: FormGroup;
+  loginResult?: LoginResult;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+    private dialogRef: MatDialog
+  ) {
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8)
+      ])
+    })
+  }
+
   onSubmit() {
-    //TODO
-  console.warn(this.loginForm.value); //log a message to browser console 
+    let loginRequest = <LoginRequest>{};
+    loginRequest.email = this.loginForm.controls['email'].value;
+    loginRequest.password = this.loginForm.controls['password'].value;
+
+    this.authService
+      .login(loginRequest)
+      .subscribe({
+        next: (result) => {
+          this.loginResult = result;
+          if (result.success && result.token){
+            localStorage.setItem(this.authService.tokenKey, result.token)
+            this.dialogRef.closeAll();
+          }
+        },
+        error: (error) => {
+          if (error.status == 401) {
+            this.loginResult = error.error;
+            console.log(this.loginResult);
+          }
+        }
+      });
   }
 }
