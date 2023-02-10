@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
 import { TaskService } from './home-page/services/task.service';
+import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,15 @@ import { TaskService } from './home-page/services/task.service';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [TrackerService, TaskService],
+  providers: [
+    TrackerService,
+    TaskService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
