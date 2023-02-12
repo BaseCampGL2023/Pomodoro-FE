@@ -14,10 +14,13 @@ import { TrackerComponent } from './home-page/components/tracker/tracker.compone
 import { TaskListComponent } from './home-page/components/task-list/task-list.component';
 import { TrackerService } from './home-page/services/tracker.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
 import { TaskService } from './home-page/services/task.service';
 import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
+import { ValidationHelper } from './shared-module/pipes/validation-helper';
+import { ValidationErrorsDirective } from './shared-module/directives/validation-errors.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,8 @@ import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
     TaskListComponent,
     LoginPopUpComponent,
     SettingsPopUpComponent,
+    ValidationHelper,
+    ValidationErrorsDirective,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +43,7 @@ import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
     MatDialogModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatIconModule,
   ],
   providers: [
     TrackerService,
