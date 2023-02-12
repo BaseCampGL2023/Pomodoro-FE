@@ -33,7 +33,11 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isAuthenticated()) {
       return true;
     }
-    this.dialogRef.open(LoginPopUpComponent);
+    this.dialogRef.open(LoginPopUpComponent, {
+      data: {
+        url: state.url
+      }
+    });
     return false;
   }
 }
