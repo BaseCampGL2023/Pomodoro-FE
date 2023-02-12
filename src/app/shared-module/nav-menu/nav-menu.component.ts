@@ -31,8 +31,6 @@ export class NavMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
-    //
-    this.dialogRef.open(LoginPopUpComponent);
   }
 
   ngOnDestroy(): void {
