@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="d-flex justify-content-between">
+    <p class="list-title">Your tasks for today</p>
+    <button type="button" class="create-task-button">
+      <span>Create task</span>
+    </button>
+  </div>
+
+  <div class="info" *ngIf="taskList.length === 0; else listNotEmptyBlock">
+    <span class="list-title"
+      >You don't have any tasks. Please create a new task!
+    </span>
+  </div>
+
+  <ng-template #listNotEmptyBlock>
+    <app-task-list [tasks]="taskList"></app-task-list>
+  </ng-template>
+</div>

@@ -1,65 +1,48 @@
-<div class="container">
-  <div *ngIf="enableTaskManaging" class="d-flex justify-content-between">
-    <p class="list-title">Your tasks for today</p>
-    <button type="button" class="create-task-button">
-      <span>Create task</span>
-    </button>
-  </div>
-
-  <div class="info" *ngIf="taskList.length === 0; else listNotEmptyBlock">
-    <span *ngIf="enableTaskManaging" class="list-title"
-      >You don't have any tasks. Please create a new task!
-    </span>
-  </div>
-
-  <ng-template #listNotEmptyBlock>
-    <div
-      *ngFor="
-        let task of isShowAllTasks
-          ? taskList
-          : (taskList | slice : 0 : initionalCountOfTasksForShow)
-      "
-      class="task-item"
-      style="--prog: {{ task.progress }}; --prog-proc: {{ task.progress }}%"
-    >
-      <ng-template #templateForProgressBar
-        ><div class="inner">
-          <span class="task-title">{{ task.title }}</span>
-          <span class="task-frequency">{{ task.frequency }}</span>
-          <span class="task-time">{{
-            task.allocatedTime * 1000 | date : "HH:mm:ss" : "UTC"
-          }}</span>
-        </div>
-      </ng-template>
-
-      <div class="right">
-        <template [ngTemplateOutlet]="templateForProgressBar"></template>
-      </div>
-
-      <div class="left">
-        <template [ngTemplateOutlet]="templateForProgressBar"></template>
-      </div>
-    </div>
-
-    <div
-      *ngIf="taskList.length > initionalCountOfTasksForShow"
-      class="d-flex justify-content-center"
-    >
-      <button
-        type="button"
-        class="show-all-tasks-button"
-        (click)="isShowAllTasks = !isShowAllTasks"
-      >
-        <span *ngIf="!isShowAllTasks">See all tasks</span>
-        <span *ngIf="isShowAllTasks">See less tasks</span>
-      </button>
-    </div>
-
-    <div class="d-flex justify-content-between general-time">
-      <span class="task-title">Total for the day:</span>
+<div
+  *ngFor="
+    let task of isShowAllTasks
+      ? tasks
+      : (tasks | slice : 0 : initionalCountOfTasksForShow)
+  "
+  class="task-item"
+  style="--prog: {{ task.progress }}; --prog-proc: {{ task.progress }}%"
+>
+  <ng-template #templateForProgressBar
+    ><div class="inner">
+      <span class="task-title">{{ task.title }}</span>
+      <span class="task-frequency">{{ task.frequency }}</span>
       <span class="task-time">{{
-        getTotalAllocatedTime() * 1000 | date : "HH:mm:ss" : "UTC"
+        task.allocatedTime * 1000 | date : "HH:mm:ss" : "UTC"
       }}</span>
     </div>
   </ng-template>
+
+  <div class="right">
+    <template [ngTemplateOutlet]="templateForProgressBar"></template>
+  </div>
+
+  <div class="left">
+    <template [ngTemplateOutlet]="templateForProgressBar"></template>
+  </div>
+</div>
+
+<div
+  *ngIf="tasks.length > initionalCountOfTasksForShow"
+  class="d-flex justify-content-center"
+>
+  <button
+    type="button"
+    class="show-all-tasks-button"
+    (click)="isShowAllTasks = !isShowAllTasks"
+  >
+    <span *ngIf="!isShowAllTasks">See all tasks</span>
+    <span *ngIf="isShowAllTasks">See less tasks</span>
+  </button>
+</div>
+
+<div class="d-flex justify-content-between general-time">
+  <span class="task-title">Total for the day:</span>
+  <span class="task-time">{{
+    getTotalAllocatedTime() * 1000 | date : "HH:mm:ss" : "UTC"
+  }}</span>
 </div>

@@ -22,6 +22,7 @@ import { AnnualStatisticsComponent } from './statistics-page/components/annual-s
 import { MonthlyStatisticsComponent } from './statistics-page/components/monthly-statistics/monthly-statistics.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TodayTasksComponent } from './home-page/components/today-tasks/today-tasks.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     DailyStatisticsComponent,
     AnnualStatisticsComponent,
     MonthlyStatisticsComponent,
+    TodayTasksComponent,
   ],
   imports: [
     BrowserModule,
