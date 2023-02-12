@@ -1,3 +1,3 @@
 export interface ReturnUrl {
-    url: string
+  url: string;
 }

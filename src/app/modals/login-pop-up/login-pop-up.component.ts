@@ -45,7 +45,7 @@ export class LoginPopUpComponent {
           this.loginResult = result;
           if (result.success) {
             this.dialogRef.closeAll();
-            if(this.returnUrl) {
+            if (this.returnUrl) {
               this.router.navigate([this.returnUrl.url]);
             }
           }

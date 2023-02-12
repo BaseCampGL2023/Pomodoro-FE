@@ -6,7 +6,11 @@ import { StatisticsPageComponent } from './statistics-page/components/statistics
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'statistics', component: StatisticsPageComponent, canActivate: [AuthGuard] },
+  {
+    path: 'statistics',
+    component: StatisticsPageComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

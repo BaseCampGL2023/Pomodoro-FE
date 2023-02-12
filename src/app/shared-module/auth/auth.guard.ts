@@ -35,8 +35,8 @@ export class AuthGuard implements CanActivate {
     }
     this.dialogRef.open(LoginPopUpComponent, {
       data: {
-        url: state.url
-      }
+        url: state.url,
+      },
     });
     return false;
   }
