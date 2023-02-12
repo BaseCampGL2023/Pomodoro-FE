@@ -4,6 +4,7 @@ import { Observable, Subject, tap } from 'rxjs';
 
 import { LoginRequest } from '../types/login-request';
 import { LoginResult } from '../types/login-result';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class AuthService {
   }
 
   login(item: LoginRequest): Observable<LoginResult> {
-    const url = 'https://localhost:7234' + '/api/account/login';
+    const url = environment.baseUrl + 'account/login';
     return this.http.post<LoginResult>(url, item).pipe(
       tap((loginResult) => {
         if (loginResult.success && loginResult.token) {
