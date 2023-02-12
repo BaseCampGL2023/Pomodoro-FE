@@ -1,0 +1,19 @@
+<div class="container overflow-hidden">
+  <div class="row row-cols-lg-2 gy-3 gx-5">
+    <div class="col-lg order-lg-1">
+      <app-daily-statistics></app-daily-statistics>
+    </div>
+    <div class="col-lg order-lg-3">
+      <div class="container">
+        <h2 class="title">Tasks I have done that day</h2>
+        <app-task-list [enableTaskManaging]="false"></app-task-list>
+      </div>
+    </div>
+    <div class="col-lg order-lg-2">
+      <app-annual-statistics></app-annual-statistics>
+    </div>
+    <div class="col-lg order-lg-4">
+      <app-monthly-statistics></app-monthly-statistics>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+@import '/src/assets/styles/variables';
+
+.container {
+  font-family: $font-family;
+  padding: 10px 20px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 26px;
+}

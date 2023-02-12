@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,11 +14,16 @@ import { HomePageComponent } from './home-page/components/home-page/home-page.co
 import { WelcomeMessageComponent } from './home-page/components/welcome-message/welcome-message.component';
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
 import { TaskListComponent } from './home-page/components/task-list/task-list.component';
-import { TrackerService } from './home-page/services/tracker.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
+import { StatisticsPageComponent } from './statistics-page/components/statistics-page/statistics-page.component';
+import { DailyStatisticsComponent } from './statistics-page/components/daily-statistics/daily-statistics.component';
+import { AnnualStatisticsComponent } from './statistics-page/components/annual-statistics/annual-statistics.component';
+import { MonthlyStatisticsComponent } from './statistics-page/components/monthly-statistics/monthly-statistics.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
 import { TaskService } from './home-page/services/task.service';
 import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
 import { ValidationHelper } from './shared-module/pipes/validation-helper';
@@ -32,6 +39,10 @@ import { ValidationErrorsDirective } from './shared-module/directives/validation
     TaskListComponent,
     LoginPopUpComponent,
     SettingsPopUpComponent,
+    StatisticsPageComponent,
+    DailyStatisticsComponent,
+    AnnualStatisticsComponent,
+    MonthlyStatisticsComponent,
     ValidationHelper,
     ValidationErrorsDirective,
   ],
@@ -42,11 +53,16 @@ import { ValidationErrorsDirective } from './shared-module/directives/validation
     CollapseModule.forRoot(),
     MatDialogModule,
     ReactiveFormsModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
     HttpClientModule,
     MatIconModule,
   ],
   providers: [
-    TrackerService,
     TaskService,
     {
       provide: HTTP_INTERCEPTORS,

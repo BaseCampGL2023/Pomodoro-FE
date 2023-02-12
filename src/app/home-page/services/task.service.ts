@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Task } from '../types/task';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TaskService {
   public getTasks(): Observable<Task[]> {
     return new Observable((observer) => {

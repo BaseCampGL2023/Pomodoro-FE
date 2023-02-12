@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../types/task';
 
@@ -9,6 +9,8 @@ import { Task } from '../../types/task';
 })
 export class TaskListComponent implements OnInit {
   constructor(private taskService: TaskService) {}
+
+  @Input() enableTaskManaging = true;
 
   initionalCountOfTasksForShow = 3;
 

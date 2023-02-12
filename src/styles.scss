@@ -41,3 +41,29 @@ $pomodoro-theme: mat.define-light-theme((
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.bar-info-tooltip {
+  font-size: 12px;
+  margin-bottom: 5px;
+  overflow: initial;
+  position: relative;
+
+  &:after {
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid #0000009c;
+    bottom: -0.5rem;
+    content: '';
+    height: 0;
+    position: absolute;
+    right: calc(50% - 0.5rem);
+    transform: rotate(180deg);
+    width: 0;
+  }
+}
+
+@import '/src/assets/styles/variables';
+.mat-calendar-body-selected {
+  color: white;
+  background-color: $base-color;
+}
