@@ -12,9 +12,15 @@ export class StatisticsPageComponent implements OnInit {
   
   taskList: Task[] = [];
 
+  selectedDateForTaskList: Date = new Date();
+
   ngOnInit() {
     this.taskService
       .getTasks()
       .subscribe((tasks) => (this.taskList = tasks));
+  }
+
+  setSelectedDate(selectedDate: Date) {
+    this.selectedDateForTaskList = selectedDate;
   }
 }
