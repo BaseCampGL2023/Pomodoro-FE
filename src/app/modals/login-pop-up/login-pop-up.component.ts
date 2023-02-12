@@ -13,8 +13,18 @@ import { LoginResult } from 'src/app/shared-module/types/login-result';
   styleUrls: ['./login-pop-up.component.scss'],
 })
 export class LoginPopUpComponent {
-  loginForm: FormGroup;
+  loginRequest = <LoginRequest>{};
   loginResult?: LoginResult;
+
+  loginForm: FormGroup = new FormGroup({
+    email: new FormControl('', {
+      validators: [Validators.required, Validators.email],
+    }),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+  });
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,33 +32,32 @@ export class LoginPopUpComponent {
     private authService: AuthService,
     private dialogRef: MatDialog
   ) {
-    this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
-    });
+    this.loginForm.reset(this.loginRequest);
   }
 
   onSubmit() {
-    const loginRequest = <LoginRequest>{};
-    loginRequest.email = this.loginForm.controls['email'].value;
-    loginRequest.password = this.loginForm.controls['password'].value;
+    console.log(this.loginRequest);
+    if (this.loginForm.valid) {
+      Object.assign(this.loginRequest, this.loginForm.value);
+      this.authService.login(this.loginRequest).subscribe({
+        next: (result) => {
+          this.loginResult = result;
+          if (result.success) {
+            this.dialogRef.closeAll();
+          }
+        },
+        error: (error) => {
+          if (error.status == 401) {
+            this.loginResult = error.error;
+            console.log(this.loginResult);
+          }
+        },
+      });
+    }
+  }
 
-    this.authService.login(loginRequest).subscribe({
-      next: (result) => {
-        this.loginResult = result;
-        if (result.success) {
-          this.dialogRef.closeAll();
-        }
-      },
-      error: (error) => {
-        if (error.status == 401) {
-          this.loginResult = error.error;
-          console.log(this.loginResult);
-        }
-      },
-    });
+  resetForm() {
+    this.loginRequest = <LoginRequest>{};
+    this.loginForm.reset();
   }
 }
