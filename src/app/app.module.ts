@@ -28,6 +28,7 @@ import { TaskService } from './home-page/services/task.service';
 import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
 import { ValidationHelper } from './shared-module/pipes/validation-helper';
 import { ValidationErrorsDirective } from './shared-module/directives/validation-errors.directive';
+import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ValidationErrorsDirective } from './shared-module/directives/validation
     MonthlyStatisticsComponent,
     ValidationHelper,
     ValidationErrorsDirective,
+    BarPlotComponent,
   ],
   imports: [
     BrowserModule,
