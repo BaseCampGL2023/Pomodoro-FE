@@ -12,7 +12,7 @@ import { NavMenuComponent } from './shared-module/nav-menu/nav-menu.component';
 import { HomePageComponent } from './home-page/components/home-page/home-page.component';
 import { WelcomeMessageComponent } from './home-page/components/welcome-message/welcome-message.component';
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
-import { TaskListComponent } from './home-page/components/task-list/task-list.component';
+import { TaskListComponent } from './shared-module/task-list/task-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
