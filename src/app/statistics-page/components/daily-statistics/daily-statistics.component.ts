@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { BarPlotUnitVM, BarPlotVM } from 'src/app/shared-module/bar-plot/bar-plot-vm';
 import { StatisticsService } from '../../services/statistics.service';
 import { DailyStatistics } from '../../types/daily-statistics';
 import { secondsToMsFormat } from '../../utils/time-utils';
@@ -18,6 +19,8 @@ export class DailyStatisticsComponent implements OnInit {
   dailyStatistics?: DailyStatistics;
   pomodoroTimesAxis: number[];
 
+  barPlotVM = new BarPlotVM("Pomodoro (times)", "Time spent");
+
   constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();
     this.maxDate.setHours(0, 0, 0, 0);
@@ -35,6 +38,16 @@ export class DailyStatisticsComponent implements OnInit {
     this.statisticsService
       .getDailyStatistics()
       .subscribe((result) => (this.dailyStatistics = result));
+
+    this.dailyStatistics?.analyticsPerHours.forEach(aph => {
+      this.barPlotVM.dataSequence.push(
+        new BarPlotUnitVM(
+          aph.hour.toString(),
+          aph.pomodorosDone,
+          this.formatTime(aph.timeSpent)
+        )
+      );
+    })
   }
 
   calcBarHeight(pomodorosDone: number): number {
