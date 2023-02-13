@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { BarPlotUnitVM, BarPlotVM } from 'src/app/shared-module/bar-plot/bar-plot-vm';
 import { StatisticsService } from '../../services/statistics.service';
 import { AnnualStatistics } from '../../types/annual-statistics';
 import { Month } from '../../types/month';
@@ -19,6 +20,8 @@ export class AnnualStatisticsComponent implements OnInit {
   Month = Month;
   pomodoroTimesAxis: number[];
 
+  barPlotVM = new BarPlotVM("Pomodoro (times)", "Overall");
+
   constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();
     this.maxDate.setDate(1);
@@ -37,6 +40,16 @@ export class AnnualStatisticsComponent implements OnInit {
     this.statisticsService
       .getAnnualStatistics()
       .subscribe((result) => (this.annualStatistics = result));
+
+      this.annualStatistics?.analyticsPerMonths.forEach(apm => {
+        this.barPlotVM.dataSequence.push(
+          new BarPlotUnitVM(
+            apm.month.toString(),
+            apm.pomodorosDone,
+            `${apm.pomodorosDone} times`
+          )
+        );
+      });
   }
 
   calcBarHeight(pomodorosDone: number): number {
