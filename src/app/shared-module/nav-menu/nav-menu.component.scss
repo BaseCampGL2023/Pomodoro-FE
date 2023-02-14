@@ -26,6 +26,10 @@ nav.navbar.navbar-expand-lg {
         letter-spacing: normal;
     }
 
+    a.nav-link.active-route {
+        text-decoration: underline;
+    }
+
     a.btn-outline-danger {
         border: 0px solid transparent;
     }
@@ -64,9 +68,5 @@ nav.navbar.navbar-expand-lg {
 
     div.navbar-collapse a.nav-link {
         margin-left: 52px;
-    }
-
-    li.active {
-        text-decoration: underline;
     }
 }

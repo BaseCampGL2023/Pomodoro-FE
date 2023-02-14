@@ -5,6 +5,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { WelcomeMessageComponent } from './home-page/components/welcome-message/
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
 import { TaskListComponent } from './home-page/components/task-list/task-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
 import { SettingsPopUpComponent } from './modals/settings-pop-up/settings-pop-up.component';
 import { StatisticsPageComponent } from './statistics-page/components/statistics-page/statistics-page.component';
@@ -22,6 +24,10 @@ import { AnnualStatisticsComponent } from './statistics-page/components/annual-s
 import { MonthlyStatisticsComponent } from './statistics-page/components/monthly-statistics/monthly-statistics.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TaskService } from './home-page/services/task.service';
+import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
+import { ValidationHelper } from './shared-module/pipes/validation-helper';
+import { ValidationErrorsDirective } from './shared-module/directives/validation-errors.directive';
 
 @NgModule({
   declarations: [
@@ -37,6 +43,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     DailyStatisticsComponent,
     AnnualStatisticsComponent,
     MonthlyStatisticsComponent,
+    ValidationHelper,
+    ValidationErrorsDirective,
   ],
   imports: [
     BrowserModule,
@@ -50,8 +58,18 @@ import { MatNativeDateModule } from '@angular/material/core';
     FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatIconModule,
   ],
-  providers: [],
+  providers: [
+    TaskService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

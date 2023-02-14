@@ -1,7 +1,7 @@
 <div class="row no-gutters">
   <div class="col-xs-12 col-md-7">
-    <!-- <app-welcome-message></app-welcome-message> -->
-    <div class="container">
+    <app-welcome-message *ngIf="!isLoggedIn"></app-welcome-message>
+    <div class="container" *ngIf="isLoggedIn">
       <app-task-list></app-task-list>
     </div>
   </div>
