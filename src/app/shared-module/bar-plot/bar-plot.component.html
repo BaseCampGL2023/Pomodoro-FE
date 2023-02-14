@@ -1,5 +1,5 @@
 <div class="statistics">
-  <span class="label">{{ viewModel.title }}</span>
+  <span class="label">{{ viewModel.yAxisTitle }}</span>
   <div class="chart-group">
     <div class="y-axis">
       <span *ngFor="let p of yAxis" class="label chart-label">{{ p }}</span>
@@ -22,5 +22,7 @@
       </div>
     </div>
   </div>
-  <span class="label d-flex justify-content-end">Hour</span>
+  <span class="label d-flex justify-content-end">{{
+    viewModel.xAxisTitle
+  }}</span>
 </div>

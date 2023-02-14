@@ -1,6 +1,7 @@
 export class BarPlotVM {
   constructor(
-    public title?: string,
+    public yAxisTitle?: string,
+    public xAxisTitle?: string,
     public tooltipTitle?: string,
     public dataSequence: BarPlotUnitVM[] = []
   ) {}

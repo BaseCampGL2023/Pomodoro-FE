@@ -21,7 +21,7 @@ export class DailyStatisticsComponent implements OnInit {
 
   dailyStatistics?: DailyStatistics;
 
-  barPlotVM = new BarPlotVM('Pomodoro (times)', 'Time spent');
+  barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
 
   constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();

@@ -22,7 +22,7 @@ export class AnnualStatisticsComponent implements OnInit {
   annualStatistics?: AnnualStatistics;
   Month = Month;
 
-  barPlotVM = new BarPlotVM('Pomodoro (times)', 'Overall');
+  barPlotVM = new BarPlotVM('Pomodoro (times)', 'Month', 'Overall');
 
   constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();
