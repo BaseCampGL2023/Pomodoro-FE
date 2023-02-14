@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../../shared-module/services/task.service';
-import { Task } from '../../types/task';
+import { Task } from '../../../shared-module/types/task';
 
 @Component({
   selector: 'app-today-tasks',

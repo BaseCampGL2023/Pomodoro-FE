@@ -29,8 +29,6 @@ export class DailyStatisticsComponent implements OnInit {
   constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();
     this.maxDate.setHours(0, 0, 0, 0);
-
-    this.selectedDay = new Date();
     
     this.pomodoroTimesAxis = [4, 3, 2, 1, 0];
   }
