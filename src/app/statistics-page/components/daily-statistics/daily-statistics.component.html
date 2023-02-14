@@ -37,34 +37,5 @@
       />
     </div>
   </div>
-  <app-bar-plot [viewModel]="barPlotVM"></app-bar-plot>
-  <div class="statistics">
-    <span class="label">Pomodoro (times)</span>
-    <div class="chart-group">
-      <div class="y-axis">
-        <span *ngFor="let p of pomodoroTimesAxis" class="label chart-label">{{
-          p
-        }}</span>
-      </div>
-      <div class="chart">
-        <div
-          *ngFor="let analytics of dailyStatistics?.analyticsPerHours"
-          class="bar-group"
-          style="--height: {{ calcBarHeight(analytics.pomodorosDone) }}%"
-        >
-          <div
-            class="bar"
-            matTooltip="Time spent: {{ formatTime(analytics.timeSpent) }}"
-            matTooltipPosition="above"
-            matTooltipClass="bar-info-tooltip"
-            matTooltipShowDelay="100"
-            matTooltipHideDelay="100"
-          ></div>
-          <span class="label chart-label x-val">{{ analytics.hour }}</span>
-        </div>
-      </div>
-    </div>
-    <span class="label d-flex justify-content-end">Hour</span>
-  </div>
+  <app-bar-plot [viewModel]="barPlotVM" [isIntAxisLabel]="true"></app-bar-plot>
 </div>
-<!-- <app-bar-plot [viewModel]="barPlotVM"></app-bar-plot> -->
