@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { BarPlotVM } from './bar-plot-vm';
 
@@ -18,7 +18,7 @@ export class BarPlotComponent {
     return this.calcYAxis(this.viewModel.dataSequence.map((ds) => ds.value));
   }
 
-  constructor(private ref: ApplicationRef) {}
+  constructor() {}
 
   calcYAxis(values: number[]): string[] {
     let max = Math.max(...values);
