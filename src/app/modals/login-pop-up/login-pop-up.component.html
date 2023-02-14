@@ -1,35 +1,45 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div class="login-pop-up-frame16">
-    <div class="relative">
-      <a class = "close" mat-button [mat-dialog-close]="true"></a>
-    </div>
-    <span class="login-pop-up-text">Sign in to Pomodoro</span>
-    <div class="login-pop-up-group9">
-      <span class="login-pop-up-text02">Not registered yet?</span>
-      <a class="login-pop-up-text04">Sign up</a>
-    </div>
-        <div class="login-pop-up-group6">
-          <label class = "login-pop-up-text06" for="email">Your email</label>
-          <input class = "login-pop-up-email" id="email" type = "email" formControlName="email">
-        </div>
-        <div class="login-pop-up-group8">
-          <label class = "login-pop-up-text08" for = "password">Your password</label>
-          <input class = "login-pop-up-password" id = "password" type = "password" formControlName="password">
-        </div>
-        <button class="login-pop-up-frame2" type="submit" [disabled]="!loginForm.valid">
-          <span class="login-pop-up-text10">Sign in</span>
-        </button>
-    <button class="login-pop-up-frame19" type="submit">
-      <span class="login-pop-up-text12">Sign in with Google</span>
-        <div class = "frame19-google">
-          <img class = "google" src = "\assets\img\google.png">
-        </div>
-    </button>
-    <div class="login-pop-up-group11">
-    <hr class="sline">
-      <div class="login-pop-up-frame18">
-        <span class="login-pop-up-text14"><span>or</span></span>
-      </div>
-    </div>
+<div class="login">
+  <div class="header-row">
+    <h4>Sign in to Pomodoro</h4>
+    <span class="icon" [mat-dialog-close]="true"
+      ><mat-icon fontIcon="close" inline="true"></mat-icon
+    ></span>
   </div>
-</form>
+  <p><span>Not registered yet?</span><a>Sign up</a></p>
+  <form
+    [formGroup]="loginForm"
+    #form="ngForm"
+    (ngSubmit)="onSubmit()"
+    (reset)="resetForm()"
+  >
+    <div class="form-group">
+      <label>Your email</label>
+      <input class="form-control" formControlName="email" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *appValidationErrors="loginForm; control: 'email'; let err">
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Your password</label>
+      <input class="form-control" formControlName="password" type="password" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *appValidationErrors="loginForm; control: 'password'; let err">
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-primary" [disabled]="form.invalid">Sign In</button>
+  </form>
+  <div class="divider">
+    <hr />
+    <span>or</span>
+    <hr />
+  </div>
+  <button class="btn btn-primary">
+    <img class="google" src="\assets\img\google.png" /><span
+      >Sign in with Google</span
+    >
+  </button>
+</div>

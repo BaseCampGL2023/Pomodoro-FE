@@ -20,10 +20,11 @@
     [collapse]="isCollapsed"
   >
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a
           class="nav-link btn btn-outline-danger"
           [routerLink]="['/statistics']"
+          routerLinkActive="active-route"
           >Statistics</a
         >
       </li>
@@ -32,10 +33,15 @@
           >Settings</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!isLoggedIn">
         <a class="nav-link btn btn-outline-danger" (click)="openLogin()"
           >Login</a
         >
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link btn btn-outline-danger" (click)="onLogout()">
+          Logout
+        </a>
       </li>
     </ul>
   </div>
