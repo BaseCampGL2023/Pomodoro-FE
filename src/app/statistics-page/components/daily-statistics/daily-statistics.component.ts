@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
+import {
+  BarPlotUnitVM,
+  BarPlotVM,
+} from 'src/app/shared-module/bar-plot/bar-plot-vm';
 import { StatisticsService } from '../../services/statistics.service';
 import { DailyStatistics } from '../../types/daily-statistics';
 import { secondsToMsFormat } from '../../utils/time-utils';
@@ -16,15 +20,14 @@ export class DailyStatisticsComponent implements OnInit {
   selectedDay: Date;
 
   dailyStatistics?: DailyStatistics;
-  pomodoroTimesAxis: number[];
+
+  barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
 
   constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();
     this.maxDate.setHours(0, 0, 0, 0);
 
     this.selectedDay = new Date();
-
-    this.pomodoroTimesAxis = [4, 3, 2, 1, 0];
   }
 
   get dateInputRightArrowState(): string {
@@ -32,13 +35,10 @@ export class DailyStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.statisticsService
-      .getDailyStatistics()
-      .subscribe((result) => (this.dailyStatistics = result));
-  }
-
-  calcBarHeight(pomodorosDone: number): number {
-    return (pomodorosDone / this.pomodoroTimesAxis[0]) * 100;
+    this.statisticsService.getDailyStatistics().subscribe((result) => {
+      this.dailyStatistics = result;
+      this.updateBarPlotVM(this.dailyStatistics);
+    });
   }
 
   formatTime(seconds: number): string {
@@ -67,5 +67,21 @@ export class DailyStatisticsComponent implements OnInit {
         currDate + 1
       );
     }
+  }
+
+  private updateBarPlotVM(data: DailyStatistics) {
+    if (this.barPlotVM.dataSequence.length > 0) {
+      this.barPlotVM.dataSequence.splice(0, this.barPlotVM.dataSequence.length);
+    }
+
+    data.analyticsPerHours.forEach((aph) => {
+      this.barPlotVM.dataSequence.push(
+        new BarPlotUnitVM(
+          aph.hour.toString(),
+          aph.pomodorosDone,
+          this.formatTime(aph.timeSpent)
+        )
+      );
+    });
   }
 }

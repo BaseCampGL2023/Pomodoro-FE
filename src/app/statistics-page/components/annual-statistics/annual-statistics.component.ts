@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
+import {
+  BarPlotUnitVM,
+  BarPlotVM,
+} from 'src/app/shared-module/bar-plot/bar-plot-vm';
 import { StatisticsService } from '../../services/statistics.service';
 import { AnnualStatistics } from '../../types/annual-statistics';
 import { Month } from '../../types/month';
@@ -17,7 +21,8 @@ export class AnnualStatisticsComponent implements OnInit {
 
   annualStatistics?: AnnualStatistics;
   Month = Month;
-  pomodoroTimesAxis: number[];
+
+  barPlotVM = new BarPlotVM('Pomodoro (times)', 'Month', 'Overall');
 
   constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();
@@ -25,8 +30,6 @@ export class AnnualStatisticsComponent implements OnInit {
     this.maxDate.setHours(0, 0, 0, 0);
 
     this.selectedMonth = new Date();
-
-    this.pomodoroTimesAxis = [100, 75, 50, 25, 0];
   }
 
   get dateInputRightArrowState(): string {
@@ -34,13 +37,10 @@ export class AnnualStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.statisticsService
-      .getAnnualStatistics()
-      .subscribe((result) => (this.annualStatistics = result));
-  }
-
-  calcBarHeight(pomodorosDone: number): number {
-    return (pomodorosDone / this.pomodoroTimesAxis[0]) * 100;
+    this.statisticsService.getAnnualStatistics().subscribe((result) => {
+      this.annualStatistics = result;
+      this.updateBarPlotVM(this.annualStatistics);
+    });
   }
 
   openDatePicker() {
@@ -68,5 +68,21 @@ export class AnnualStatisticsComponent implements OnInit {
         currMonth + 1
       );
     }
+  }
+
+  private updateBarPlotVM(data: AnnualStatistics) {
+    if (this.barPlotVM.dataSequence.length > 0) {
+      this.barPlotVM.dataSequence.splice(0, this.barPlotVM.dataSequence.length);
+    }
+
+    data.analyticsPerMonths.forEach((apm) => {
+      this.barPlotVM.dataSequence.push(
+        new BarPlotUnitVM(
+          `${Month[apm.month]}`,
+          apm.pomodorosDone,
+          `${apm.pomodorosDone} times`
+        )
+      );
+    });
   }
 }
