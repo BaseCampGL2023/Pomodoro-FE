@@ -15,8 +15,8 @@ export class PomodoroBadgeDirective {
   @Input('appPomodoroBadge')
   text = '';
 
-  @Input('appPomodoroBadge-settings')
-  settings: PomodoroBadgeSettings = <PomodoroBadgeSettings>{};
+  @Input()
+  appPomodoroBadgeSettings: PomodoroBadgeSettings = <PomodoroBadgeSettings>{};
 
   constructor(private element: ElementRef) {}
 
@@ -26,14 +26,14 @@ export class PomodoroBadgeDirective {
   }
 
   private createBadgeElement(): HTMLElement {
-    const radius = this.settings?.radius ?? 15;
+    const radius = this.appPomodoroBadgeSettings?.radius ?? 15;
 
     const div = document.createElement('div');
 
-    div.style.backgroundColor = this.settings?.badgeColor ?? '#cc5b53';
-    div.style.fontFamily = this.settings?.fontFamily ?? '"DM Sans", serif';
-    div.style.fontWeight = this.settings?.fontWeight ?? '500';
-    div.style.color = this.settings?.textColor ?? '#f0f0f0';
+    div.style.backgroundColor = this.appPomodoroBadgeSettings?.badgeColor ?? '#cc5b53';
+    div.style.fontFamily = this.appPomodoroBadgeSettings?.fontFamily ?? '"DM Sans", serif';
+    div.style.fontWeight = this.appPomodoroBadgeSettings?.fontWeight ?? '500';
+    div.style.color = this.appPomodoroBadgeSettings?.textColor ?? '#f0f0f0';
 
     div.style.position = 'absolute';
     div.style.width = `${2 * radius}px`;
