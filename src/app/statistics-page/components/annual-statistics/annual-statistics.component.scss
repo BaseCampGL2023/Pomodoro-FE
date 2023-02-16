@@ -17,10 +17,6 @@
   line-height: 18px;
 }
 
-.chart-label {
-  color: #777777;
-}
-
 .date-group {
   align-items: center;
   display: flex;
@@ -77,64 +73,5 @@
     display: flex;
     margin: auto;
     width: 19px;
-  }
-}
-
-.statistics {
-  margin-top: 40px;
-}
-
-.chart-group {
-  display: flex;
-  margin-top: 15px;
-}
-
-.y-axis {
-  display: flex;
-  flex-direction: column;
-  height: 165px;
-  justify-content: space-between;
-}
-
-.chart {
-  align-items: flex-end;
-  border: 1px solid #BABABA;
-  display: flex;
-  flex: 1;
-  height: 150px;
-  justify-content: space-between;
-  margin-bottom: 40px;
-  margin-left: 25px;
-}
-
-$shift: 18px;
-
-.bar-group {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  height: calc(var(--height) + $shift);
-  margin-right: 7px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  > .bar {
-    background-color: $base-color;
-    display: flex;
-    flex: 1;
-    position: relative;
-    top: $shift;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  .x-val {
-    align-self: center;
-    position: relative;
-    top: $shift + 11px;
   }
 }

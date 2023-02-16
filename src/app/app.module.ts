@@ -29,6 +29,7 @@ import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
 import { ValidationHelper } from './shared-module/pipes/validation-helper';
 import { ValidationErrorsDirective } from './shared-module/directives/validation-errors.directive';
 import { TodayTasksComponent } from './home-page/components/today-tasks/today-tasks.component';
+import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { TodayTasksComponent } from './home-page/components/today-tasks/today-ta
     ValidationHelper,
     ValidationErrorsDirective,
     TodayTasksComponent,
+    BarPlotComponent,
   ],
   imports: [
     BrowserModule,
