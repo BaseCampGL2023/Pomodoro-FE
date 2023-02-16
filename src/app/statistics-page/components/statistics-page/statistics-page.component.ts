@@ -8,19 +8,13 @@ import { Task } from 'src/app/shared-module/types/task';
   styleUrls: ['./statistics-page.component.scss'],
 })
 export class StatisticsPageComponent implements OnInit {
-  constructor(private taskService: TaskService) { }
-  
-  taskList: Task[] = [];
+  constructor(private taskService: TaskService) {}
 
-  selectedDateForTaskList: Date = new Date();
+  taskList: Task[] = [];
 
   ngOnInit() {
     this.taskService
-      .getTasks()
+      .getTasksOnDate(new Date())
       .subscribe((tasks) => (this.taskList = tasks));
-  }
-
-  setSelectedDate(selectedDate: Date) {
-    this.selectedDateForTaskList = selectedDate;
   }
 }

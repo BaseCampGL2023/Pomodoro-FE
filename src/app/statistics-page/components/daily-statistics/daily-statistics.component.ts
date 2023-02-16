@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { TaskService } from 'src/app/shared-module/services/task.service';
 import { StatisticsService } from '../../services/statistics.service';
 import { DailyStatistics } from '../../types/daily-statistics';
 import { secondsToMsFormat } from '../../utils/time-utils';
@@ -11,25 +12,27 @@ import { secondsToMsFormat } from '../../utils/time-utils';
 })
 export class DailyStatisticsComponent implements OnInit {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
-  @Output() selectedDayEvent = new EventEmitter<Date>();
-  
+
   private _selectedDay: Date = new Date();
-  get selectedDay(): Date{
+  get selectedDay(): Date {
     return this._selectedDay;
   }
   set selectedDay(value: Date) {
     this._selectedDay = value;
-    this.selectedDayEvent.emit(value);
+    this.taskService.getTasksOnDate(value);
   }
 
   maxDate: Date;
   dailyStatistics?: DailyStatistics;
   pomodoroTimesAxis: number[];
 
-  constructor(private statisticsService: StatisticsService) {
+  constructor(
+    private statisticsService: StatisticsService,
+    private taskService: TaskService
+  ) {
     this.maxDate = new Date();
     this.maxDate.setHours(0, 0, 0, 0);
-    
+
     this.pomodoroTimesAxis = [4, 3, 2, 1, 0];
   }
 
