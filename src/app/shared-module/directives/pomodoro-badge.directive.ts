@@ -30,8 +30,10 @@ export class PomodoroBadgeDirective {
 
     const div = document.createElement('div');
 
-    div.style.backgroundColor = this.appPomodoroBadgeSettings?.badgeColor ?? '#cc5b53';
-    div.style.fontFamily = this.appPomodoroBadgeSettings?.fontFamily ?? '"DM Sans", serif';
+    div.style.backgroundColor =
+      this.appPomodoroBadgeSettings?.badgeColor ?? '#cc5b53';
+    div.style.fontFamily =
+      this.appPomodoroBadgeSettings?.fontFamily ?? '"DM Sans", serif';
     div.style.fontWeight = this.appPomodoroBadgeSettings?.fontWeight ?? '500';
     div.style.color = this.appPomodoroBadgeSettings?.textColor ?? '#f0f0f0';
 
