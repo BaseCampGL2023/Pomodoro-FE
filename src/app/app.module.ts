@@ -29,6 +29,7 @@ import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
 import { ValidationHelper } from './shared-module/pipes/validation-helper';
 import { ValidationErrorsDirective } from './shared-module/directives/validation-errors.directive';
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
+import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
     ValidationHelper,
     ValidationErrorsDirective,
     BarPlotComponent,
+    PomodoroBadgeDirective,
   ],
   imports: [
     BrowserModule,
