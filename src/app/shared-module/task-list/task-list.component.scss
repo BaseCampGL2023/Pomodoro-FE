@@ -1,54 +1,5 @@
 @import "/src/assets/styles/variables";
 
-.container {
-  font-family: $font-family;
-  height: 100%;
-  overflow: auto;
-}
-
-.list-title {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 26px;
-}
-
-.create-task-button {
-  margin-bottom: 10px;
-  border-radius: 4px;
-  padding: 8px;
-  border: none;
-  background-color: $base-color;
-}
-
-.create-task-button span {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 26px;
-  color: $background-color;
-}
-
-.create-task-button:hover {
-  border-color: $base-color;
-  background-color: $background-color;
-}
-
-.create-task-button:hover span {
-  color: $secondary-color;
-  font-weight: 700;
-}
-
-.info {
-  height: 40vh;
-  line-height: 40vh;
-  text-align: center;
-}
-
-.info span {
-  display: inline-block;
-  vertical-align: middle;
-}
-
 .task-item {
   position: relative;
   margin-top: 10px;

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { TaskService } from 'src/app/shared-module/services/task.service';
 import {
   BarPlotUnitVM,
   BarPlotVM,
@@ -16,18 +17,26 @@ import { secondsToMsFormat } from '../../utils/time-utils';
 export class DailyStatisticsComponent implements OnInit {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
 
-  maxDate: Date;
-  selectedDay: Date;
+  private _selectedDay: Date = new Date();
+  get selectedDay(): Date {
+    return this._selectedDay;
+  }
+  set selectedDay(value: Date) {
+    this._selectedDay = value;
+    this.taskService.getTasksOnDate(value);
+  }
 
+  maxDate: Date;
   dailyStatistics?: DailyStatistics;
 
   barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
 
-  constructor(private statisticsService: StatisticsService) {
+  constructor(
+    private statisticsService: StatisticsService,
+    private taskService: TaskService
+  ) {
     this.maxDate = new Date();
     this.maxDate.setHours(0, 0, 0, 0);
-
-    this.selectedDay = new Date();
   }
 
   get dateInputRightArrowState(): string {

@@ -13,7 +13,7 @@ import { NavMenuComponent } from './shared-module/nav-menu/nav-menu.component';
 import { HomePageComponent } from './home-page/components/home-page/home-page.component';
 import { WelcomeMessageComponent } from './home-page/components/welcome-message/welcome-message.component';
 import { TrackerComponent } from './home-page/components/tracker/tracker.component';
-import { TaskListComponent } from './home-page/components/task-list/task-list.component';
+import { TaskListComponent } from './shared-module/task-list/task-list.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { LoginPopUpComponent } from './modals/login-pop-up/login-pop-up.component';
@@ -24,10 +24,11 @@ import { AnnualStatisticsComponent } from './statistics-page/components/annual-s
 import { MonthlyStatisticsComponent } from './statistics-page/components/monthly-statistics/monthly-statistics.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-import { TaskService } from './home-page/services/task.service';
+import { TaskService } from './shared-module/services/task.service';
 import { AuthInterceptor } from './shared-module/auth/auth.interceptor';
 import { ValidationHelper } from './shared-module/pipes/validation-helper';
 import { ValidationErrorsDirective } from './shared-module/directives/validation-errors.directive';
+import { TodayTasksComponent } from './home-page/components/today-tasks/today-tasks.component';
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 
 @NgModule({
@@ -46,6 +47,7 @@ import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
     MonthlyStatisticsComponent,
     ValidationHelper,
     ValidationErrorsDirective,
+    TodayTasksComponent,
     BarPlotComponent,
   ],
   imports: [
