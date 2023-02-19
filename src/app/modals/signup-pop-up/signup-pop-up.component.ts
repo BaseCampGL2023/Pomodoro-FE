@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/shared-module/auth/auth.service';
+import { SignupRequest } from 'src/app/shared-module/types/signup-request';
+import { SignupResult } from 'src/app/shared-module/types/signup-result';
 
 import { MatchValidator } from 'src/app/shared-module/validation/match';
 import { LoginPopUpComponent } from '../login-pop-up/login-pop-up.component';
@@ -14,6 +17,9 @@ import { LoginPopUpComponent } from '../login-pop-up/login-pop-up.component';
   ],
 })
 export class SignupPopUpComponent {
+  signupRequest = <SignupRequest>{};
+  signupResult?: SignupResult;
+
   signUpForm: FormGroup = new FormGroup({
     name: new FormControl('', {
       validators: [Validators.required, Validators.pattern('^[A-Za-z ]+$')],
@@ -35,11 +41,31 @@ export class SignupPopUpComponent {
   });
 
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   onSubmit() {
-    console.log('submit');
+    if(this.signUpForm.valid){
+      this.signupRequest.userName = this.signUpForm.controls['name'].value;
+      this.signupRequest.email = this.signUpForm.controls['email'].value;
+      this.signupRequest.password = this.signUpForm.controls['password'].value;
+      this.signupRequest.confirmPassword = this.signUpForm.controls['confirmPassword'].value;
+
+      console.log(this.signupRequest);
+      this.authService.signup(this.signupRequest).subscribe({
+        next: (result) => {
+          this.signupResult = result;
+          if(result.success) {
+            this.toSignIn();
+          }
+        },
+        error: (error) => {
+          this.signupResult = error.error;
+          console.log(error.error);
+        }
+      })
+    }
   }
 
   onSignIn() {

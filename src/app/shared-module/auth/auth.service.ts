@@ -5,6 +5,8 @@ import { Observable, Subject, tap } from 'rxjs';
 import { LoginRequest } from '../types/login-request';
 import { LoginResult } from '../types/login-result';
 import { environment } from 'src/environments/environment';
+import { SignupRequest } from '../types/signup-request';
+import { SignupResult } from '../types/signup-result';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +42,11 @@ export class AuthService {
         }
       })
     );
+  }
+
+  signup(item: SignupRequest): Observable<SignupResult> {
+    const url = environment.baseUrl + 'account/registration';
+    return this.http.post<SignupResult>(url, item);
   }
 
   logout() {
