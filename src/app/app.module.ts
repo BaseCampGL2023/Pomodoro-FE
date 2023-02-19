@@ -30,6 +30,7 @@ import { ValidationHelper } from './shared-module/pipes/validation-helper';
 import { ValidationErrorsDirective } from './shared-module/directives/validation-errors.directive';
 import { TodayTasksComponent } from './home-page/components/today-tasks/today-tasks.component';
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
+import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
     ValidationErrorsDirective,
     TodayTasksComponent,
     BarPlotComponent,
+    SignupPopUpComponent,
   ],
   imports: [
     BrowserModule,
