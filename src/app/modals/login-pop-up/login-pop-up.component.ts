@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/shared-module/auth/auth.service';
 import { LoginRequest } from 'src/app/shared-module/types/login-request';
 import { LoginResult } from 'src/app/shared-module/types/login-result';
 import { ReturnUrl } from 'src/app/shared-module/types/return-url';
+import { SignupPopUpComponent } from '../signup-pop-up/signup-pop-up.component';
+import { single } from 'rxjs';
 
 @Component({
   selector: 'app-login-pop-up',
@@ -57,6 +59,11 @@ export class LoginPopUpComponent {
         },
       });
     }
+  }
+
+  onSignUp(){
+    this.dialogRef.closeAll();
+    this.dialogRef.open(SignupPopUpComponent);
   }
 
   resetForm() {
