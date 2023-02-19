@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { AuthService } from 'src/app/shared-module/auth/auth.service';
 import { TrackerService } from '../../services/tracker.service';
+import { SignupPopUpComponent } from 'src/app/modals/signup-pop-up/signup-pop-up.component';
 
 @Component({
   selector: 'app-home-page',
@@ -15,7 +17,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private trackerService: TrackerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {
     this.authService.authStatus
       .pipe(takeUntil(this.destroySubject))
@@ -37,5 +40,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
         console.log('Done');
       }
     });
+    this.dialog.open(SignupPopUpComponent);
   }
 }
