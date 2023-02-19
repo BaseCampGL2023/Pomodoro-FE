@@ -61,7 +61,7 @@ export class LoginPopUpComponent {
     }
   }
 
-  onSignUp(){
+  onSignUp() {
     this.dialogRef.closeAll();
     this.dialogRef.open(SignupPopUpComponent);
   }

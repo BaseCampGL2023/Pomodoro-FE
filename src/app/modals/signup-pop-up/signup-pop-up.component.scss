@@ -1,8 +1,10 @@
 @import '../../../assets/styles/variables';
 
-.sign-up form input.checkbox-green:checked {
-    background-color: $green-color;
-}
-.sign-up form label.form-check-label {
-    margin-top: 5px;
+.sign-up form {
+    input.checkbox-green:checked {
+        background-color: $green-color;
+    }
+    label.form-check-label {
+        margin-top: 5px;
+    }
 }

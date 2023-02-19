@@ -6,14 +6,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './signup-pop-up.component.html',
   styleUrls: [
     '../login-pop-up/login-pop-up.component.scss',
-    './signup-pop-up.component.scss'
-  ]
+    './signup-pop-up.component.scss',
+  ],
 })
 export class SignupPopUpComponent {
-
   signUpForm: FormGroup = new FormGroup({
     name: new FormControl('', {
-      validators: [Validators.required]
+      validators: [Validators.required],
     }),
     email: new FormControl('', {
       validators: [Validators.required, Validators.email],
@@ -26,9 +25,7 @@ export class SignupPopUpComponent {
       Validators.required,
       Validators.minLength(8),
     ]),
-    agreement: new FormControl('', [
-      Validators.requiredTrue
-    ])
+    agreement: new FormControl('', [Validators.requiredTrue]),
   });
 
   onSubmit() {
