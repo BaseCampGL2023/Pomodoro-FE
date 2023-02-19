@@ -1,4 +1,4 @@
 export interface SignupResult {
-    success: boolean;
-    errors?: string[];
+  success: boolean;
+  errors?: string[];
 }

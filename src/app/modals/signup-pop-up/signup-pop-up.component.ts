@@ -40,32 +40,30 @@ export class SignupPopUpComponent {
     agreement: new FormControl('', [Validators.requiredTrue]),
   });
 
-  constructor(
-    private dialog: MatDialog,
-    private authService: AuthService
-  ) {}
+  constructor(private dialog: MatDialog, private authService: AuthService) {}
 
   onSubmit() {
-    if(this.signUpForm.valid){
+    if (this.signUpForm.valid) {
       this.signupRequest.userName = this.signUpForm.controls['name'].value;
       this.signupRequest.email = this.signUpForm.controls['email'].value;
       this.signupRequest.password = this.signUpForm.controls['password'].value;
-      this.signupRequest.confirmPassword = this.signUpForm.controls['confirmPassword'].value;
+      this.signupRequest.confirmPassword =
+        this.signUpForm.controls['confirmPassword'].value;
 
       this.authService.signup(this.signupRequest).subscribe({
         next: (result) => {
           this.signupResult = result;
-          if(result.success) {
+          if (result.success) {
             this.toSignIn();
           }
         },
         error: (error) => {
-          if(!error?.error?.success){
+          if (!error?.error?.success) {
             this.signupResult = error.error;
             this.resetForm();
           }
-        }
-      })
+        },
+      });
     }
   }
 
@@ -74,6 +72,7 @@ export class SignupPopUpComponent {
   }
 
   resetForm() {
+    this.signupRequest = <SignupRequest>{};
     this.signUpForm.reset();
   }
 
