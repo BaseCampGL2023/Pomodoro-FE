@@ -8,7 +8,6 @@ import { LoginRequest } from 'src/app/shared-module/types/login-request';
 import { LoginResult } from 'src/app/shared-module/types/login-result';
 import { ReturnUrl } from 'src/app/shared-module/types/return-url';
 import { SignupPopUpComponent } from '../signup-pop-up/signup-pop-up.component';
-import { single } from 'rxjs';
 
 @Component({
   selector: 'app-login-pop-up',
@@ -33,7 +32,7 @@ export class LoginPopUpComponent {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private dialogRef: MatDialog,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) private returnUrl: ReturnUrl
   ) {
     this.loginForm.reset(this.loginRequest);
@@ -46,7 +45,7 @@ export class LoginPopUpComponent {
         next: (result) => {
           this.loginResult = result;
           if (result.success) {
-            this.dialogRef.closeAll();
+            this.dialog.closeAll();
             if (this.returnUrl) {
               this.router.navigate([this.returnUrl.url]);
             }
@@ -62,8 +61,8 @@ export class LoginPopUpComponent {
   }
 
   onSignUp() {
-    this.dialogRef.closeAll();
-    this.dialogRef.open(SignupPopUpComponent);
+    this.dialog.closeAll();
+    this.dialog.open(SignupPopUpComponent);
   }
 
   resetForm() {

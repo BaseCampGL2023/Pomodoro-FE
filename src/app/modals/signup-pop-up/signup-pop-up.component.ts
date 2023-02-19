@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 import { MatchValidator } from 'src/app/shared-module/validation/match';
+import { LoginPopUpComponent } from '../login-pop-up/login-pop-up.component';
 
 @Component({
   selector: 'app-signup-pop-up',
@@ -32,15 +34,24 @@ export class SignupPopUpComponent {
     agreement: new FormControl('', [Validators.requiredTrue]),
   });
 
+  constructor(
+    private dialog: MatDialog
+  ) {}
+
   onSubmit() {
     console.log('submit');
   }
 
   onSignIn() {
-    console.log('sign in');
+    this.toSignIn();
   }
 
   resetForm() {
     console.log('sign up');
+  }
+
+  private toSignIn() {
+    this.dialog.closeAll();
+    this.dialog.open(LoginPopUpComponent);
   }
 }
