@@ -1,4 +1,4 @@
-<div class="login">
+<div class="sign-up">
     <div class="header-row">
       <h4>Sign up to Pomodoro</h4>
       <span class="icon" [mat-dialog-close]="true"
@@ -49,7 +49,7 @@
         </ul>
       </div>
       <div class="form-check">
-        <input class="form-check-input" formControlName="agreement" type="checkbox"/>
+        <input class="form-check-input checkbox-green" formControlName="agreement" type="checkbox"/>
         <label class="form-check-label">By creating an account you agree to the Terms of Service and Conditions and Privacy Policy</label>
         <ul class="text-danger list-unstyled mt-1">
           <li *appValidationErrors="signUpForm; control: 'agreement'; let err">
@@ -57,7 +57,7 @@
           </li>
         </ul>
       </div>
-      <button class="btn btn-primary" [disabled]="form.invalid">Sign In</button>
+      <button class="btn btn-primary" [disabled]="form.invalid">Sign up</button>
     </form>
     <div class="divider">
       <hr />

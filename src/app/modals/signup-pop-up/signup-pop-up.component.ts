@@ -4,7 +4,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-signup-pop-up',
   templateUrl: './signup-pop-up.component.html',
-  styleUrls: ['../login-pop-up/login-pop-up.component.scss']
+  styleUrls: [
+    '../login-pop-up/login-pop-up.component.scss',
+    './signup-pop-up.component.scss'
+  ]
 })
 export class SignupPopUpComponent {
 
