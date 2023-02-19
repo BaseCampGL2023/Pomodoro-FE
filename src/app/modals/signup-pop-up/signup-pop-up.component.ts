@@ -52,7 +52,6 @@ export class SignupPopUpComponent {
       this.signupRequest.password = this.signUpForm.controls['password'].value;
       this.signupRequest.confirmPassword = this.signUpForm.controls['confirmPassword'].value;
 
-      console.log(this.signupRequest);
       this.authService.signup(this.signupRequest).subscribe({
         next: (result) => {
           this.signupResult = result;
@@ -61,8 +60,10 @@ export class SignupPopUpComponent {
           }
         },
         error: (error) => {
-          this.signupResult = error.error;
-          console.log(error.error);
+          if(!error?.error?.success){
+            this.signupResult = error.error;
+            this.resetForm();
+          }
         }
       })
     }
@@ -73,7 +74,7 @@ export class SignupPopUpComponent {
   }
 
   resetForm() {
-    console.log('sign up');
+    this.signUpForm.reset();
   }
 
   private toSignIn() {

@@ -14,6 +14,11 @@
     (ngSubmit)="onSubmit()"
     (reset)="resetForm()"
   >
+    <ul class="text-danger list-unstyled mt-1" *ngIf="!signupResult?.success && signupResult?.errors?.length">
+        <li *ngFor="let error of signupResult?.errors">
+            {{error}}
+        </li>
+    </ul>
     <div class="form-group">
       <label>Your name</label>
       <input class="form-control" formControlName="name" />
