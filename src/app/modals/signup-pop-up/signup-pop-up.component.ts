@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { MatchValidator } from 'src/app/shared-module/validation/match';
+
 @Component({
   selector: 'app-signup-pop-up',
   templateUrl: './signup-pop-up.component.html',
@@ -12,7 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class SignupPopUpComponent {
   signUpForm: FormGroup = new FormGroup({
     name: new FormControl('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.pattern('^[A-Za-z ]+$')],
     }),
     email: new FormControl('', {
       validators: [Validators.required, Validators.email],
@@ -20,10 +22,12 @@ export class SignupPopUpComponent {
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
+      MatchValidator.Match('confirmPassword', true),
     ]),
     confirmPassword: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
+      MatchValidator.Match('password'),
     ]),
     agreement: new FormControl('', [Validators.requiredTrue]),
   });
