@@ -12,6 +12,9 @@
     (ngSubmit)="onSubmit()"
     (reset)="resetForm()"
   >
+    <p class="text-danger mt-1" *ngIf="!loginResult?.success">
+      {{ loginResult?.message }}
+    </p>
     <div class="form-group">
       <label>Your email</label>
       <input class="form-control" formControlName="email" />
