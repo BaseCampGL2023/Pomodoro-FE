@@ -1,3 +1,5 @@
+@import "/src/assets/styles/variables";
+
 $color_1: rgba(143, 43, 35, 1);
 $color_2: rgba(42, 3, 0, 1);
 $font-family_1: 'DM Sans';
@@ -5,6 +7,25 @@ $background-color_1: rgba(255, 255, 255, 1);
 $background-color_2: rgba(240, 240, 240, 1);
 $border-color_1: transparent;
 $radius: 14px;
+
+.save-btn {
+  background-color: $base-color;
+  border: none;
+  border-radius: 6px;
+  color: $background-color;
+  font-family: $font-family;
+  font-size: 16px;
+  font-weight: 500;
+  height: 48px;
+  line-height: 20px;
+  margin: 16px;
+  padding: 8px;
+  width: 91%;
+
+  &:disabled {
+    background-color: #d97f79;
+  }
+}
 
 :host {
 	display: contents;
