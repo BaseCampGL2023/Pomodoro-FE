@@ -8,9 +8,9 @@
   style="--prog: {{ task.progress }}; --prog-proc: {{ task.progress }}%"
   [ngClass]="{
     'border border-danger border-3':
-      selectedTask != null && selectedTask == task
+      selectedTaskId !== null && selectedTaskId === task.id
   }"
-  (click)="!isSelectable || selectTask(task)"
+  (click)="!isSelectable || setTaskId(task.id)"
 >
   <ng-template #templateForProgressBar
     ><div class="inner">
