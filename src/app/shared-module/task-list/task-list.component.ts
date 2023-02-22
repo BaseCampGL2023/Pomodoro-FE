@@ -7,12 +7,22 @@ import { Task } from '../types/task';
   styleUrls: ['./task-list.component.scss'],
 })
 export class TaskListComponent {
-
   @Input() tasks: Task[] = [];
+  @Input() isSelectable = false;
 
   initionalCountOfTasksForShow = 3;
 
-  isShowAllTasks = false; 
+  isShowAllTasks = false;
+
+  selectedTask: Task | null = null;
+
+  selectTask(task: Task) {
+    if (this.selectedTask == null || this.selectedTask != task) {
+      this.selectedTask = task;
+    } else {
+      this.selectedTask = null;
+    }
+  }
 
   getTotalAllocatedTime() {
     return this.tasks
