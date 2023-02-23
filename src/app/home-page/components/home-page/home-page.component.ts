@@ -15,7 +15,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private trackerService: TrackerService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
     this.authService.authStatus
       .pipe(takeUntil(this.destroySubject))
