@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TrackerSettings } from '../../types/tracker-settings';
 import { TrackerService } from '../../services/tracker.service';
 import { TrackerDurationEnum } from '../../types/tracker-duration.enum';
+import { TaskService } from 'src/app/shared-module/services/task.service';
 
 @Component({
   selector: 'app-tracker',
@@ -19,12 +20,20 @@ export class TrackerComponent implements OnInit, OnDestroy {
   timerDuration: typeof TrackerDurationEnum = TrackerDurationEnum;
   curTimerDuration: TrackerDurationEnum = TrackerDurationEnum.pomodoro;
 
-  constructor(private trackerService: TrackerService) {}
+  constructor(
+    private trackerService: TrackerService,
+    private taskService: TaskService
+  ) {}
 
   ngOnInit() {
     this.trackerService.castSettings.subscribe(
       (settings) => (this.trackerSettings = settings)
     );
+    this.taskService.castIsNewTask.subscribe((isNewTask) => {
+      if (isNewTask) {
+        this.onTimerReload();
+      }
+    });
     //not magic at all, 60 seconds in 1 minute
     this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
     this.updateView(this.curTimeSpan);
@@ -84,7 +93,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
       window.clearInterval(this.timerId);
       this.timerId = NaN;
       this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
-      this.trackerService.emitFinished(true);
+      this.trackerService.emitFinished(true, this.curTimerDuration);
       return;
     }
 

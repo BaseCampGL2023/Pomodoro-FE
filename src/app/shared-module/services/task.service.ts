@@ -10,7 +10,7 @@ export class TaskService {
     private http: HttpClient,
     private trackerService: TrackerService
   ) {
-    this.trackerService.castFinished.subscribe((isDone: boolean) => {
+    this.trackerService.castPomoFinished.subscribe((isDone: boolean) => {
       if (isDone && this.curTaskId != null) {
         this.addPomodoro(this.curTaskId);
       }
@@ -33,6 +33,7 @@ export class TaskService {
 
   addPomodoro(taskId: string) {
     // todo: request to backend
+    console.log(`add pomodoro to task${taskId} in db`);
   }
 
   getTodayTasks(): Observable<Task[]> {

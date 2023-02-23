@@ -32,9 +32,19 @@ export class HomePageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
     //TODO: implement useful handler in subscribe
-    this.trackerService.castFinished.subscribe((val) => {
+    this.trackerService.castPomoFinished.subscribe((val) => {
       if (val) {
-        console.log('Done');
+        console.log('Pomodoro done');
+      }
+    });
+    this.trackerService.castShortbFinished.subscribe((val) => {
+      if (val) {
+        console.log('Short break done');
+      }
+    });
+    this.trackerService.castLongbFinished.subscribe((val) => {
+      if (val) {
+        console.log('Long break done');
       }
     });
   }
