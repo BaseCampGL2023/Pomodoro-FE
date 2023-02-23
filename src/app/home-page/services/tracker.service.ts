@@ -10,30 +10,15 @@ export class TrackerService {
     longBreak: 15,
     shortBreak: 5,
   });
-  private pomoCountdownFinished = new Subject<boolean>();
-  private shortbCountdownFinished = new Subject<boolean>();
-  private longbCountdownFinished = new Subject<boolean>();
+  private countdownFinished = new Subject<TrackerDurationEnum>();
 
   castSettings = this.settings.asObservable();
-  castPomoFinished = this.pomoCountdownFinished.asObservable();
-  castShortbFinished = this.shortbCountdownFinished.asObservable();
-  castLongbFinished = this.longbCountdownFinished.asObservable();
+  castFinished = this.countdownFinished.asObservable();
 
   editSettings(newSettings: TrackerSettings) {
     this.settings.next(newSettings);
   }
-
-  emitFinished(done: boolean, trackerDuration: TrackerDurationEnum) {
-    switch (trackerDuration) {
-      case TrackerDurationEnum.pomodoro:
-        this.pomoCountdownFinished.next(done);
-        break;
-      case TrackerDurationEnum.shortBreak:
-        this.shortbCountdownFinished.next(done);
-        break;
-      case TrackerDurationEnum.longBreak:
-        this.longbCountdownFinished.next(done);
-        break;
-    }
+  emitFinished(trackerDuration: TrackerDurationEnum) {
+    this.countdownFinished.next(trackerDuration);
   }
 }

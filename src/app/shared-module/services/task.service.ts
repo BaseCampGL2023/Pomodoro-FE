@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { TrackerService } from 'src/app/home-page/services/tracker.service';
+import { TrackerDurationEnum } from 'src/app/home-page/types/tracker-duration.enum';
 import { Task } from '../types/task';
 
 @Injectable({ providedIn: 'root' })
@@ -10,17 +11,21 @@ export class TaskService {
     private http: HttpClient,
     private trackerService: TrackerService
   ) {
-    this.trackerService.castPomoFinished.subscribe((isDone: boolean) => {
-      if (isDone && this.curTaskId != null) {
-        this.addPomodoro(this.curTaskId);
+    this.trackerService.castFinished.subscribe(
+      (trackerDuration: TrackerDurationEnum) => {
+        if (
+          this.curTaskId != null &&
+          trackerDuration == TrackerDurationEnum.pomodoro
+        ) {
+          this.addPomodoro(this.curTaskId);
+        }
       }
-    });
+    );
   }
 
   private curTaskId: string | null = null;
   private isNewTask = new Subject<boolean>();
 
-  // tracker need to subscribe on it and updateView if selected new task
   castIsNewTask = this.isNewTask.asObservable();
 
   setCurTaskId(taskId: string | null) {
@@ -28,6 +33,7 @@ export class TaskService {
       return;
     }
     this.curTaskId = taskId;
+    // todo: invoke TrackerService reload method and remove castIsNewTask
     this.isNewTask.next(true);
   }
 
