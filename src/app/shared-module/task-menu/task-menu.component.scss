@@ -1,0 +1,18 @@
+@import "/src/assets/styles/variables";
+
+.icon-button,
+::ng-deep .menu-customize,
+::ng-deep .icon-customize {
+  background: $gray-color;
+}
+
+.icon-button {
+  padding: 3px 3px;
+  border: none;
+  border-radius: 2px;
+}
+
+::ng-deep .icon-customize {
+  display: inline-block;
+  vertical-align: middle;
+}

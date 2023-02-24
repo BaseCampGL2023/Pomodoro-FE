@@ -31,6 +31,8 @@ import { ValidationErrorsDirective } from './shared-module/directives/validation
 import { TodayTasksComponent } from './home-page/components/today-tasks/today-tasks.component';
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
+import { TaskMenuComponent } from './shared-module/task-menu/task-menu.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
     TodayTasksComponent,
     BarPlotComponent,
     PomodoroBadgeDirective,
+    TaskMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
     ReactiveFormsModule,
     HttpClientModule,
     MatIconModule,
+    MatMenuModule,
   ],
   providers: [
     TaskService,
