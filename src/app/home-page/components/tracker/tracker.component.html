@@ -2,21 +2,21 @@
   <div #actions class="actions">
     <button
       class="btn btn-outline-danger"
-      [class.active]="curTimerDuration === timerDuration.pomodoro"
+      [class.active]="trackerService.duration === timerDuration.pomodoro"
       (click)="onSetActivity(timerDuration.pomodoro)"
     >
       Pomodoro
     </button>
     <button
       class="btn btn-outline-danger"
-      [class.active]="curTimerDuration === timerDuration.longBreak"
+      [class.active]="trackerService.duration === timerDuration.longBreak"
       (click)="onSetActivity(timerDuration.longBreak)"
     >
       Long Break
     </button>
     <button
       class="btn btn-outline-danger"
-      [class.active]="curTimerDuration === timerDuration.shortBreak"
+      [class.active]="trackerService.duration === timerDuration.shortBreak"
       (click)="onSetActivity(timerDuration.shortBreak)"
     >
       Short Break
@@ -24,15 +24,21 @@
   </div>
   <div class="fruit">
     <p class="count-down">
-      <span class="first-digit">{{ curMin[0] }}</span>
+      <!-- <span class="first-digit">{{ curMin[0] }}</span>
       <span>{{ curMin[1] }}</span>
       <span class="colon">:</span>
       <span class="first-digit">{{ curSec[0] }}</span>
-      <span>{{ curSec[1] }}</span>
+      <span>{{ curSec[1] }}</span> -->
+      <span class="first-digit">{{ trackerService.strMin[0] }}</span>
+      <span>{{ trackerService.strMin[1] }}</span>
+      <span class="colon">:</span>
+      <span class="first-digit">{{ trackerService.strSec[0] }}</span>
+      <span>{{ trackerService.strSec[1] }}</span>
     </p>
   </div>
   <div class="controls">
-    <span class="start" *ngIf="!timerId" (click)="onTimerStart()">
+    <!-- <span class="start" *ngIf="!timerId" (click)="onTimerStart()"> -->
+    <span class="start" *ngIf="trackerService.mode != 'countdown'" (click)="onTimerStart()">
       <svg
         width="37"
         height="37"
@@ -56,7 +62,8 @@
         />
       </svg>
     </span>
-    <span class="pause" *ngIf="timerId" (click)="onTimerPause()">
+    <!-- <span class="pause" *ngIf="timerId" (click)="onTimerPause()"> -->
+      <span class="pause" *ngIf="trackerService.mode == 'countdown'" (click)="onTimerPause()">
       <svg
         width="37"
         height="37"

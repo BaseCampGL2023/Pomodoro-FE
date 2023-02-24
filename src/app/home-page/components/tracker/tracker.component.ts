@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TrackerSettings } from '../../types/tracker-settings';
 import { TrackerService } from '../../services/tracker.service';
 import { TrackerDurationEnum } from '../../types/tracker-duration.enum';
+import { TrackerSettingsService } from '../../services/tracker-settings.service';
 
 @Component({
   selector: 'app-tracker',
@@ -10,7 +11,7 @@ import { TrackerDurationEnum } from '../../types/tracker-duration.enum';
   styleUrls: ['./tracker.component.scss'],
 })
 export class TrackerComponent implements OnInit, OnDestroy {
-  trackerSettings!: TrackerSettings;
+  //trackerSettings!: TrackerSettings;
   curMin!: string;
   curSec!: string;
   curTimeSpan!: number;
@@ -19,14 +20,16 @@ export class TrackerComponent implements OnInit, OnDestroy {
   timerDuration: typeof TrackerDurationEnum = TrackerDurationEnum;
   curTimerDuration: TrackerDurationEnum = TrackerDurationEnum.pomodoro;
 
-  constructor(private trackerService: TrackerService) {}
+  constructor(protected trackerService: TrackerService,
+      protected trackerSettings: TrackerSettingsService
+    ) {}
 
   ngOnInit() {
-    this.trackerService.castSettings.subscribe(
-      (settings) => (this.trackerSettings = settings)
-    );
+    // this.trackerService.castSettings.subscribe(
+    //   (settings) => (this.trackerSettings = settings)
+    // );
     //not magic at all, 60 seconds in 1 minute
-    this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
+    this.curTimeSpan = this.trackerSettings.pomodoro * 60;
     this.updateView(this.curTimeSpan);
   }
 
@@ -38,41 +41,47 @@ export class TrackerComponent implements OnInit, OnDestroy {
   }
 
   onSetActivity(duration: TrackerDurationEnum) {
-    if (duration == this.curTimerDuration) {
-      return;
-    }
-    this.onTimerReload();
-    this.curTimerDuration = duration;
-    this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
-    this.updateView(this.curTimeSpan);
+    // console.log(this.trackerSettings);
+    
+    // if (duration == this.curTimerDuration) {
+    //   return;
+    // }
+    // this.onTimerReload();
+    // this.curTimerDuration = duration;
+    // this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
+    // this.updateView(this.curTimeSpan);
+    this.trackerService.setDuration(duration);
   }
 
   onTimerStart() {
-    if (!isNaN(this.timerId)) {
-      return;
-    }
-    this.startStamp = new Date().getTime();
-    this.timerId = window.setInterval(this.countDown.bind(this), 1000);
+    // if (!isNaN(this.timerId)) {
+    //   return;
+    // }
+    // this.startStamp = new Date().getTime();
+    // this.timerId = window.setInterval(this.countDown.bind(this), 1000);
+    this.trackerService.start();
   }
 
   onTimerReload() {
-    if (isNaN(this.timerId)) {
-      this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
-      this.updateView(this.curTimeSpan);
-      return;
-    }
-    window.clearInterval(this.timerId);
-    this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
-    this.updateView(this.curTimeSpan);
-    this.timerId = NaN;
+    // if (isNaN(this.timerId)) {
+    //   this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
+    //   this.updateView(this.curTimeSpan);
+    //   return;
+    // }
+    // window.clearInterval(this.timerId);
+    // this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
+    // this.updateView(this.curTimeSpan);
+    // this.timerId = NaN;
+    this.trackerService.reload();
   }
 
   onTimerPause() {
-    window.clearInterval(this.timerId);
-    const curStamp = new Date().getTime();
-    const diff = Math.round((curStamp - this.startStamp) / 1000);
-    this.curTimeSpan -= diff;
-    this.timerId = NaN;
+    // window.clearInterval(this.timerId);
+    // const curStamp = new Date().getTime();
+    // const diff = Math.round((curStamp - this.startStamp) / 1000);
+    // this.curTimeSpan -= diff;
+    // this.timerId = NaN;
+    this.trackerService.pause();
   }
 
   countDown() {
