@@ -1,19 +1,69 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormGroup,
+  Validators,
+  ValidatorFn,
+  FormBuilder,
+} from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { TrackerSettings } from 'src/app/home-page/types/tracker-settings';
+import { SettingsService } from 'src/app/shared-module/services/settings.service';
 
 @Component({
   selector: 'app-settings-pop-up',
   templateUrl: './settings-pop-up.component.html',
   styleUrls: ['./settings-pop-up.component.scss'],
 })
-export class SettingsPopUpComponent {
-  settingsForm = new FormGroup({
-    pomodoro: new FormControl(''),
-    shortbreak: new FormControl(''),
-    longbreak: new FormControl(''),
-  });
+export class SettingsPopUpComponent implements OnInit {
+  settingsForm = <FormGroup>{};
+
+  private settings = <TrackerSettings>{};
+
+  private readonly minValue = 1;
+  private readonly maxValue = 255;
+
+  private readonly settingsValidators: ValidatorFn[] = [
+    Validators.required,
+    Validators.min(this.minValue),
+    Validators.max(this.maxValue),
+  ];
+
+  constructor(
+    private settingsService: SettingsService,
+    private formBuilder: FormBuilder,
+    private matDialog: MatDialog
+  ) {
+    this.settingsForm = this.buildFormGroup();
+  }
+
+  ngOnInit() {
+    this.settingsService.loadSettings().subscribe((res) => {
+      this.settings = res;
+      this.settingsForm.setValue({
+        pomodoroDuration: res.pomodoroDuration,
+        shortBreak: res.shortBreak,
+        longBreak: res.longBreak,
+        pomodorosBeforeLongBreak: res.pomodorosBeforeLongBreak,
+        autostartEnabled: res.autostartEnabled,
+      });
+    });
+  }
+
   onSubmit() {
-    //TODO
-    console.warn(this.settingsForm.value); //log a message to browser console
+    if (this.settingsForm.valid) {
+      Object.assign(this.settings, this.settingsForm.value);
+      this.settingsService.saveSettings(this.settings);
+      this.matDialog.closeAll();
+    }
+  }
+
+  private buildFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      pomodoroDuration: ['', this.settingsValidators],
+      shortBreak: ['', this.settingsValidators],
+      longBreak: ['', this.settingsValidators],
+      pomodorosBeforeLongBreak: ['', this.settingsValidators],
+      autostartEnabled: [false],
+    });
   }
 }
