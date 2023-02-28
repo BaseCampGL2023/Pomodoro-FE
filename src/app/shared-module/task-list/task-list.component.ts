@@ -7,12 +7,11 @@ import { Task } from '../types/task';
   styleUrls: ['./task-list.component.scss'],
 })
 export class TaskListComponent {
-
   @Input() tasks: Task[] = [];
 
   initionalCountOfTasksForShow = 3;
 
-  isShowAllTasks = false; 
+  isShowAllTasks = false;
 
   getTotalAllocatedTime() {
     return this.tasks

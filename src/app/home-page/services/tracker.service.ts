@@ -12,7 +12,7 @@ export class TrackerService {
     longBreak: 15,
     shortBreak: 5,
     pomodorosBeforeLongBreak: 4,
-    autostartEnabled: false
+    autostartEnabled: false,
   });
 
   castSettings = this.settings.asObservable();
