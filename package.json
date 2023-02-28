@@ -26,6 +26,7 @@
     "@fontsource/dm-sans": "^4.5.9",
     "bootstrap": "^5.2.3",
     "husky-init": "^8.0.0",
+    "jwt-decode": "^3.1.2",
     "ngx-bootstrap": "^6.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

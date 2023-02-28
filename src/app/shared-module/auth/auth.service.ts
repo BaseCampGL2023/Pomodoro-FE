@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
+import jwt_decode from 'jwt-decode';
 
 import { LoginRequest } from '../types/login-request';
 import { LoginResult } from '../types/login-result';
 import { environment } from 'src/environments/environment';
+import { Guid } from '../types/guid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private tokenKey = 'token';
+  private readonly tokenKey = 'token';
+  private readonly userIdClaim = 'userId';
+
   private _authStatus = new Subject<boolean>();
   public authStatus = this._authStatus.asObservable();
 
@@ -22,6 +26,15 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  getUserId(): string {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken: any = jwt_decode(token);
+      return decodedToken[this.userIdClaim];
+    }
+    return Guid.empty;
   }
 
   init(): void {
