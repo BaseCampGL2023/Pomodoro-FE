@@ -26,7 +26,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
       (settings) => (this.trackerSettings = settings)
     );
     //not magic at all, 60 seconds in 1 minute
-    this.curTimeSpan = this.trackerSettings.pomoDuration * 60;
+    this.curTimeSpan = this.trackerSettings.pomodoroDuration * 60;
     this.updateView(this.curTimeSpan);
   }
 

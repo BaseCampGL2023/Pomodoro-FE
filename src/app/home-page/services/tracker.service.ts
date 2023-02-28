@@ -6,9 +6,13 @@ import { TrackerSettings } from '../types/tracker-settings';
 @Injectable({ providedIn: 'root' })
 export class TrackerService {
   private settings = new BehaviorSubject<TrackerSettings>({
-    pomoDuration: 25,
+    id: '',
+    userId: '',
+    pomodoroDuration: 25,
     longBreak: 15,
     shortBreak: 5,
+    pomodorosBeforeLongBreak: 4,
+    autostartEnabled: false
   });
 
   castSettings = this.settings.asObservable();

@@ -1,5 +1,9 @@
 export interface TrackerSettings {
-  pomoDuration: number;
+  id: string;
+  userId: string;
+  pomodoroDuration: number;
   longBreak: number;
   shortBreak: number;
+  pomodorosBeforeLongBreak: number;
+  autostartEnabled: boolean;
 }
