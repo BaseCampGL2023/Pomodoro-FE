@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/shared-module/auth/auth.service';
 import { LoginRequest } from 'src/app/shared-module/types/login-request';
 import { LoginResult } from 'src/app/shared-module/types/login-result';
 import { ReturnUrl } from 'src/app/shared-module/types/return-url';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-login-pop-up',
@@ -28,13 +29,18 @@ export class LoginPopUpComponent {
   });
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private dialogRef: MatDialog,
+    socialAuthService: SocialAuthService,
     @Inject(MAT_DIALOG_DATA) private returnUrl: ReturnUrl
   ) {
     this.loginForm.reset(this.loginRequest);
+
+    socialAuthService.authState.subscribe((user: SocialUser) => {
+      console.log(user);
+      authService.continueWithGoogle(user);
+    });
   }
 
   onSubmit() {

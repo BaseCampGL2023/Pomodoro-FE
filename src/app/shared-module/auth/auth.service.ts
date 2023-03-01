@@ -5,6 +5,7 @@ import { Observable, Subject, tap } from 'rxjs';
 import { LoginRequest } from '../types/login-request';
 import { LoginResult } from '../types/login-result';
 import { environment } from 'src/environments/environment';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,14 @@ export class AuthService {
   private _authStatus = new Subject<boolean>();
   public authStatus = this._authStatus.asObservable();
 
-  constructor(private http: HttpClient) {}
+  private socialUser: SocialUser | null;
+
+  constructor(
+    private http: HttpClient,
+    private socialAuthService: SocialAuthService
+  ) {
+    this.socialUser = null;
+  }
 
   isAuthenticated(): boolean {
     return this.getToken() !== null;
@@ -42,9 +50,22 @@ export class AuthService {
     );
   }
 
+  loggedInViaExternalService(): boolean {
+    return this.socialUser !== null;
+  }
+
   logout() {
     localStorage.removeItem(this.tokenKey);
     this.setAuthStatus(false);
+
+    if (this.loggedInViaExternalService()) {
+      this.socialAuthService.signOut();
+    }
+  }
+
+  continueWithGoogle(user: SocialUser) {
+    this.socialUser = user;
+    // TODO send api req
   }
 
   private setAuthStatus(isAuthenticated: boolean): void {
