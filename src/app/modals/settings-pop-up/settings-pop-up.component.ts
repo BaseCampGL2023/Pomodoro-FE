@@ -14,7 +14,7 @@ export class SettingsPopUpComponent {
   //   longbreak: new FormControl(''),
   // });
 
-  constructor(protected trackerSettings: TrackerSettingsService){}
+  constructor(protected trackerSettings: TrackerSettingsService) {}
 
   // onSubmit() {
   //   //TODO

@@ -38,7 +38,11 @@
   </div>
   <div class="controls">
     <!-- <span class="start" *ngIf="!timerId" (click)="onTimerStart()"> -->
-    <span class="start" *ngIf="trackerService.mode != 'countdown'" (click)="onTimerStart()">
+    <span
+      class="start"
+      *ngIf="trackerService.mode !== 'countdown'"
+      (click)="onTimerStart()"
+    >
       <svg
         width="37"
         height="37"
@@ -63,7 +67,11 @@
       </svg>
     </span>
     <!-- <span class="pause" *ngIf="timerId" (click)="onTimerPause()"> -->
-      <span class="pause" *ngIf="trackerService.mode == 'countdown'" (click)="onTimerPause()">
+    <span
+      class="pause"
+      *ngIf="trackerService.mode === 'countdown'"
+      (click)="onTimerPause()"
+    >
       <svg
         width="37"
         height="37"

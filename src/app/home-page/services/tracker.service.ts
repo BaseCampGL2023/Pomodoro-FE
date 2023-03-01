@@ -1,7 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-
 import { TrackerDurationEnum } from '../types/tracker-duration.enum';
 import { TrackerModeEnum } from '../types/tracker-mode.enum';
 import { TrackerSettingsService } from './tracker-settings.service';
@@ -30,15 +29,16 @@ export class TrackerService implements OnDestroy {
   }
   get strSec(): string {
     const seconds = (this.timeSpan - this.tick) % 60;
-    return seconds > 9 ? seconds.toString() : `0${seconds.toString()}`
+    return seconds > 9 ? seconds.toString() : `0${seconds.toString()}`;
   }
   get strMin(): string {
-    const minutes = ((this.timeSpan - this.tick) - (this.timeSpan - this.tick) % 60) / 60;
+    const minutes =
+      (this.timeSpan - this.tick - ((this.timeSpan - this.tick) % 60)) / 60;
     return minutes > 9 ? minutes.toString() : `0${minutes.toString()}`;
   }
 
   setDuration(duration: TrackerDurationEnum): void {
-    if (this.duration == duration){
+    if (this.duration == duration) {
       return;
     }
     this.duration = duration;
@@ -46,7 +46,7 @@ export class TrackerService implements OnDestroy {
   }
 
   start(): void {
-    if(this.mode == TrackerModeEnum.countdown && !isNaN(this.timerId)){
+    if (this.mode == TrackerModeEnum.countdown && !isNaN(this.timerId)) {
       return;
     }
     this.timerId = window.setInterval(this.countdown.bind(this), 1000);
@@ -54,18 +54,17 @@ export class TrackerService implements OnDestroy {
   }
 
   pause(): void {
-    if(this.mode != TrackerModeEnum.countdown && !isNaN(this.timerId)){
+    if (this.mode != TrackerModeEnum.countdown && !isNaN(this.timerId)) {
       return;
     }
     window.clearInterval(this.timerId);
     this.timerId = NaN;
     this.mode = TrackerModeEnum.pause;
     //TODO emit paused
-
   }
 
   reload(): void {
-    if(this.mode == TrackerModeEnum.pristine) {
+    if (this.mode == TrackerModeEnum.pristine) {
       return;
     }
     window.clearInterval(this.timerId);
@@ -76,7 +75,7 @@ export class TrackerService implements OnDestroy {
 
   countdown(): void {
     this.tick++;
-    if(this.timeSpan - this.tick <= 0){
+    if (this.timeSpan - this.tick <= 0) {
       window.clearInterval(this.timerId);
       this.timerId = NaN;
       this.emitFinished(true);
@@ -85,12 +84,10 @@ export class TrackerService implements OnDestroy {
     }
   }
 
-  constructor(
-    public settings: TrackerSettingsService
-  ){}
+  constructor(public settings: TrackerSettingsService) {}
 
   ngOnDestroy(): void {
-    if(isNaN(this.timerId)){
+    if (isNaN(this.timerId)) {
       return;
     }
     window.clearInterval(this.timerId);

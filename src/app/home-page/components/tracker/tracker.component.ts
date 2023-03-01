@@ -20,9 +20,10 @@ export class TrackerComponent implements OnInit, OnDestroy {
   timerDuration: typeof TrackerDurationEnum = TrackerDurationEnum;
   curTimerDuration: TrackerDurationEnum = TrackerDurationEnum.pomodoro;
 
-  constructor(protected trackerService: TrackerService,
-      protected trackerSettings: TrackerSettingsService
-    ) {}
+  constructor(
+    protected trackerService: TrackerService,
+    protected trackerSettings: TrackerSettingsService
+  ) {}
 
   ngOnInit() {
     // this.trackerService.castSettings.subscribe(
@@ -42,7 +43,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
   onSetActivity(duration: TrackerDurationEnum) {
     // console.log(this.trackerSettings);
-    
+
     // if (duration == this.curTimerDuration) {
     //   return;
     // }
