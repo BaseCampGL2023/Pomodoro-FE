@@ -34,28 +34,34 @@ export class ValidationHelper implements PipeTransform {
 
   getTopErrorMessage(formGroup: FormGroup): string {
     let topErrorMsg = '';
-    Object.keys(formGroup.controls).forEach((control) => {
+    const controls = Object.keys(formGroup.controls);
+
+    for (const control of controls) {
       const controlErrors = formGroup.get(control)?.errors;
+      
       if (controlErrors) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          switch (keyError) {
-            case 'required':
-              topErrorMsg = `${this.getDisplayName(control)} is required`;
-              break;
-            case 'min':
-              topErrorMsg = `${this.getDisplayName(control)}
-                must be greater than or equal to ${
-                  controlErrors[keyError].min
-                }`;
-              break;
-            case 'max':
-              topErrorMsg = `${this.getDisplayName(control)}
-                must be less than or equal to ${controlErrors[keyError].max}`;
-              break;
-          }
-        });
+        var keyError = Object
+          .keys(controlErrors)
+          .at(controlErrors['length'] - 1);
+
+        switch (keyError) {
+          case 'required':
+            topErrorMsg = `${this.getDisplayName(control)} is required`;
+            break;
+          case 'min':
+            topErrorMsg = `${this.getDisplayName(control)}
+              must be greater than or equal to ${
+                controlErrors[keyError].min
+              }`;
+            break;
+          case 'max':
+            topErrorMsg = `${this.getDisplayName(control)}
+              must be less than or equal to ${controlErrors[keyError].max}`;
+            break;
+        }
+        break;
       }
-    });
+    }
     return topErrorMsg;
   }
 
