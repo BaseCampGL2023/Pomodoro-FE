@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -75,6 +75,7 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
       useClass: AuthInterceptor,
       multi: true,
     },
+    Title
   ],
   bootstrap: [AppComponent],
 })
