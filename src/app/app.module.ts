@@ -31,6 +31,8 @@ import { ValidationErrorsDirective } from './shared-module/directives/validation
 import { TodayTasksComponent } from './home-page/components/today-tasks/today-tasks.component';
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.component';
+import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
+
 
 @NgModule({
   declarations: [
@@ -51,6 +53,7 @@ import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.compo
     TodayTasksComponent,
     BarPlotComponent,
     SignupPopUpComponent,
+    PomodoroBadgeDirective,
   ],
   imports: [
     BrowserModule,
