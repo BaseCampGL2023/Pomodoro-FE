@@ -24,11 +24,6 @@
   </div>
   <div class="fruit">
     <p class="count-down">
-      <!-- <span class="first-digit">{{ curMin[0] }}</span>
-      <span>{{ curMin[1] }}</span>
-      <span class="colon">:</span>
-      <span class="first-digit">{{ curSec[0] }}</span>
-      <span>{{ curSec[1] }}</span> -->
       <span class="first-digit">{{ trackerService.strMin[0] }}</span>
       <span>{{ trackerService.strMin[1] }}</span>
       <span class="colon">:</span>
@@ -37,7 +32,6 @@
     </p>
   </div>
   <div class="controls">
-    <!-- <span class="start" *ngIf="!timerId" (click)="onTimerStart()"> -->
     <span
       class="start"
       *ngIf="trackerService.mode !== 'countdown'"
@@ -66,7 +60,6 @@
         />
       </svg>
     </span>
-    <!-- <span class="pause" *ngIf="timerId" (click)="onTimerPause()"> -->
     <span
       class="pause"
       *ngIf="trackerService.mode === 'countdown'"
