@@ -94,7 +94,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
       window.clearInterval(this.timerId);
       this.timerId = NaN;
       this.curTimeSpan = this.trackerSettings[this.curTimerDuration] * 60;
-      this.trackerService.emitFinished(true);
+      this.trackerService.emitFinished();
       return;
     }
 
