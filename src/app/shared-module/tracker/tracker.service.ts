@@ -20,6 +20,7 @@ export class TrackerService implements OnDestroy {
 
   private timerId = NaN;
   private tick = 0;
+  private session = 0;
 
   constructor(public settings: TrackerSettingsService) {}
 
@@ -31,7 +32,8 @@ export class TrackerService implements OnDestroy {
   }
 
   get timeSpan(): number {
-    return this.settings[this.duration] * 60;
+    //TODO: return to seconds
+    return this.settings[this.duration]// * 60;
   }
 
   get strSec(): string {
@@ -91,7 +93,35 @@ export class TrackerService implements OnDestroy {
       this.timerId = NaN;
       this.emitEvent(TrackerEventEnum.finish);
       this.tick = 0;
+      this.changeDuration();
       this.mode = TrackerModeEnum.pristine;
+      this.autostart();
+    }
+  }
+
+  autostart(){
+    if(this.settings.autostartEnabled){
+      this.start();
+    }
+  }
+  changeDuration(){
+    if(this.duration === TrackerDurationEnum.shortBreak) {
+      this.duration = TrackerDurationEnum.pomodoro;
+      return;
+    }
+    if(this.duration === TrackerDurationEnum.longBreak) {
+      this.duration = TrackerDurationEnum.pomodoro;
+      this.session = 0;
+      return;
+    }
+
+    ++this.session;
+    console.log(this.session);
+
+    if(this.session < this.settings.pomodorosBeforeLongBreak){
+      this.duration = TrackerDurationEnum.shortBreak
+    } else {
+      this.duration = TrackerDurationEnum.longBreak;
     }
   }
 
