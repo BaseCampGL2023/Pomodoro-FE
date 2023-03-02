@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { TrackerSettings } from '../../types/tracker-settings';
-import { TrackerService } from '../../services/tracker.service';
-import { TrackerDurationEnum } from '../../types/tracker-duration.enum';
-import { TrackerSettingsService } from '../../services/tracker-settings.service';
+import { TrackerSettings } from '../../../shared-module/tracker/types/tracker-settings';
+import { TrackerService } from '../../../shared-module/tracker/tracker.service';
+import { TrackerDurationEnum } from '../../../shared-module/tracker/types/tracker-duration.enum';
+import { TrackerSettingsService } from '../../../shared-module/tracker/tracker-settings.service';
 
 @Component({
   selector: 'app-tracker',

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from 'src/app/shared-module/auth/auth.service';
-import { TrackerService } from '../../services/tracker.service';
+import { TrackerService } from '../../../shared-module/tracker/tracker.service';
 
 @Component({
   selector: 'app-home-page',

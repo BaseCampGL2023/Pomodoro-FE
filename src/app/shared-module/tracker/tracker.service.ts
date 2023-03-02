@@ -2,8 +2,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 //import { Title } from '@angular/platform-browser';
 
-import { TrackerDurationEnum } from '../types/tracker-duration.enum';
-import { TrackerModeEnum } from '../types/tracker-mode.enum';
+import { TrackerDurationEnum } from './types/tracker-duration.enum';
+import { TrackerModeEnum } from './types/tracker-mode.enum';
 import { TrackerSettingsService } from './tracker-settings.service';
 
 @Injectable({ providedIn: 'root' })

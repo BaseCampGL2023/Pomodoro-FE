@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TrackerSettings } from '../types/tracker-settings';
+import { TrackerSettings } from './types/tracker-settings';
 
 @Injectable({
   providedIn: 'root',

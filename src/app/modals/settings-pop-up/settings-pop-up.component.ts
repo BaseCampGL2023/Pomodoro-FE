@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TrackerSettingsService } from 'src/app/home-page/services/tracker-settings.service';
+import { TrackerSettingsService } from 'src/app/shared-module/tracker/tracker-settings.service';
 
 @Component({
   selector: 'app-settings-pop-up',
