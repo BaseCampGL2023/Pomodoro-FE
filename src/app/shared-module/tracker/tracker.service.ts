@@ -93,6 +93,7 @@ export class TrackerService implements OnDestroy {
 
   countdown(): void {
     this.tick++;
+    this.emitTick();
     if (this.timeSpan - this.tick <= 0) {
       window.clearInterval(this.timerId);
       this.timerId = NaN;
@@ -108,5 +109,13 @@ export class TrackerService implements OnDestroy {
 
   private emitEvent(type: TrackerEventEnum, duration?: TrackerDurationEnum) {
     this.trackerEvent.next(new TrackerEvent(type, duration ?? this.duration));
+  }
+
+  private trackerTick = new Subject<void>();
+
+  tickEvent = this.trackerTick.asObservable();
+
+  private emitTick() {
+    this.trackerTick.next();
   }
 }
