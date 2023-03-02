@@ -5,19 +5,8 @@ import { TrackerSettingsService } from 'src/app/shared-module/tracker/tracker-se
 @Component({
   selector: 'app-settings-pop-up',
   templateUrl: './settings-pop-up.component.html',
-  //styleUrls: ['./settings-pop-up.component.scss'],
+  styleUrls: ['./settings-pop-up.component.scss'],
 })
 export class SettingsPopUpComponent {
-  // settingsForm = new FormGroup({
-  //   pomodoro: new FormControl(''),
-  //   shortbreak: new FormControl(''),
-  //   longbreak: new FormControl(''),
-  // });
-
   constructor(protected trackerSettings: TrackerSettingsService) {}
-
-  // onSubmit() {
-  //   //TODO
-  //   console.warn(this.settingsForm.value); //log a message to browser console
-  // }
 }
