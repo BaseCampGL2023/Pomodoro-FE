@@ -45,15 +45,31 @@ export class TrackerSettingsService {
     }
   }
 
+  get pomodorosBeforeLongBreak() {
+    return this._settings.pomodorosBeforeLongBreak;
+  }
+
+  set pomodorosBeforeLongBreak(pomodoros: number) {
+    if(pomodoros > 0 && Number.isInteger(pomodoros)){
+      this._settings.pomodorosBeforeLongBreak = pomodoros
+      this.save();
+    }
+  }
+
+  get autostartEnabled() {
+    return this._settings.autostartEnabled;
+  }
+
+  set autostartEnabled(state: boolean) {
+    this._settings.autostartEnabled = state;
+    this.save();
+  }
+
   private load() {
     const persisted = localStorage.getItem(this.storageKey);
     if (persisted != null) {
       const settings = JSON.parse(persisted) as TrackerSettings;
-      if (
-        settings?.shortBreak > 0 &&
-        settings?.longBreak > 0 &&
-        settings?.pomodoro > 0
-      ) {
+      if (this.isSettings(settings)) {
         this._settings = settings;
         return;
       } else {
@@ -65,5 +81,13 @@ export class TrackerSettingsService {
 
   private save() {
     localStorage.setItem(this.storageKey, JSON.stringify(this._settings));
+  }
+
+  private isSettings(obj: TrackerSettings): boolean{
+    return obj?.shortBreak > 0 &&
+    obj?.longBreak > 0 &&
+    obj?.pomodoro > 0 &&
+    typeof(obj?.autostartEnabled) == "boolean" &&
+    obj?.pomodorosBeforeLongBreak > 0
   }
 }
