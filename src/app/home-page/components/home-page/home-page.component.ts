@@ -31,18 +31,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
-    //TODO: implement useful handler in subscribe
-    this.trackerService.onFinished.subscribe((val) =>
-      console.log(`${val} finished`)
-    );
-    this.trackerService.onPaused.subscribe((val) =>
-      console.log(`${val} paused`)
-    );
-    this.trackerService.onReseted.subscribe((val) =>
-      console.log(`${val} reseted`)
-    );
-    this.trackerService.onStarted.subscribe((val) =>
-      console.log(`${val} started`)
+    //TODO: implement useful subscribe
+    this.trackerService.event.subscribe((val) =>
+      console.log(`${val.duration} ${val.eventType}`)
     );
   }
 }

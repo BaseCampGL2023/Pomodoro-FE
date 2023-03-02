@@ -1,10 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 //import { Title } from '@angular/platform-browser';
 
 import { TrackerDurationEnum } from './types/tracker-duration.enum';
 import { TrackerModeEnum } from './types/tracker-mode.enum';
 import { TrackerSettingsService } from './tracker-settings.service';
+import { TrackerEventEnum } from './types/tracker-event.enum';
+import { TrackerEvent } from './types/tracker-event';
 
 @Injectable({ providedIn: 'root' })
 export class TrackerService implements OnDestroy {
@@ -64,7 +66,7 @@ export class TrackerService implements OnDestroy {
     }
     this.timerId = window.setInterval(this.countdown.bind(this), 1000);
     this.mode = TrackerModeEnum.countdown;
-    this.emitStarted();
+    this.emitEvent(TrackerEventEnum.start);
   }
 
   pause(): void {
@@ -74,7 +76,7 @@ export class TrackerService implements OnDestroy {
     window.clearInterval(this.timerId);
     this.timerId = NaN;
     this.mode = TrackerModeEnum.pause;
-    this.emitPaused();
+    this.emitEvent(TrackerEventEnum.stop);
     //TODO emit paused
   }
 
@@ -86,43 +88,25 @@ export class TrackerService implements OnDestroy {
     this.timerId = NaN;
     this.mode = TrackerModeEnum.pristine;
     this.tick = 0;
-    this.emitReseted();
+    this.emitEvent(TrackerEventEnum.reset);
   }
 
   countdown(): void {
     this.tick++;
-    //this.title.setTitle(`${this.strMin} : ${this.strSec}`);
-    //console.log(`${this.strMin} : ${this.strSec}`);
     if (this.timeSpan - this.tick <= 0) {
       window.clearInterval(this.timerId);
       this.timerId = NaN;
-      this.emitFinished();
+      this.emitEvent(TrackerEventEnum.finish);
       this.tick = 0;
       this.mode = TrackerModeEnum.pristine;
     }
   }
 
-  private countdownFinished = new Subject<TrackerDurationEnum>();
-  onFinished = this.countdownFinished.asObservable();
-  emitFinished(duration?: TrackerDurationEnum) {
-    this.countdownFinished.next(duration ?? this.duration);
-  }
+  private trackerEvent = new Subject<TrackerEvent>();
 
-  private countdownStarted = new Subject<TrackerDurationEnum>();
-  onStarted = this.countdownStarted.asObservable();
-  emitStarted(duration?: TrackerDurationEnum) {
-    this.countdownStarted.next(duration ?? this.duration);
-  }
+  event = this.trackerEvent.asObservable();
 
-  private countdownReseted = new Subject<TrackerDurationEnum>();
-  onReseted = this.countdownReseted.asObservable();
-  emitReseted(duration?: TrackerDurationEnum) {
-    this.countdownReseted.next(duration ?? this.duration);
-  }
-
-  private countdownPaused = new Subject<TrackerDurationEnum>();
-  onPaused = this.countdownPaused.asObservable();
-  emitPaused(duration?: TrackerDurationEnum) {
-    this.countdownPaused.next(duration ?? this.duration);
+  private emitEvent(type: TrackerEventEnum, duration?: TrackerDurationEnum) {
+    this.trackerEvent.next(new TrackerEvent(type, duration ?? this.duration));
   }
 }
