@@ -5,7 +5,7 @@ import { TrackerSettingsService } from 'src/app/home-page/services/tracker-setti
 @Component({
   selector: 'app-settings-pop-up',
   templateUrl: './settings-pop-up.component.html',
-  styleUrls: ['./settings-pop-up.component.scss'],
+  //styleUrls: ['./settings-pop-up.component.scss'],
 })
 export class SettingsPopUpComponent {
   // settingsForm = new FormGroup({

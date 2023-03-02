@@ -42,10 +42,21 @@
     <label class="frame9-text06">Autostart next round</label>
     <div class="frame9-ellipse1">
       <label class="switch">
-        <input type="checkbox" checked />
+        <input type="checkbox" name="autostartEnabled" [(ngModel)]="trackerSettings.autostartEnabled"/>
         <span class="slider round"></span>
       </label>
       <hr class="sline" />
     </div>
   </div>
 </form>
+<label class="frame9-text10" for="longbreak">Pomos before long</label>
+<input
+  class="frame9-frame12"
+  id="pomodoro"
+  type="number"
+  name="pomodorosBeforeLongBreak"
+  step="1"
+  min="1"
+  max="60"
+  [(ngModel)]="trackerSettings.pomodorosBeforeLongBreak"
+/>
