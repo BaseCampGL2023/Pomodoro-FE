@@ -32,8 +32,7 @@ export class TrackerService implements OnDestroy {
   }
 
   get timeSpan(): number {
-    //TODO: return to seconds
-    return this.settings[this.duration]// * 60;
+    return this.settings[this.duration] * 60;
   }
 
   get strSec(): string {
@@ -99,27 +98,26 @@ export class TrackerService implements OnDestroy {
     }
   }
 
-  autostart(){
-    if(this.settings.autostartEnabled){
+  autostart() {
+    if (this.settings.autostartEnabled) {
       this.start();
     }
   }
-  changeDuration(){
-    if(this.duration === TrackerDurationEnum.shortBreak) {
+  changeDuration() {
+    if (this.duration === TrackerDurationEnum.shortBreak) {
       this.duration = TrackerDurationEnum.pomodoro;
       return;
     }
-    if(this.duration === TrackerDurationEnum.longBreak) {
+    if (this.duration === TrackerDurationEnum.longBreak) {
       this.duration = TrackerDurationEnum.pomodoro;
       this.session = 0;
       return;
     }
 
     ++this.session;
-    console.log(this.session);
 
-    if(this.session < this.settings.pomodorosBeforeLongBreak){
-      this.duration = TrackerDurationEnum.shortBreak
+    if (this.session < this.settings.pomodorosBeforeLongBreak) {
+      this.duration = TrackerDurationEnum.shortBreak;
     } else {
       this.duration = TrackerDurationEnum.longBreak;
     }

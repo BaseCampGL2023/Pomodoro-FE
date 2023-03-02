@@ -60,9 +60,8 @@ export class TrackerSettingsService {
     this.save();
   }
 
-  public setSettings(settings: TrackerSettings){
-    if(this.isSettings(settings))
-    this._settings = settings;
+  public setSettings(settings: TrackerSettings) {
+    if (this.isSettings(settings)) this._settings = settings;
     this.save();
   }
 

@@ -10,7 +10,7 @@ import { TrackerSettings } from 'src/app/shared-module/tracker/types/tracker-set
 })
 export class SettingsPopUpComponent {
   constructor(protected trackerSettings: TrackerSettingsService) {}
-  setSettings(){
-    this.trackerSettings.setSettings(new TrackerSettings(10, 10, 10, 5, false));
-  }
+  // setSettings() {
+  //   this.trackerSettings.setSettings(new TrackerSettings(10, 10, 10, 5, false));
+  // }
 }
