@@ -75,7 +75,7 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
       useClass: AuthInterceptor,
       multi: true,
     },
-    Title
+    Title,
   ],
   bootstrap: [AppComponent],
 })

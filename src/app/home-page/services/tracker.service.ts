@@ -26,8 +26,7 @@ export class TrackerService implements OnDestroy {
   private tick = 0;
 
   constructor(
-    public settings: TrackerSettingsService,
-    //private title: Title
+    public settings: TrackerSettingsService //private title: Title
   ) {}
 
   ngOnDestroy(): void {
@@ -39,7 +38,7 @@ export class TrackerService implements OnDestroy {
 
   get timeSpan(): number {
     //TODO: return minutes
-    return this.settings[this.duration];// * 60;
+    return this.settings[this.duration]; // * 60;
   }
   get strSec(): string {
     const seconds = (this.timeSpan - this.tick) % 60;
@@ -103,7 +102,6 @@ export class TrackerService implements OnDestroy {
     }
   }
 
- 
   private countdownFinished = new Subject<TrackerDurationEnum>();
   onFinished = this.countdownFinished.asObservable();
   emitFinished(duration?: TrackerDurationEnum) {
@@ -112,19 +110,19 @@ export class TrackerService implements OnDestroy {
 
   private countdownStarted = new Subject<TrackerDurationEnum>();
   onStarted = this.countdownStarted.asObservable();
-  emitStarted(duration?: TrackerDurationEnum){
+  emitStarted(duration?: TrackerDurationEnum) {
     this.countdownStarted.next(duration ?? this.duration);
   }
 
   private countdownReseted = new Subject<TrackerDurationEnum>();
   onReseted = this.countdownReseted.asObservable();
-  emitReseted(duration?: TrackerDurationEnum){
+  emitReseted(duration?: TrackerDurationEnum) {
     this.countdownReseted.next(duration ?? this.duration);
   }
 
   private countdownPaused = new Subject<TrackerDurationEnum>();
   onPaused = this.countdownPaused.asObservable();
-  emitPaused(duration?: TrackerDurationEnum){
+  emitPaused(duration?: TrackerDurationEnum) {
     this.countdownPaused.next(duration ?? this.duration);
   }
 }

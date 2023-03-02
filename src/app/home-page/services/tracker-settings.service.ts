@@ -50,8 +50,8 @@ export class TrackerSettingsService {
   }
 
   set pomodorosBeforeLongBreak(pomodoros: number) {
-    if(pomodoros > 0 && Number.isInteger(pomodoros)){
-      this._settings.pomodorosBeforeLongBreak = pomodoros
+    if (pomodoros > 0 && Number.isInteger(pomodoros)) {
+      this._settings.pomodorosBeforeLongBreak = pomodoros;
       this.save();
     }
   }
@@ -83,11 +83,13 @@ export class TrackerSettingsService {
     localStorage.setItem(this.storageKey, JSON.stringify(this._settings));
   }
 
-  private isSettings(obj: TrackerSettings): boolean{
-    return obj?.shortBreak > 0 &&
-    obj?.longBreak > 0 &&
-    obj?.pomodoro > 0 &&
-    typeof(obj?.autostartEnabled) == "boolean" &&
-    obj?.pomodorosBeforeLongBreak > 0
+  private isSettings(obj: TrackerSettings): boolean {
+    return (
+      obj?.shortBreak > 0 &&
+      obj?.longBreak > 0 &&
+      obj?.pomodoro > 0 &&
+      typeof obj?.autostartEnabled == 'boolean' &&
+      obj?.pomodorosBeforeLongBreak > 0
+    );
   }
 }

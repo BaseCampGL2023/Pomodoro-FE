@@ -11,9 +11,7 @@ import { AuthService } from './shared-module/auth/auth.service';
 export class AppComponent implements OnInit {
   defaultTitle = 'Pomodoro';
 
-  constructor(
-    private authService: AuthService,
-    private title: Title) {}
+  constructor(private authService: AuthService, private title: Title) {}
 
   ngOnInit(): void {
     this.authService.init();
