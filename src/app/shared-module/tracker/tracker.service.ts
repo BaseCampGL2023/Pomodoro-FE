@@ -1,6 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-//import { Title } from '@angular/platform-browser';
 
 import { TrackerDurationEnum } from './types/tracker-duration.enum';
 import { TrackerModeEnum } from './types/tracker-mode.enum';
@@ -10,26 +9,19 @@ import { TrackerEvent } from './types/tracker-event';
 
 @Injectable({ providedIn: 'root' })
 export class TrackerService implements OnDestroy {
-  //private settings = new BehaviorSubject<TrackerSettings>(new TrackerSettings());
-
-  //castSettings = this.settings.asObservable();
-
-  // editSettings(newSettings: TrackerSettings) {
-  //   this.settings.next(newSettings);
-  // }
-  //strSec: string = '00';
-  //strMin: string = '00';
-
   duration: TrackerDurationEnum = TrackerDurationEnum.pomodoro;
   mode: TrackerModeEnum = TrackerModeEnum.pristine;
 
+  private trackerEvent = new Subject<TrackerEvent>();
+  private trackerTick = new Subject<void>();
+
+  event = this.trackerEvent.asObservable();
+  tickEvent = this.trackerTick.asObservable();
+
   private timerId = NaN;
-  //private startStamp = 0;
   private tick = 0;
 
-  constructor(
-    public settings: TrackerSettingsService //private title: Title
-  ) {}
+  constructor(public settings: TrackerSettingsService) {}
 
   ngOnDestroy(): void {
     if (isNaN(this.timerId)) {
@@ -39,13 +31,14 @@ export class TrackerService implements OnDestroy {
   }
 
   get timeSpan(): number {
-    //TODO: return minutes
-    return this.settings[this.duration]; // * 60;
+    return this.settings[this.duration] * 60;
   }
+
   get strSec(): string {
     const seconds = (this.timeSpan - this.tick) % 60;
     return seconds > 9 ? seconds.toString() : `0${seconds.toString()}`;
   }
+
   get strMin(): string {
     const minutes =
       (this.timeSpan - this.tick - ((this.timeSpan - this.tick) % 60)) / 60;
@@ -77,7 +70,6 @@ export class TrackerService implements OnDestroy {
     this.timerId = NaN;
     this.mode = TrackerModeEnum.pause;
     this.emitEvent(TrackerEventEnum.stop);
-    //TODO emit paused
   }
 
   reload(): void {
@@ -103,17 +95,9 @@ export class TrackerService implements OnDestroy {
     }
   }
 
-  private trackerEvent = new Subject<TrackerEvent>();
-
-  event = this.trackerEvent.asObservable();
-
   private emitEvent(type: TrackerEventEnum, duration?: TrackerDurationEnum) {
     this.trackerEvent.next(new TrackerEvent(type, duration ?? this.duration));
   }
-
-  private trackerTick = new Subject<void>();
-
-  tickEvent = this.trackerTick.asObservable();
 
   private emitTick() {
     this.trackerTick.next();

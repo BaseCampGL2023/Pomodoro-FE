@@ -15,7 +15,6 @@ export class TrackerSettingsService {
   get pomodoro() {
     return this._settings.pomodoro;
   }
-
   set pomodoro(duration: number) {
     if (duration > 0 && Number.isInteger(duration)) {
       this._settings.pomodoro = duration;
@@ -26,7 +25,6 @@ export class TrackerSettingsService {
   get longBreak() {
     return this._settings.longBreak;
   }
-
   set longBreak(duration: number) {
     if (duration > 0 && Number.isInteger(duration)) {
       this._settings.longBreak = duration;
@@ -37,7 +35,6 @@ export class TrackerSettingsService {
   get shortBreak() {
     return this._settings.shortBreak;
   }
-
   set shortBreak(duration: number) {
     if (duration > 0 && Number.isInteger(duration)) {
       this._settings.shortBreak = duration;
@@ -48,7 +45,6 @@ export class TrackerSettingsService {
   get pomodorosBeforeLongBreak() {
     return this._settings.pomodorosBeforeLongBreak;
   }
-
   set pomodorosBeforeLongBreak(pomodoros: number) {
     if (pomodoros > 0 && Number.isInteger(pomodoros)) {
       this._settings.pomodorosBeforeLongBreak = pomodoros;
@@ -59,7 +55,6 @@ export class TrackerSettingsService {
   get autostartEnabled() {
     return this._settings.autostartEnabled;
   }
-
   set autostartEnabled(state: boolean) {
     this._settings.autostartEnabled = state;
     this.save();
