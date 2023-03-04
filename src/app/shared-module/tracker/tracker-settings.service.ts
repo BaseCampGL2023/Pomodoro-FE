@@ -65,6 +65,16 @@ export class TrackerSettingsService {
     this.save();
   }
 
+  public getCurrentSettings(): TrackerSettings {
+    const currentSettings = new TrackerSettings();
+    Object.assign(currentSettings, this._settings);
+    return currentSettings;
+  }
+
+  public isStoredLocal(): boolean {
+    return localStorage.getItem(this.storageKey) !== null;
+  }
+
   private load() {
     const persisted = localStorage.getItem(this.storageKey);
     if (persisted != null) {
