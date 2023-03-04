@@ -20,12 +20,12 @@
       <div class="date-input" (click)="openDatePicker()">
         <div class="date-picker">
           <div class="form-control">
-            <span class="label">{{ selectedDay | date : "d MMM y" }}</span>
+            <span class="label">{{ selectedDate | date : "d MMM y" }}</span>
             <input
               class="hidden"
               matInput
               [matDatepicker]="picker"
-              [(ngModel)]="selectedDay"
+              [(ngModel)]="selectedDate"
               formControlName="initialDate"
             />
             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -44,7 +44,7 @@
     </div>
     <div class="form-group">
       <label>Frequency</label>
-      <select class="form-select">
+      <select class="form-select" formControlName="frequency">
         <option
           *ngFor="let freq of taskFrequencies | keyvalue"
           [value]="freq.key"
@@ -54,7 +54,7 @@
         </option>
       </select>
     </div>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" [disabled]="newTaskForm.invalid">
       <span>Create new task</span>
     </button>
   </form>

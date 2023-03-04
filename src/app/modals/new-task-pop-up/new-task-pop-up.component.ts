@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from '../../shared-module/services/task.service';
@@ -18,26 +18,40 @@ import { TaskFrequenciesEnum } from '../../shared-module/enums/task-frequencies.
 export class NewTaskPopUpComponent {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
   newTask = <NewTask>{};
-  private _selectedDay: Date;
   public taskFrequencies = TaskFrequenciesEnum;
 
-  get selectedDay(): Date {
-    return this._selectedDay;
+  private _selectedDate = new Date();
+  private _indexOfFreq = Object.values(this.taskFrequencies).indexOf(
+    'Doesn`t repeat' as unknown as TaskFrequenciesEnum
+  );
+  private _selectedFrequency =
+    Object.keys(TaskFrequenciesEnum)[this._indexOfFreq];
+
+  get selectedDate(): Date {
+    return this._selectedDate;
   }
 
-  set selectedDay(value: Date) {
-    this._selectedDay = value;
+  set selectedDate(value: Date) {
+    this._selectedDate = value;
+  }
+
+  get selectedFrequency(): string {
+    return this._selectedFrequency;
+  }
+
+  set selectedFrequency(value: string) {
+    this._selectedFrequency = value;
   }
 
   newTaskForm: FormGroup = new FormGroup({
     title: new FormControl('', {
       validators: [Validators.required],
     }),
-    initialDate: new FormControl('', {
-      validators: [Validators.required],
+    initialDate: new FormControl(this.selectedDate, {
+      initialValueIsDefault: true,
     }),
-    frequency: new FormControl('', {
-      validators: [Validators.required],
+    frequency: new FormControl(this.selectedFrequency, {
+      initialValueIsDefault: true,
     }),
   });
 
@@ -47,13 +61,12 @@ export class NewTaskPopUpComponent {
     private taskService: TaskService
   ) {
     this.newTaskForm.reset(this.newTask);
-    this._selectedDay = new Date();
   }
 
   onSubmit() {
-    console.log(this.selectedDay);
     if (this.newTaskForm.valid) {
       Object.assign(this.newTask, this.newTaskForm.value);
+      console.log(this.newTask);
     }
   }
 

@@ -4,16 +4,26 @@
 .new-task-menu {
 
   .btn {
-    background-color: #CC5B53 !important;
+    background-color: $base-color;
     border-radius: 6px;
-    color: #FFFFFF !important;
-    border-color: #CC5B53 !important;
+    color: #FFFFFF;
+    border-color: $base-color;
+
+    &:hover {
+      background-color: $input-color !important;
+      border-radius: 6px;
+      color: black !important;
+      border-color: black !important;
+    }
   }
 
-  .form-control {
-    background-color: #F0F0F0 !important;
+
+
+  .form-control, .form-select {
+    border: 2px solid $input-color;
+    background-color: $input-color;
     border-radius: 6px;
-    font-family: $font-family !important;
+    font-family: $font-family;
     margin-bottom: 20px;
   }
 
@@ -43,21 +53,21 @@
     }
 
     .form-control {
-      background-color: #F0F0F0 !important;
+      background-color: $input-color;
     }
 
   }
 
-  select option {
-    background-color: #F0F0F0 !important;
-    font-family: $font-family !important;
+  select {
+    padding-left: 15px;
+    font-family: $font-family;
+  }
 
-    &:hover {
-      background-color: #CC5B53 !important;
-      border-radius: 6px;
-      color: #FFFFFF !important;
-      border-color: #CC5B53 !important;
-    }
+  select.form-control option:hover {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #8F2C24;
   }
 }
 
