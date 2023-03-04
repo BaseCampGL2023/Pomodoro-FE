@@ -32,6 +32,7 @@ import { TodayTasksComponent } from './home-page/components/today-tasks/today-ta
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.component';
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
+import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
     BarPlotComponent,
     SignupPopUpComponent,
     PomodoroBadgeDirective,
+    FinishModalComponent,
   ],
   imports: [
     BrowserModule,

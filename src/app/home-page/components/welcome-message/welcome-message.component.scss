@@ -1,39 +1,5 @@
 @import '../../../../assets/styles/variables';
 
-
-.finish-frame {
-  top: 35px;
-  left: 245px;
-  width: 951px;
-  height: 50px;
-  display: flex;
-  overflow: hidden;
-  position: absolute;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: transparent;
-  border-radius: 6px;
-  background-color: rgba(51, 179, 85, 0.9599999785423279);
-  }
-.finish-text {
-    top: 15px;
-    left: 234px;
-    color: rgba(255, 255, 255, 1);
-    height: auto;
-    position: absolute;
-    font-size: 16px;
-    align-self: auto;
-    font-style: Medium;
-    text-align: left;
-    font-family: DM Sans;
-    font-weight: 500;
-    line-height: 20px;
-    font-stretch: normal;
-    margin-right: 0;
-    margin-bottom: 0;
-    text-decoration: none;
-  }
-
 h3 {
     margin-top: 25px;
     color: $secondary-color;
