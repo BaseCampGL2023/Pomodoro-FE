@@ -32,7 +32,8 @@ import { TodayTasksComponent } from './home-page/components/today-tasks/today-ta
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.component';
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
-
+import { NewTaskPopUpComponent } from './modals/new-task-pop-up/new-task-pop-up.component';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
     BarPlotComponent,
     SignupPopUpComponent,
     PomodoroBadgeDirective,
+    NewTaskPopUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +72,7 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
     ReactiveFormsModule,
     HttpClientModule,
     MatIconModule,
+    MatInputModule,
   ],
   providers: [
     TaskService,

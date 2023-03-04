@@ -1,0 +1,64 @@
+@import '../../../assets/styles/variables';
+
+
+.new-task-menu {
+
+  .btn {
+    background-color: #CC5B53 !important;
+    border-radius: 6px;
+    color: #FFFFFF !important;
+    border-color: #CC5B53 !important;
+  }
+
+  .form-control {
+    background-color: #F0F0F0 !important;
+    border-radius: 6px;
+    font-family: $font-family !important;
+    margin-bottom: 20px;
+  }
+
+  .date-picker {
+    position: relative;
+    margin-bottom: 20px;
+
+    mat-datepicker-toggle {
+      position: absolute;
+      left: 88%;
+      top: -12%;
+      width: 35px;
+      height: 35px;
+    }
+
+    .icon {
+      display: flex;
+      margin: auto;
+      width: 19px;
+      position: absolute;
+    }
+
+    .hidden {
+      visibility: hidden;
+      width: 0;
+      z-index: -1;
+    }
+
+    .form-control {
+      background-color: #F0F0F0 !important;
+    }
+
+  }
+
+  select option {
+    background-color: #F0F0F0 !important;
+    font-family: $font-family !important;
+
+    &:hover {
+      background-color: #CC5B53 !important;
+      border-radius: 6px;
+      color: #FFFFFF !important;
+      border-color: #CC5B53 !important;
+    }
+  }
+}
+
+

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../../shared-module/services/task.service';
 import { Task } from '../../../shared-module/types/task';
+import { MatDialog } from '@angular/material/dialog';
+import { NewTaskPopUpComponent } from '../../../modals/new-task-pop-up/new-task-pop-up.component';
 
 @Component({
   selector: 'app-today-tasks',
@@ -8,7 +10,7 @@ import { Task } from '../../../shared-module/types/task';
   styleUrls: ['./today-tasks.component.scss'],
 })
 export class TodayTasksComponent implements OnInit {
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private dialogRef: MatDialog) {}
 
   taskList: Task[] = [];
 
@@ -22,5 +24,9 @@ export class TodayTasksComponent implements OnInit {
     const notDone = arr.filter((task) => task.progress !== 100);
     const done = arr.filter((task) => task.progress === 100);
     return notDone.concat(done);
+  }
+
+  createTask() {
+    this.dialogRef.open(NewTaskPopUpComponent);
   }
 }
