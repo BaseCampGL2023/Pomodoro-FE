@@ -6,8 +6,8 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { TrackerSettings } from 'src/app/home-page/types/tracker-settings';
 import { SettingsService } from 'src/app/shared-module/services/settings.service';
+import { TrackerSettings } from 'src/app/shared-module/tracker/types/tracker-settings';
 
 @Component({
   selector: 'app-settings-pop-up',
@@ -40,7 +40,7 @@ export class SettingsPopUpComponent implements OnInit {
     this.settingsService.loadSettings().subscribe((res) => {
       this.settings = res;
       this.settingsForm.setValue({
-        pomodoroDuration: res.pomodoroDuration,
+        pomodoro: res.pomodoro,
         shortBreak: res.shortBreak,
         longBreak: res.longBreak,
         pomodorosBeforeLongBreak: res.pomodorosBeforeLongBreak,
@@ -59,7 +59,7 @@ export class SettingsPopUpComponent implements OnInit {
 
   private buildFormGroup(): FormGroup {
     return this.formBuilder.group({
-      pomodoroDuration: ['', this.settingsValidators],
+      pomodoro: ['', this.settingsValidators],
       shortBreak: ['', this.settingsValidators],
       longBreak: ['', this.settingsValidators],
       pomodorosBeforeLongBreak: ['', this.settingsValidators],
