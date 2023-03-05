@@ -38,11 +38,11 @@ export class ValidationHelper implements PipeTransform {
 
     for (const control of controls) {
       const controlErrors = formGroup.get(control)?.errors;
-      
+
       if (controlErrors) {
-        var keyError = Object
-          .keys(controlErrors)
-          .at(controlErrors['length'] - 1);
+        const keyError = Object.keys(controlErrors).at(
+          controlErrors['length'] - 1
+        );
 
         switch (keyError) {
           case 'required':
@@ -50,9 +50,7 @@ export class ValidationHelper implements PipeTransform {
             break;
           case 'min':
             topErrorMsg = `${this.getDisplayName(control)}
-              must be greater than or equal to ${
-                controlErrors[keyError].min
-              }`;
+              must be greater than or equal to ${controlErrors[keyError].min}`;
             break;
           case 'max':
             topErrorMsg = `${this.getDisplayName(control)}

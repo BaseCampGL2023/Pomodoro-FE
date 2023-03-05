@@ -15,7 +15,7 @@ export class SettingsService {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private trackerSettingsService: TrackerSettingsService,
+    private trackerSettingsService: TrackerSettingsService
   ) {}
 
   private readonly settingsIdKey = 'settingsId';
@@ -44,9 +44,11 @@ export class SettingsService {
 
   private localStorageHasUserSettings(): boolean {
     const userId = this.userIdFromLocalStorage();
-    return this.trackerSettingsService.isStoredLocal() &&
+    return (
+      this.trackerSettingsService.isStoredLocal() &&
       userId !== null &&
-      userId == this.authService.getUserId();
+      userId == this.authService.getUserId()
+    );
   }
 
   private getFromLocalStorageOrDefault(): Observable<TrackerSettings> {
@@ -100,19 +102,12 @@ export class SettingsService {
     return this.createResource(settings);
   }
 
-  private createResource(
-    settings: Settings
-  ): Observable<Settings> {
+  private createResource(settings: Settings): Observable<Settings> {
     return this.http.post<Settings>(this.url, settings);
   }
 
-  private updateResource(
-    settings: Settings
-  ): Observable<Settings> {
-    return this.http.put<Settings>(
-      `${this.url}/${settings.id}`,
-      settings
-    );
+  private updateResource(settings: Settings): Observable<Settings> {
+    return this.http.put<Settings>(`${this.url}/${settings.id}`, settings);
   }
 
   private toTrackerSettings(settings: Settings): TrackerSettings {
