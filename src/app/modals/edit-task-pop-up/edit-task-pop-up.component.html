@@ -1,0 +1,76 @@
+<div class="edit-task">
+  <div class="header-row">
+    <h4>Edit task</h4>
+    <span class="icon" [mat-dialog-close]="true"
+      ><mat-icon fontIcon="close" inline="true"></mat-icon
+    ></span>
+  </div>
+  <form
+    [formGroup]="editTaskForm"
+    #form="ngForm"
+    (ngSubmit)="onSubmit()"
+    (reset)="resetForm()"
+  >
+    <div class="form-group">
+      <label>Task title</label>
+      <input class="form-control" formControlName="title" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *appValidationErrors="editTaskForm; control: 'title'; let err">
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <div class="date-picker" (click)="openDatePicker()">
+        <input
+          class="form-control"
+          matInput
+          [min]="minDate"
+          [matDatepicker]="picker"
+          formControlName="initialDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>
+            <img class="icon" src="assets/icons/calendar.svg" alt="Calendar" />
+          </mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+      <ul class="text-danger list-unstyled mt-1">
+        <li
+          *appValidationErrors="editTaskForm; control: 'initialDate'; let err"
+        >
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Frequency</label>
+      <mat-select class="form-control" formControlName="frequency">
+        <mat-option *ngFor="let frequency of frequencies" [value]="frequency">
+          {{ frequency }}
+        </mat-option>
+      </mat-select>
+      <ul class="text-danger list-unstyled mt-1">
+        <li *appValidationErrors="editTaskForm; control: 'frequency'; let err">
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Allocated time</label>
+      <input class="form-control" formControlName="allocatedTime" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li
+          *appValidationErrors="editTaskForm; control: 'allocatedTime'; let err"
+        >
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-primary" [disabled]="form.invalid">
+      Save changes
+    </button>
+  </form>
+</div>

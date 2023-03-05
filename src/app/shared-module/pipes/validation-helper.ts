@@ -27,6 +27,15 @@ export class ValidationHelper implements PipeTransform {
             `A ${name} must be at least ${errors['minlength'].requiredLength} characters`
           );
           break;
+        case 'notNumber':
+          messages.push(`${name} must be a number`);
+          break;
+        case 'numberLessThanMin':
+          messages.push(`Number must be more then ${errors[errorName]}`);
+          break;
+        case 'numberMoreThanMax':
+          messages.push(`Number must be less then ${errors[errorName]}`);
+          break;
       }
     }
     return messages;

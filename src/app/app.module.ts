@@ -33,6 +33,8 @@ import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
 import { TaskMenuComponent } from './shared-module/task-menu/task-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { EditTaskPopUpComponent } from './modals/edit-task-pop-up/edit-task-pop-up.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { MatMenuModule } from '@angular/material/menu';
     BarPlotComponent,
     PomodoroBadgeDirective,
     TaskMenuComponent,
+    EditTaskPopUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,7 @@ import { MatMenuModule } from '@angular/material/menu';
     HttpClientModule,
     MatIconModule,
     MatMenuModule,
+    MatSelectModule,
   ],
   providers: [
     TaskService,

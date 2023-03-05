@@ -7,7 +7,7 @@
   <mat-icon class="icon-customize">more_vert</mat-icon>
 </button>
 <mat-menu #menu="matMenu" xPosition="before" class="menu-customize">
-  <button mat-menu-item>
+  <button mat-menu-item (click)="onEditTask()">
     <span>Edit</span>
   </button>
   <button mat-menu-item>

@@ -42,6 +42,22 @@ export class TaskService {
     console.log(`add pomodoro to task${taskId} in db`);
   }
 
+  getFrequencies(): string[] {
+    return this.frequencies();
+  }
+
+  updateTask(task: Task): Observable<any> {
+    return of(console.log(`updates task${task.id} in db`));
+  }
+
+  getCurrentTask(): Observable<Task> {
+    return this.getTaskById(this.curTaskId!);
+  }
+
+  getTaskById(taskId: string): Observable<Task> {
+    return of(this.getTasks().find((t) => t.id === taskId)!);
+  }
+
   getTodayTasks(): Observable<Task[]> {
     return of(this.getTasks());
   }
@@ -55,80 +71,95 @@ export class TaskService {
       {
         id: '1',
         title: 'task1',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1000,
+        initialDate: new Date(2023, 1, 10),
         progress: 50,
       },
       {
         id: '2',
         title: 'task2',
-        frequency: '',
+        frequency: 'Week',
         allocatedTime: 600,
+        initialDate: new Date(2023, 1, 11),
         progress: 10,
       },
       {
         id: '3',
         title: 'task3',
-        frequency: 'mounthly',
+        frequency: 'Month',
         allocatedTime: 30,
+        initialDate: new Date(2023, 1, 12),
         progress: 25,
       },
       {
         id: '4',
         title: 'task4',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1500,
+        initialDate: new Date(2023, 1, 13),
         progress: 100,
       },
       {
         id: '5',
         title: 'task5',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1100,
+        initialDate: new Date(2023, 1, 14),
         progress: 60,
       },
       {
         id: '6',
         title: 'task6',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1100,
+        initialDate: new Date(2023, 1, 15),
         progress: 100,
       },
       {
         id: '7',
         title: 'task7',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1100,
+        initialDate: new Date(2023, 1, 16),
         progress: 35,
       },
       {
         id: '8',
         title: 'task8',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1600,
+        initialDate: new Date(2023, 1, 17),
         progress: 40,
       },
       {
         id: '9',
         title: 'task9',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1100,
+        initialDate: new Date(2023, 1, 18),
         progress: 55,
       },
       {
         id: '10',
         title: 'task10',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1100,
+        initialDate: new Date(2023, 1, 19),
         progress: 80,
       },
       {
         id: '11',
         title: 'task11',
-        frequency: 'dayly',
+        frequency: 'Day',
         allocatedTime: 1100,
+        initialDate: new Date(2023, 1, 20),
         progress: 95,
       },
     ];
+  }
+
+  private frequencies(): string[] {
+    return ['None', 'Day', 'Week', 'Month', 'Year', 'Workday', 'Weekend'];
   }
 }

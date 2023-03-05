@@ -1,148 +1,156 @@
-@import '../../../assets/styles/variables';
+@import "../../../assets/styles/variables";
 
-.login {
-	max-width: 450px;
-	width: 80vw;
-	padding: 20px 34px 34px;
+.login,
+.edit-task {
+  max-width: 450px;
+  width: 80vw;
+  padding: 20px 34px 34px;
 
-	.header-row {
-		display: flex;
-		justify-content: space-between;
-		position: relative;
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
 
-		h4 {
-			margin: 0;
-			padding-top: 5px;
-			padding-left: 2px;
-			font-family: $font-family;
-			color: $accent-color;
-			font-style: normal;
-			font-weight: 500;
-			font-size: 20px;
-			line-height: 20px;
-			letter-spacing: normal;
-		}
+    h4 {
+      margin: 0;
+      padding-top: 5px;
+      padding-left: 2px;
+      font-family: $font-family;
+      color: $accent-color;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 20px;
+      letter-spacing: normal;
+    }
 
-		span {
-			position: absolute;
-			top: -5px;
-			right: -7px;
-		}
-	}
-	span.icon {
-		color: $accent-color;
-		font-size: 28px;
-	}
+    span {
+      position: absolute;
+      top: -5px;
+      right: -7px;
+    }
+  }
+  span.icon {
+    color: $accent-color;
+    font-size: 28px;
+  }
 
-	span.icon:hover {
-		cursor: pointer;
-	}
+  span.icon:hover {
+    cursor: pointer;
+  }
 
-	p {
-		margin-top: 14px;
-		font-family: $font-family;
-		color: $secondary-color;
-		font-weight: 300;
-		font-size: 14px;
-		line-height: 14px;
-		letter-spacing: normal;
+  p {
+    margin-top: 14px;
+    font-family: $font-family;
+    color: $secondary-color;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: normal;
 
-		a {
-			display: inline-block;
-			margin-left: 20px;
-			font-weight: 500;
-			color: $accent-color;
-		}
+    a {
+      display: inline-block;
+      margin-left: 20px;
+      font-weight: 500;
+      color: $accent-color;
+    }
 
-		a:hover {
-			cursor: pointer;
-		}
-	}
+    a:hover {
+      cursor: pointer;
+    }
+  }
 
-	form {
-		margin-top: 35px;
+  form {
+    margin-top: 35px;
 
-		label {
-			font-family: $font-family;
-			color: $secondary-color;
-			font-weight: 300;
-			font-size: 15px;
-			line-height: 15px;
-			letter-spacing: normal;
-		}
+    label {
+      font-family: $font-family;
+      color: $secondary-color;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 15px;
+      letter-spacing: normal;
+    }
 
-		input {
-			background-color: $input-color;
-			border: 2px solid $input-color;
-		}
-		.form-control:focus {
-			box-shadow: 0 0 8px $base-color;
-		}
+    input {
+      background-color: $input-color;
+      border: 2px solid $input-color;
+    }
+    .form-control:focus {
+      box-shadow: 0 0 8px $base-color;
+    }
 
-		button.btn {
-			margin-top: 16px;
-			width: 100%;
-			height: 48px;
-			background-color: $base-color;
-			border-color: $base-color;
-			color: $background-color;
-		}
+    button.btn {
+      margin-top: 16px;
+      width: 100%;
+      height: 48px;
+      background-color: $base-color;
+      border-color: $base-color;
+      color: $background-color;
+    }
+    input.ng-dirty.ng-invalid {
+      border: 2px solid $secondary-color;
+    }
+    input.ng-dirty.ng-invalid:focus {
+      box-shadow: 0 0 8px $secondary-color;
+    }
+    input.ng-dirty.ng-valid {
+      border: 2px solid $green-color;
+    }
+    input.ng-dirty.ng-valid:focus {
+      box-shadow: 0 0 8px $green-color;
+    }
 
-		input.ng-dirty.ng-invalid { border: 2px solid $secondary-color }
-		input.ng-dirty.ng-invalid:focus { box-shadow: 0 0 8px $secondary-color }
-		input.ng-dirty.ng-valid { border: 2px solid $green-color }
-		input.ng-dirty.ng-valid:focus { box-shadow: 0 0 8px $green-color }
+    ul {
+      font-family: $font-family;
+      color: $base-color;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 15px;
+      letter-spacing: normal;
+    }
+  }
 
-		ul {
-			font-family: $font-family;
-			color: $base-color;
-			font-weight: 300;
-			font-size: 15px;
-			line-height: 15px;
-			letter-spacing: normal;
-		}
-	}
+  div.divider {
+    margin-top: 42px;
+    display: flex;
+    align-items: center;
 
-	div.divider {
-		margin-top: 42px;
-		display: flex;
-		align-items: center;
+    hr {
+      display: inline-flex;
+      flex-grow: 10;
+      background-color: #ccc;
+      border: none;
+      height: 2px;
+    }
 
-		hr {
-			display: inline-flex;
-			flex-grow: 10;
-			background-color: #ccc;
-			border: none;
-			height: 2px;
-		}
+    span {
+      font-family: $font-family;
+      color: $secondary-color;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      letter-spacing: 1px;
+    }
+  }
 
-		span {
-			font-family: $font-family;
-			color: $secondary-color;
-			font-weight: 500;
-			font-size: 16px;
-			line-height: 16px;
-			letter-spacing: 1px;
-		}
-	}
+  button.btn {
+    position: relative;
+    width: 100%;
+    height: 48px;
+    margin-top: 14px;
+    background-color: $background-color;
+    border-color: $secondary-color;
+    color: $secondary-color;
+    font-family: $font-family;
+    font-weight: 500;
 
-	button.btn {
-		position: relative;
-		width: 100%;
-		height: 48px;
-		margin-top: 14px;
-		background-color: $background-color;
-		border-color: $secondary-color;
-		color: $secondary-color;
-		font-family: $font-family;
-		font-weight: 500;
-
-		img {
-			position: absolute;
-			left: 15px;
-			top: 14px;
-			width: 20px;
-			height: 20px;
-		}
-	}
+    img {
+      position: absolute;
+      left: 15px;
+      top: 14px;
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
