@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/shared-module/services/task.service';
 import { Task } from 'src/app/shared-module/types/task';
 import { NumberValidator } from 'src/app/shared-module/validation/number';
@@ -22,11 +21,7 @@ export class EditTaskPopUpComponent implements OnInit {
   minDate = new Date();
   editTaskResult?: any;
 
-  constructor(
-    private dialog: MatDialog,
-    private taskService: TaskService,
-    private fb: FormBuilder
-  ) {}
+  constructor(private taskService: TaskService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.taskService

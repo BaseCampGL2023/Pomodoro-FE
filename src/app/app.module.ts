@@ -35,6 +35,7 @@ import { TaskMenuComponent } from './shared-module/task-menu/task-menu.component
 import { MatMenuModule } from '@angular/material/menu';
 import { EditTaskPopUpComponent } from './modals/edit-task-pop-up/edit-task-pop-up.component';
 import { MatSelectModule } from '@angular/material/select';
+import { CompleteTaskPopUpComponent } from './modals/complete-task-pop-up/complete-task-pop-up.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { MatSelectModule } from '@angular/material/select';
     PomodoroBadgeDirective,
     TaskMenuComponent,
     EditTaskPopUpComponent,
+    CompleteTaskPopUpComponent,
   ],
   imports: [
     BrowserModule,

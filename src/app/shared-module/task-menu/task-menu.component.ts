@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CompleteTaskPopUpComponent } from 'src/app/modals/complete-task-pop-up/complete-task-pop-up.component';
 import { EditTaskPopUpComponent } from 'src/app/modals/edit-task-pop-up/edit-task-pop-up.component';
-import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'app-task-menu',
@@ -9,10 +9,15 @@ import { TaskService } from '../services/task.service';
   styleUrls: ['./task-menu.component.scss'],
 })
 export class TaskMenuComponent {
-  constructor(private dialog: MatDialog, private taskService: TaskService) {}
+  constructor(private dialog: MatDialog) {}
 
   onEditTask() {
     this.dialog.closeAll();
     this.dialog.open(EditTaskPopUpComponent);
+  }
+
+  onCompleteTask() {
+    this.dialog.closeAll();
+    this.dialog.open(CompleteTaskPopUpComponent);
   }
 }

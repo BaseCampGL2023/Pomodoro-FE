@@ -50,6 +50,14 @@ export class TaskService {
     return of(console.log(`updates task${task.id} in db`));
   }
 
+  completeCurrentTask(): Observable<any> {
+    return of(console.log(`completes task${this.curTaskId} in db`));
+  }
+
+  deleteCurrentTask(): Observable<any> {
+    return of(console.log(`deletes task${this.curTaskId} in db`));
+  }
+
   getCurrentTask(): Observable<Task> {
     return this.getTaskById(this.curTaskId!);
   }

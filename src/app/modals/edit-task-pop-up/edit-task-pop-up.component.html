@@ -11,6 +11,14 @@
     (ngSubmit)="onSubmit()"
     (reset)="resetForm()"
   >
+    <ul
+      class="text-danger list-unstyled mt-1"
+      *ngIf="!editTaskResult?.success && editTaskResult?.errors?.length"
+    >
+      <li *ngFor="let error of editTaskResult?.errors">
+        {{ error }}
+      </li>
+    </ul>
     <div class="form-group">
       <label>Task title</label>
       <input class="form-control" formControlName="title" />
