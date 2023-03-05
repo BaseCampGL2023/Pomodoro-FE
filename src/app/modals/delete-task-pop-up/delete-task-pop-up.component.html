@@ -1,11 +1,11 @@
 <div class="confirmation-modal">
   <div class="header-row">
-    <h4>Did you complete the task?</h4>
+    <h4>Are you sure to delete the task?</h4>
   </div>
   <div class="buttons">
     <button
       type="button"
-      class="btn btn-success"
+      class="btn btn-danger"
       [mat-dialog-close]="true"
       (click)="onSubmit()"
     >
@@ -18,9 +18,9 @@
 
   <ul
     class="text-danger list-unstyled mt-1"
-    *ngIf="!completeTaskResult?.success && completeTaskResult?.errors?.length"
+    *ngIf="!deleteTaskResult?.success && deleteTaskResult?.errors?.length"
   >
-    <li *ngFor="let error of completeTaskResult?.errors">
+    <li *ngFor="let error of deleteTaskResult?.errors">
       {{ error }}
     </li>
   </ul>
