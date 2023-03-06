@@ -1,7 +1,7 @@
-export interface Task {
+export interface TaskForList {
   id: string;
   title: string;
   frequency: string;
   allocatedTime: number;
-  initialDate: Date;
+  progress: number;
 }

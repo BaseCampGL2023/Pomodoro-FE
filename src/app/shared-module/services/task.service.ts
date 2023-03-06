@@ -4,6 +4,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { TrackerService } from 'src/app/home-page/services/tracker.service';
 import { TrackerDurationEnum } from 'src/app/home-page/types/tracker-duration.enum';
 import { Task } from '../types/task';
+import { TaskForList } from '../types/task-for-list';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -63,25 +64,24 @@ export class TaskService {
   }
 
   getTaskById(taskId: string): Observable<Task> {
-    return of(this.getTasks().find((t) => t.id === taskId)!);
+    return of(this.getTask());
   }
 
-  getTodayTasks(): Observable<Task[]> {
+  getTodayTasks(): Observable<TaskForList[]> {
     return of(this.getTasks());
   }
 
-  getTasksOnDate(date: Date): Observable<Task[]> {
+  getTasksOnDate(date: Date): Observable<TaskForList[]> {
     return of(this.getTasks());
   }
 
-  private getTasks(): Task[] {
+  private getTasks(): TaskForList[] {
     return [
       {
         id: '1',
         title: 'task1',
         frequency: 'Day',
         allocatedTime: 1000,
-        initialDate: new Date(2023, 1, 10),
         progress: 50,
       },
       {
@@ -89,7 +89,6 @@ export class TaskService {
         title: 'task2',
         frequency: 'Week',
         allocatedTime: 600,
-        initialDate: new Date(2023, 1, 11),
         progress: 10,
       },
       {
@@ -97,7 +96,6 @@ export class TaskService {
         title: 'task3',
         frequency: 'Month',
         allocatedTime: 30,
-        initialDate: new Date(2023, 1, 12),
         progress: 25,
       },
       {
@@ -105,7 +103,6 @@ export class TaskService {
         title: 'task4',
         frequency: 'Day',
         allocatedTime: 1500,
-        initialDate: new Date(2023, 1, 13),
         progress: 100,
       },
       {
@@ -113,7 +110,6 @@ export class TaskService {
         title: 'task5',
         frequency: 'Day',
         allocatedTime: 1100,
-        initialDate: new Date(2023, 1, 14),
         progress: 60,
       },
       {
@@ -121,7 +117,6 @@ export class TaskService {
         title: 'task6',
         frequency: 'Day',
         allocatedTime: 1100,
-        initialDate: new Date(2023, 1, 15),
         progress: 100,
       },
       {
@@ -129,7 +124,6 @@ export class TaskService {
         title: 'task7',
         frequency: 'Day',
         allocatedTime: 1100,
-        initialDate: new Date(2023, 1, 16),
         progress: 35,
       },
       {
@@ -137,7 +131,6 @@ export class TaskService {
         title: 'task8',
         frequency: 'Day',
         allocatedTime: 1600,
-        initialDate: new Date(2023, 1, 17),
         progress: 40,
       },
       {
@@ -145,7 +138,6 @@ export class TaskService {
         title: 'task9',
         frequency: 'Day',
         allocatedTime: 1100,
-        initialDate: new Date(2023, 1, 18),
         progress: 55,
       },
       {
@@ -153,7 +145,6 @@ export class TaskService {
         title: 'task10',
         frequency: 'Day',
         allocatedTime: 1100,
-        initialDate: new Date(2023, 1, 19),
         progress: 80,
       },
       {
@@ -161,10 +152,19 @@ export class TaskService {
         title: 'task11',
         frequency: 'Day',
         allocatedTime: 1100,
-        initialDate: new Date(2023, 1, 20),
         progress: 95,
       },
     ];
+  }
+
+  private getTask(): Task {
+    return {
+      id: '11',
+      title: 'task11',
+      frequency: 'Day',
+      allocatedTime: 1100,
+      initialDate: new Date(2023, 1, 20),
+    };
   }
 
   private frequencies(): string[] {
