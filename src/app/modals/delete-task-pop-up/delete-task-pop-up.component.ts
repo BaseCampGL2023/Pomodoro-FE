@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/shared-module/services/task.service';
 
 @Component({
@@ -12,11 +13,14 @@ import { TaskService } from 'src/app/shared-module/services/task.service';
 export class DeleteTaskPopUpComponent {
   deleteTaskResult?: any;
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private dialogRef: MatDialog) {}
 
   onSubmit() {
     // TODO
     this.taskService.deleteCurrentTask().subscribe({
+      next: () => {
+        this.dialogRef.closeAll();
+      },
       error: (error) => {
         if (!error?.error?.success) {
           this.deleteTaskResult = error.error;

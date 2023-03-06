@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/shared-module/services/task.service';
 import { Task } from 'src/app/shared-module/types/task';
 import { NumberValidator } from 'src/app/shared-module/validation/number';
@@ -21,7 +22,11 @@ export class EditTaskPopUpComponent implements OnInit {
   minDate = new Date();
   editTaskResult?: any;
 
-  constructor(private taskService: TaskService, private fb: FormBuilder) {}
+  constructor(
+    private taskService: TaskService,
+    private fb: FormBuilder,
+    private dialogRef: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.taskService
@@ -44,19 +49,14 @@ export class EditTaskPopUpComponent implements OnInit {
     });
   }
 
-  openDatePicker() {
-    this.datePicker?.open();
-  }
-
   onSubmit() {
     // TODO
     if (this.editTaskForm.valid) {
-      this.task.title = this.editTaskForm.controls['title'].value;
-      this.task.initialDate = this.editTaskForm.controls['initialDate'].value;
-      this.task.allocatedTime =
-        this.editTaskForm.controls['allocatedTime'].value;
-      this.task.frequency = this.editTaskForm.controls['frequency'].value;
+      Object.assign(this.task, this.editTaskForm.value);
       this.taskService.updateTask(this.task).subscribe({
+        next: () => {
+          this.dialogRef.closeAll();
+        },
         error: (error) => {
           if (!error?.error?.success) {
             this.editTaskResult = error.error;
@@ -69,5 +69,9 @@ export class EditTaskPopUpComponent implements OnInit {
 
   resetForm() {
     this.editTaskForm.reset();
+  }
+
+  openDatePicker() {
+    this.datePicker?.open();
   }
 }

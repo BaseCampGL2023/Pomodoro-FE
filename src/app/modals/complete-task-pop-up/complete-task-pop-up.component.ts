@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TaskService } from 'src/app/shared-module/services/task.service';
 
 @Component({
@@ -9,11 +10,14 @@ import { TaskService } from 'src/app/shared-module/services/task.service';
 export class CompleteTaskPopUpComponent {
   completeTaskResult?: any;
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private dialogRef: MatDialog) {}
 
   onSubmit() {
     // TODO
     this.taskService.completeCurrentTask().subscribe({
+      next: () => {
+        this.dialogRef.closeAll();
+      },
       error: (error) => {
         if (!error?.error?.success) {
           this.completeTaskResult = error.error;
