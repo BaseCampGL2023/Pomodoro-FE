@@ -20,7 +20,7 @@ export class SettingsPopUpComponent implements OnInit {
   private settings = <TrackerSettings>{};
 
   private readonly minValue = 1;
-  private readonly maxValue = 255;
+  private readonly maxValue = 60;
 
   private readonly settingsValidators: ValidatorFn[] = [
     Validators.required,
