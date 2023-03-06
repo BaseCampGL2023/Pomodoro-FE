@@ -30,28 +30,30 @@
     </div>
     <div class="form-group">
       <label>Date</label>
-      <div class="date-picker" (click)="openDatePicker()">
-        <input
-          class="form-control"
-          matInput
-          [min]="minDate"
-          [matDatepicker]="picker"
-          formControlName="initialDate"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker">
-          <mat-icon matDatepickerToggleIcon>
-            <img class="icon" src="assets/icons/calendar.svg" alt="Calendar" />
-          </mat-icon>
-        </mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+      <div class="date-picker">
+        <div class="form-control" (click)="openDatePicker()">
+          <span class="label">{{
+            editTaskForm.controls["initialDate"].value | date : "d MMM y"
+          }}</span>
+          <input
+            class="hidden"
+            matInput
+            [min]="minDate"
+            [matDatepicker]="picker"
+            formControlName="initialDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img
+                class="icon"
+                src="assets/icons/calendar.svg"
+                alt="Calendar"
+              />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
       </div>
-      <ul class="text-danger list-unstyled mt-1">
-        <li
-          *appValidationErrors="editTaskForm; control: 'initialDate'; let err"
-        >
-          {{ err }}
-        </li>
-      </ul>
     </div>
     <div class="form-group">
       <label>Frequency</label>
@@ -60,11 +62,6 @@
           {{ frequency }}
         </mat-option>
       </mat-select>
-      <ul class="text-danger list-unstyled mt-1">
-        <li *appValidationErrors="editTaskForm; control: 'frequency'; let err">
-          {{ err }}
-        </li>
-      </ul>
     </div>
     <div class="form-group">
       <label>Allocated time</label>
