@@ -51,7 +51,7 @@ export class EditTaskPopUpComponent implements OnInit {
 
   onSubmit() {
     // TODO
-    if (this.editTaskForm.valid) {
+    if (this.editTaskForm.valid && this.taskIsChanged()) {
       Object.assign(this.task, this.editTaskForm.value);
       this.taskService.updateTask(this.task).subscribe({
         next: () => {
@@ -64,6 +64,8 @@ export class EditTaskPopUpComponent implements OnInit {
           }
         },
       });
+    } else {
+      this.dialogRef.closeAll();
     }
   }
 
@@ -73,5 +75,14 @@ export class EditTaskPopUpComponent implements OnInit {
 
   openDatePicker() {
     this.datePicker?.open();
+  }
+
+  taskIsChanged(): boolean {
+    return (
+      this.task.title !== this.editTaskForm.value.title ||
+      this.task.initialDate !== this.editTaskForm.value.initialDate ||
+      this.task.frequency !== this.editTaskForm.value.frequency ||
+      this.task.allocatedTime !== this.editTaskForm.value.allocatedTime
+    );
   }
 }
