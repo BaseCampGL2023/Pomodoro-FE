@@ -11,6 +11,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginPopUpComponent } from 'src/app/modals/login-pop-up/login-pop-up.component';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
+        if (
+          error instanceof HttpErrorResponse &&
+          error.status === 401 &&
+          error.url !== `${environment.baseUrl}account/login`
+        ) {
           this.authService.logout();
           this.dialogRef.open(LoginPopUpComponent);
         }
