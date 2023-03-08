@@ -15,7 +15,7 @@ import { TrackerService } from '../../services/tracker.service';
 export class HomePageComponent implements OnInit, OnDestroy {
   private readonly returnUrlKey = 'returnUrl';
   private readonly externalLoginResponseKey = 'ExternalLoginResponse';
-  
+
   private destroySubject = new Subject();
   isLoggedIn = false;
 
@@ -30,7 +30,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
       if (params) {
         const returnUrl = params[this.returnUrlKey];
         if (returnUrl) {
-          const externalLoginResponse = cookieService.get(this.externalLoginResponseKey);
+          const externalLoginResponse = cookieService.get(
+            this.externalLoginResponseKey
+          );
           console.log(externalLoginResponse);
           router.navigate([returnUrl]);
         }

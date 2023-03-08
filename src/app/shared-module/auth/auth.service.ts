@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    @Inject(DOCUMENT) private document: Document,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   isAuthenticated(): boolean {
@@ -47,7 +47,8 @@ export class AuthService {
   }
 
   externalLogin(provider: string, returnUrl: string): void {
-    this.document.location.href = environment.baseUrl +
+    this.document.location.href =
+      environment.baseUrl +
       `account/external-login?provider=${provider}&returnUrl=${returnUrl}`;
   }
 
