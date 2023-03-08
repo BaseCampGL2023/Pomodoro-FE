@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared-module/auth/auth.service';
+import { ExternalLoginProviders } from 'src/app/shared-module/types/external-login-providers';
 import { ReturnUrl } from 'src/app/shared-module/types/return-url';
 import { SignupRequest } from 'src/app/shared-module/types/signup-request';
 import { SignupResult } from 'src/app/shared-module/types/signup-result';
@@ -83,7 +84,7 @@ export class SignupPopUpComponent {
 
   signUpViaGoogle(): void {
     const returnUrl = this.returnUrl ? this.returnUrl.url : '/';
-    this.authService.externalLogin('Google', returnUrl);
+    this.authService.externalLogin(ExternalLoginProviders.Google, returnUrl);
   }
 
   private toSignIn() {
