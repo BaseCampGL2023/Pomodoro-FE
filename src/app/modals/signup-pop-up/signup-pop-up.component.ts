@@ -47,7 +47,7 @@ export class SignupPopUpComponent {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) private authMatDialogData?: AuthMatDialogData,
+    @Inject(MAT_DIALOG_DATA) private authMatDialogData?: AuthMatDialogData
   ) {
     this.returnUrl = authMatDialogData?.returnUrl ?? '/';
   }
@@ -96,7 +96,7 @@ export class SignupPopUpComponent {
   private toSignIn() {
     this.dialog.closeAll();
     this.dialog.open(LoginPopUpComponent, {
-      data: this.authMatDialogData
+      data: this.authMatDialogData,
     });
   }
 }

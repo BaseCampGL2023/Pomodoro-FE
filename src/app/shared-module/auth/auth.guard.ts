@@ -16,10 +16,7 @@ import { AuthMatDialogData } from '../types/auth-mat-dialog-data';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private authService: AuthService,
-    private dialogRef: MatDialog
-  ) {}
+  constructor(private authService: AuthService, private dialogRef: MatDialog) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,

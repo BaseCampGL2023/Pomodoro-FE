@@ -26,7 +26,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private cookieService: CookieService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private matDialog: MatDialog,
+    private matDialog: MatDialog
   ) {
     this.authService.authStatus
       .pipe(takeUntil(this.destroySubject))
@@ -58,7 +58,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
                 data: <AuthMatDialogData>{
                   returnUrl: returnUrl,
                   serverResponse: loginResult.message,
-                }
+                },
               });
             }
           }

@@ -35,7 +35,7 @@ export class LoginPopUpComponent {
     private router: Router,
     private authService: AuthService,
     private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) private authMatDialogData?: AuthMatDialogData,
+    @Inject(MAT_DIALOG_DATA) private authMatDialogData?: AuthMatDialogData
   ) {
     this.loginForm.reset(this.loginRequest);
     this.returnUrl = authMatDialogData?.returnUrl ?? '/';
@@ -66,7 +66,7 @@ export class LoginPopUpComponent {
   onSignUp() {
     this.dialog.closeAll();
     this.dialog.open(SignupPopUpComponent, {
-      data: this.authMatDialogData
+      data: this.authMatDialogData,
     });
   }
 
