@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/shared-module/auth/auth.service';
 import { LoginRequest } from 'src/app/shared-module/types/login-request';
 import { LoginResult } from 'src/app/shared-module/types/login-result';
 import { ReturnUrl } from 'src/app/shared-module/types/return-url';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-login-pop-up',
@@ -32,15 +31,9 @@ export class LoginPopUpComponent {
     private router: Router,
     private authService: AuthService,
     private dialogRef: MatDialog,
-    socialAuthService: SocialAuthService,
     @Inject(MAT_DIALOG_DATA) private returnUrl: ReturnUrl
   ) {
     this.loginForm.reset(this.loginRequest);
-
-    socialAuthService.authState.subscribe((user: SocialUser) => {
-      console.log(user);
-      authService.continueWithGoogle(user);
-    });
   }
 
   onSubmit() {
@@ -68,5 +61,10 @@ export class LoginPopUpComponent {
   resetForm() {
     this.loginRequest = <LoginRequest>{};
     this.loginForm.reset();
+  }
+
+  loginViaGoogle(): void {
+    const returnUrl = this.returnUrl ? this.returnUrl.url : '/';
+    this.authService.externalLogin('Google', returnUrl);
   }
 }
