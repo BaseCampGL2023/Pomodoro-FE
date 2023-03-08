@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { TrackerService } from 'src/app/home-page/services/tracker.service';
 import { TrackerDurationEnum } from 'src/app/home-page/types/tracker-duration.enum';
+import { TaskFrequenciesEnum } from '../enums/task-frequencies.enum';
 import { Task } from '../types/task';
 import { TaskForList } from '../types/task-for-list';
 
@@ -43,12 +44,8 @@ export class TaskService {
     console.log(`add pomodoro to task${taskId} in db`);
   }
 
-  getFrequencies(): string[] {
-    return this.frequencies();
-  }
-
   updateTask(task: Task): Observable<any> {
-    return of(console.log(`updates task${task.id} in db`));
+    return of(console.log(`updates task${task.id} in db`), console.log(task));
   }
 
   completeCurrentTask(): Observable<any> {
@@ -161,13 +158,9 @@ export class TaskService {
     return {
       id: '11',
       title: 'task11',
-      frequency: 'Day',
+      frequency: TaskFrequenciesEnum.None,
       allocatedTime: 1100,
       initialDate: new Date(2023, 1, 20),
     };
-  }
-
-  private frequencies(): string[] {
-    return ['None', 'Day', 'Week', 'Month', 'Year', 'Workday', 'Weekend'];
   }
 }

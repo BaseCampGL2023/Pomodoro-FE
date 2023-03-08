@@ -58,7 +58,11 @@
     <div class="form-group">
       <label>Frequency</label>
       <mat-select class="form-control" formControlName="frequency">
-        <mat-option class="opt" *ngFor="let frequency of frequencies" [value]="frequency">
+        <mat-option
+          class="opt"
+          *ngFor="let frequency of frequencies"
+          [value]="frequency"
+        >
           {{ frequency }}
         </mat-option>
       </mat-select>

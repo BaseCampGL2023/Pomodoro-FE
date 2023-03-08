@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
+import { TaskFrequenciesEnum } from 'src/app/shared-module/enums/task-frequencies.enum';
 import { TaskService } from 'src/app/shared-module/services/task.service';
 import { Task } from 'src/app/shared-module/types/task';
 import { NumberValidator } from 'src/app/shared-module/validation/number';
@@ -17,7 +18,7 @@ import { NumberValidator } from 'src/app/shared-module/validation/number';
 export class EditTaskPopUpComponent implements OnInit {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
   task = <Task>{};
-  frequencies = <string[]>{};
+  frequencies = Object.values(TaskFrequenciesEnum);
   editTaskForm = <FormGroup>{};
   minDate = new Date();
   editTaskResult?: any;
@@ -32,7 +33,6 @@ export class EditTaskPopUpComponent implements OnInit {
     this.taskService
       .getCurrentTask()
       .subscribe((result) => (this.task = result));
-    this.frequencies = this.taskService.getFrequencies();
     this.editTaskForm = this.buildFormGroup();
     this.minDate = this.task.initialDate;
   }
