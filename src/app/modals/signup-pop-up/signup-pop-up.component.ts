@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared-module/auth/auth.service';
+import { ReturnUrl } from 'src/app/shared-module/types/return-url';
 import { SignupRequest } from 'src/app/shared-module/types/signup-request';
 import { SignupResult } from 'src/app/shared-module/types/signup-result';
 
@@ -40,7 +41,11 @@ export class SignupPopUpComponent {
     agreement: new FormControl('', [Validators.requiredTrue]),
   });
 
-  constructor(private dialog: MatDialog, private authService: AuthService) {}
+  constructor(
+    private dialog: MatDialog,
+    private authService: AuthService,
+    @Inject(MAT_DIALOG_DATA) private returnUrl: ReturnUrl
+  ) {}
 
   onSubmit() {
     if (this.signUpForm.valid) {
@@ -74,6 +79,11 @@ export class SignupPopUpComponent {
   resetForm() {
     this.signupRequest = <SignupRequest>{};
     this.signUpForm.reset();
+  }
+
+  signUpViaGoogle(): void {
+    const returnUrl = this.returnUrl ? this.returnUrl.url : '/';
+    this.authService.externalLogin('Google', returnUrl);
   }
 
   private toSignIn() {

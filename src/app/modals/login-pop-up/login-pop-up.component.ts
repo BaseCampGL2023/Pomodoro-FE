@@ -62,7 +62,11 @@ export class LoginPopUpComponent {
 
   onSignUp() {
     this.dialog.closeAll();
-    this.dialog.open(SignupPopUpComponent);
+    this.dialog.open(SignupPopUpComponent, {
+      data: {
+        url: this.returnUrl.url,
+      },
+    });
   }
 
   resetForm() {
