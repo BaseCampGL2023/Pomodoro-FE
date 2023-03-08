@@ -36,13 +36,17 @@ export class AuthService {
     }
   }
 
+  completeAuth(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+    this.setAuthStatus(true);
+  }
+
   login(item: LoginRequest): Observable<LoginResult> {
     const url = environment.baseUrl + 'account/login';
     return this.http.post<LoginResult>(url, item).pipe(
       tap((loginResult) => {
         if (loginResult.success && loginResult.token) {
-          localStorage.setItem(this.tokenKey, loginResult.token);
-          this.setAuthStatus(true);
+          this.completeAuth(loginResult.token);
         }
       })
     );
