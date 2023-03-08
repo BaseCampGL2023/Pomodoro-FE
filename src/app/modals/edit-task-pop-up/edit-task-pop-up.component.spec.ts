@@ -8,9 +8,8 @@ describe('EditTaskPopUpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditTaskPopUpComponent ]
-    })
-    .compileComponents();
+      declarations: [EditTaskPopUpComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EditTaskPopUpComponent);
     component = fixture.componentInstance;
