@@ -33,7 +33,6 @@ import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.component';
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
 
-
 @NgModule({
   declarations: [
     AppComponent,
