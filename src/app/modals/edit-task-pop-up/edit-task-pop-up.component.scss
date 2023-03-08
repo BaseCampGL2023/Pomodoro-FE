@@ -2,10 +2,13 @@
 
 .date-picker {
   position: relative;
+  margin-bottom: 1.25rem;
 
   .form-control {
     background: $input-color;
     cursor: pointer;
+    height: 2.5rem;
+    border: none;
   }
 
   .form-control:has(input.ng-dirty.ng-valid) {
@@ -21,7 +24,7 @@
 
 .mat-datepicker-toggle {
   position: absolute;
-  top: -6%;
+  top: -0.25rem;
   right: 0;
 
   .mat-icon {
@@ -38,10 +41,13 @@
 
 mat-select {
   background-color: $input-color;
+  border: none;
+  height: 2.5rem;
+  margin-bottom: 1.25rem;
 }
 
 mat-select:focus {
-  border-color: #ced4da;
+  border: none;
   background-color: $input-color;
   box-shadow: none !important;
 }
