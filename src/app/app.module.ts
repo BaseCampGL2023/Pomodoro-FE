@@ -6,8 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SocialLoginModule, SocialAuthServiceConfig, GoogleInitOptions } from '@abacritt/angularx-social-login';
-import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -69,7 +67,6 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
     ReactiveFormsModule,
     HttpClientModule,
     MatIconModule,
-    SocialLoginModule,
   ],
   providers: [
     TaskService,
@@ -77,21 +74,6 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-    },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '513628381530-2nj8f4lftohck7drakp86h8ds427snk2.apps.googleusercontent.com',
-              { scopes: 'email' } as GoogleInitOptions
-            )
-          }
-        ]
-      } as SocialAuthServiceConfig,
     },
   ],
   bootstrap: [AppComponent],
