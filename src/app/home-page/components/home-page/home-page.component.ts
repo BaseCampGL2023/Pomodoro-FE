@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from 'src/app/shared-module/auth/auth.service';
-import { TrackerService } from '../../services/tracker.service';
+import { TrackerService } from '../../../shared-module/tracker/tracker.service';
 
 @Component({
   selector: 'app-home-page',
@@ -31,11 +31,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
-    //TODO: implement useful handler in subscribe
-    this.trackerService.castFinished.subscribe((val) => {
-      if (val) {
-        console.log(`${val} done`);
-      }
-    });
+    //TODO: implement useful subscribe
+    this.trackerService.event.subscribe((val) =>
+      console.log(`${val.duration} ${val.eventType}`)
+    );
   }
 }
