@@ -6,9 +6,9 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared-module/auth/auth.service';
 import { LoginRequest } from 'src/app/shared-module/types/login-request';
 import { LoginResult } from 'src/app/shared-module/types/login-result';
-import { ReturnUrl } from 'src/app/shared-module/types/return-url';
 import { SignupPopUpComponent } from '../signup-pop-up/signup-pop-up.component';
 import { ExternalLoginProviders } from 'src/app/shared-module/types/external-login-providers';
+import { AuthMatDialogData } from 'src/app/shared-module/types/auth-mat-dialog-data';
 
 @Component({
   selector: 'app-login-pop-up',
@@ -17,7 +17,7 @@ import { ExternalLoginProviders } from 'src/app/shared-module/types/external-log
 })
 export class LoginPopUpComponent {
   loginRequest = <LoginRequest>{};
-  loginResult?: LoginResult;
+  loginResult = <LoginResult>{};
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', {
@@ -29,13 +29,17 @@ export class LoginPopUpComponent {
     ]),
   });
 
+  private readonly returnUrl: string;
+
   constructor(
     private router: Router,
     private authService: AuthService,
     private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) private returnUrl: ReturnUrl
+    @Inject(MAT_DIALOG_DATA) private authMatDialogData?: AuthMatDialogData,
   ) {
     this.loginForm.reset(this.loginRequest);
+    this.returnUrl = authMatDialogData?.returnUrl ?? '/';
+    this.loginResult.message = authMatDialogData?.serverResponse ?? '';
   }
 
   onSubmit() {
@@ -46,9 +50,7 @@ export class LoginPopUpComponent {
           this.loginResult = result;
           if (result.success) {
             this.dialog.closeAll();
-            if (this.returnUrl) {
-              this.router.navigate([this.returnUrl.url]);
-            }
+            this.router.navigate([this.returnUrl]);
           }
         },
         error: (error) => {
@@ -64,9 +66,7 @@ export class LoginPopUpComponent {
   onSignUp() {
     this.dialog.closeAll();
     this.dialog.open(SignupPopUpComponent, {
-      data: {
-        url: this.returnUrl.url,
-      },
+      data: this.authMatDialogData
     });
   }
 
@@ -76,7 +76,9 @@ export class LoginPopUpComponent {
   }
 
   loginViaGoogle(): void {
-    const returnUrl = this.returnUrl ? this.returnUrl.url : '/';
-    this.authService.externalLogin(ExternalLoginProviders.Google, returnUrl);
+    this.authService.externalLogin(
+      ExternalLoginProviders.Google,
+      this.returnUrl
+    );
   }
 }

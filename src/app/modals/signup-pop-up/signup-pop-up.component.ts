@@ -2,8 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared-module/auth/auth.service';
+import { AuthMatDialogData } from 'src/app/shared-module/types/auth-mat-dialog-data';
 import { ExternalLoginProviders } from 'src/app/shared-module/types/external-login-providers';
-import { ReturnUrl } from 'src/app/shared-module/types/return-url';
 import { SignupRequest } from 'src/app/shared-module/types/signup-request';
 import { SignupResult } from 'src/app/shared-module/types/signup-result';
 
@@ -42,11 +42,15 @@ export class SignupPopUpComponent {
     agreement: new FormControl('', [Validators.requiredTrue]),
   });
 
+  private readonly returnUrl: string;
+
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
-    @Inject(MAT_DIALOG_DATA) private returnUrl: ReturnUrl
-  ) {}
+    @Inject(MAT_DIALOG_DATA) private authMatDialogData?: AuthMatDialogData,
+  ) {
+    this.returnUrl = authMatDialogData?.returnUrl ?? '/';
+  }
 
   onSubmit() {
     if (this.signUpForm.valid) {
@@ -83,12 +87,16 @@ export class SignupPopUpComponent {
   }
 
   signUpViaGoogle(): void {
-    const returnUrl = this.returnUrl ? this.returnUrl.url : '/';
-    this.authService.externalLogin(ExternalLoginProviders.Google, returnUrl);
+    this.authService.externalLogin(
+      ExternalLoginProviders.Google,
+      this.returnUrl
+    );
   }
 
   private toSignIn() {
     this.dialog.closeAll();
-    this.dialog.open(LoginPopUpComponent);
+    this.dialog.open(LoginPopUpComponent, {
+      data: this.authMatDialogData
+    });
   }
 }

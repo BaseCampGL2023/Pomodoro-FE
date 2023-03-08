@@ -13,7 +13,7 @@
     (reset)="resetForm()"
   >
     <p class="text-danger mt-1" *ngIf="!loginResult?.success">
-      {{ loginResult?.message }}
+      {{ loginResult.message }}
     </p>
     <div class="form-group">
       <label>Your email</label>
