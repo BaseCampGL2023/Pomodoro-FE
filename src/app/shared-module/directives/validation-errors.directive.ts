@@ -19,7 +19,7 @@ export class ValidationErrorsDirective implements OnInit {
   ) {}
 
   @Input('appValidationErrorsControl')
-  control = '';
+  control?: string;
 
   @Input('appValidationErrorsLabel')
   label?: string;
@@ -28,25 +28,50 @@ export class ValidationErrorsDirective implements OnInit {
   formGroup?: FormGroup;
 
   ngOnInit() {
-    const formatter = new ValidationHelper();
+    const validationHelper = new ValidationHelper();
     if (this.formGroup && this.control) {
-      const control = this.formGroup?.get(this.control);
-      if (control) {
-        control.statusChanges.subscribe(() => {
-          if (this.container.length > 0) {
-            this.container.clear();
-          }
-          if (control && control.dirty && control.invalid && control.errors) {
-            formatter
-              .formatMessages(control.errors, this.label ?? this.control)
-              .forEach((err) => {
-                this.container.createEmbeddedView(this.template, {
-                  $implicit: err,
-                });
+      this.handleControlStatusChanges(this.control, validationHelper);
+    } else if (this.formGroup) {
+      this.handleFormValueChanges(this.formGroup, validationHelper);
+    }
+  }
+
+  handleControlStatusChanges(
+    controlName: string,
+    validationHelper: ValidationHelper
+  ): void {
+    const control = this.formGroup?.get(controlName);
+    if (control) {
+      control.statusChanges.subscribe(() => {
+        if (this.container.length > 0) {
+          this.container.clear();
+        }
+        if (control && control.dirty && control.invalid && control.errors) {
+          validationHelper
+            .formatMessages(control.errors, this.label ?? this.control ?? '')
+            .forEach((err) => {
+              this.container.createEmbeddedView(this.template, {
+                $implicit: err,
               });
-          }
+            });
+        }
+      });
+    }
+  }
+
+  handleFormValueChanges(
+    formGroup: FormGroup,
+    validationHelper: ValidationHelper
+  ): void {
+    formGroup.valueChanges.subscribe(() => {
+      if (this.container.length > 0) {
+        this.container.clear();
+      }
+      if (this.formGroup && this.formGroup.dirty && this.formGroup.invalid) {
+        this.container.createEmbeddedView(this.template, {
+          $implicit: validationHelper.getTopErrorMessage(this.formGroup),
         });
       }
-    }
+    });
   }
 }
