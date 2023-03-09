@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { TrackerService } from 'src/app/home-page/services/tracker.service';
-import { TrackerDurationEnum } from 'src/app/home-page/types/tracker-duration.enum';
+import { TrackerService } from '../tracker/tracker.service';
+import { TrackerDurationEnum } from '../tracker/types/tracker-duration.enum';
 import { TaskFrequenciesEnum } from '../enums/task-frequencies.enum';
+import { TrackerEvent } from '../tracker/types/tracker-event';
+import { TrackerEventEnum } from '../tracker/types/tracker-event.enum';
 import { Task } from '../types/task';
 import { TaskForList } from '../types/task-for-list';
 
@@ -13,30 +15,25 @@ export class TaskService {
     private http: HttpClient,
     private trackerService: TrackerService
   ) {
-    this.trackerService.castFinished.subscribe(
-      (trackerDuration: TrackerDurationEnum) => {
-        if (
-          this.curTaskId != null &&
-          trackerDuration == TrackerDurationEnum.pomodoro
-        ) {
-          this.addPomodoro(this.curTaskId);
-        }
+    this.trackerService.event.subscribe((trackerEvent: TrackerEvent) => {
+      if (
+        this.curTaskId != null &&
+        trackerEvent.duration == TrackerDurationEnum.pomodoro &&
+        trackerEvent.eventType == TrackerEventEnum.finish
+      ) {
+        this.addPomodoro(this.curTaskId);
       }
-    );
+    });
   }
 
   private curTaskId: string | null = null;
-  private isNewTask = new Subject<boolean>();
-
-  castIsNewTask = this.isNewTask.asObservable();
 
   setCurTaskId(taskId: string | null) {
     if (this.curTaskId == taskId) {
       return;
     }
     this.curTaskId = taskId;
-    // todo: invoke TrackerService reload method and remove castIsNewTask
-    this.isNewTask.next(true);
+    this.trackerService.reload();
   }
 
   addPomodoro(taskId: string) {

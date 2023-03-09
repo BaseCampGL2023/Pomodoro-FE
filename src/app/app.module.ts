@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -30,6 +30,7 @@ import { ValidationHelper } from './shared-module/pipes/validation-helper';
 import { ValidationErrorsDirective } from './shared-module/directives/validation-errors.directive';
 import { TodayTasksComponent } from './home-page/components/today-tasks/today-tasks.component';
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
+import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.component';
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
 import { TaskMenuComponent } from './shared-module/task-menu/task-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -37,6 +38,7 @@ import { EditTaskPopUpComponent } from './modals/edit-task-pop-up/edit-task-pop-
 import { MatSelectModule } from '@angular/material/select';
 import { CompleteTaskPopUpComponent } from './modals/complete-task-pop-up/complete-task-pop-up.component';
 import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-task-pop-up.component';
+
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-tas
     ValidationErrorsDirective,
     TodayTasksComponent,
     BarPlotComponent,
+    SignupPopUpComponent,
     PomodoroBadgeDirective,
     TaskMenuComponent,
     EditTaskPopUpComponent,
@@ -87,6 +90,7 @@ import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-tas
       useClass: AuthInterceptor,
       multi: true,
     },
+    Title,
   ],
   bootstrap: [AppComponent],
 })

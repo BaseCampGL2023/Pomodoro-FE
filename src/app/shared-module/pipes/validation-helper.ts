@@ -27,6 +27,14 @@ export class ValidationHelper implements PipeTransform {
             `A ${name} must be at least ${errors['minlength'].requiredLength} characters`
           );
           break;
+        case 'pattern':
+          messages.push(`The ${name} contains illegal characters`);
+          break;
+        case 'match':
+          messages.push(
+            `The ${name} value must match with ${errors['match'].matchTo} value`
+          );
+          break;
         case 'notNumber':
           messages.push(`${name} must be a number`);
           break;
