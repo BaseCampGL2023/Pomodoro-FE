@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { TrackerDurationEnum } from 'src/app/shared-module/tracker/types/tracker-duration.enum';
 import { TrackerService } from '../../../shared-module/tracker/tracker.service';
 import { TrackerEventEnum } from '../../../shared-module/tracker/types/tracker-event.enum';
 
@@ -18,7 +19,7 @@ export class FinishModalComponent implements OnInit{
   ngOnInit(): void
   {
     this.tracker.event.subscribe((event)=> {
-      if (event.eventType === TrackerEventEnum.finish)
+      if (event.eventType === TrackerEventEnum.finish && event.duration === TrackerDurationEnum.pomodoro)
       {
         this.visibility = false;
         setTimeout(()=>this.visibility = true,7000)
