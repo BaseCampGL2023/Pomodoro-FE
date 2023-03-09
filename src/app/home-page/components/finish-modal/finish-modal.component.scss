@@ -12,22 +12,26 @@
     border-radius: 6px;
     background-color: rgba(51, 179, 85, 0.9599999785423279);
     }
-  .finish-text {
-      top: 15px;
-      left: 234px;
-      color: rgba(255, 255, 255, 1);
-      height: auto;
-      position: absolute;
-      font-size: 16px;
-      align-self: auto;
-      font-style: Medium;
-      text-align: left;
-      font-family: DM Sans;
-      font-weight: 500;
-      line-height: 20px;
-      font-stretch: normal;
-      margin-right: 0;
-      margin-bottom: 0;
-      text-decoration: none;
+.finish-text {
+    top: 15px;
+    left: 234px;
+    color: rgba(255, 255, 255, 1);
+    height: auto;
+    position: absolute;
+    font-size: 16px;
+    align-self: auto;
+    font-style: Medium;
+    text-align: left;
+    font-family: DM Sans;
+    font-weight: 500;
+    line-height: 20px;
+    font-stretch: normal;
+    margin-right: 0;
+    margin-bottom: 0;
+    text-decoration: none;
+    }
+    .stealth
+    {
+      display: none;
     }
   
