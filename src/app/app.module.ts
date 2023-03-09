@@ -34,7 +34,6 @@ import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.compo
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
 import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

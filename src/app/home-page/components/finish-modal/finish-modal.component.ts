@@ -15,11 +15,13 @@ export class FinishModalComponent implements OnInit{
     private tracker: TrackerService
   ) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void
+  {
     this.tracker.event.subscribe((event)=> {
       if (event.eventType === TrackerEventEnum.finish)
       {
         this.visibility = false;
+        setTimeout(()=>this.visibility = true,7000)
       }
       else
       {
