@@ -17,8 +17,6 @@
     }
   }
 
-
-
   .form-control, .form-select {
     border: 2px solid $input-color;
     background-color: $input-color;
@@ -58,17 +56,26 @@
 
   }
 
-  select {
-    padding-left: 15px;
-    font-family: $font-family;
-  }
-
-  select.form-control option:hover {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: #8F2C24;
-  }
 }
+
+
+mat-select {
+  background-color: $input-color;
+  border: none;
+  height: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+mat-select:focus {
+  border: none;
+  background-color: $input-color;
+  box-shadow: none !important;
+}
+
+mat-select.ng-dirty.ng-valid {
+  border: 2px solid $green-color;
+}
+
+
 
 

@@ -15,9 +15,9 @@ export class TodayTasksComponent implements OnInit {
   taskList: Task[] = [];
 
   ngOnInit() {
-    this.taskService
-      .getTodayTasks()
-      .subscribe((tasks) => (this.taskList = this.moveDoneTaskToEnd(tasks)));
+    this.taskService.getTodayTasks().subscribe((tasks) => {
+      this.taskList = this.moveDoneTaskToEnd(tasks);
+    });
   }
 
   moveDoneTaskToEnd(arr: Task[]) {

@@ -44,15 +44,26 @@
     </div>
     <div class="form-group">
       <label>Frequency</label>
-      <select class="form-select" formControlName="frequency">
-        <option
+      <mat-select class="form-control" formControlName="frequency">
+        <mat-option
+          class="opt"
           *ngFor="let freq of taskFrequencies | keyvalue"
           [value]="freq.key"
-          [selected]="freq.value === taskFrequencies.None"
         >
           {{ freq.value }}
-        </option>
-      </select>
+        </mat-option>
+      </mat-select>
+    </div>
+    <div class="form-group">
+      <label>Allocated time</label>
+      <input class="form-control" formControlName="allocatedTime" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li
+          *appValidationErrors="newTaskForm; control: 'allocatedTime'; let err"
+        >
+          {{ err }}
+        </li>
+      </ul>
     </div>
     <button class="btn btn-primary" [disabled]="newTaskForm.invalid">
       <span>Create new task</span>

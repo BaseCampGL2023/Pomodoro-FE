@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from '../../shared-module/services/task.service';
 import { NewTask } from '../../shared-module/types/new-task';
 import { TaskFrequenciesEnum } from '../../shared-module/enums/task-frequencies.enum';
+import { NumberValidator } from 'src/app/shared-module/validation/number';
 
 @Component({
   selector: 'app-new-task-pop-up',
@@ -45,13 +46,16 @@ export class NewTaskPopUpComponent {
 
   newTaskForm: FormGroup = new FormGroup({
     title: new FormControl('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.minLength(3)],
     }),
     initialDate: new FormControl(this.selectedDate, {
       initialValueIsDefault: true,
     }),
     frequency: new FormControl(this.selectedFrequency, {
       initialValueIsDefault: true,
+    }),
+    allocatedTime: new FormControl('', {
+      validators: [Validators.required, NumberValidator.number(0, 1440)],
     }),
   });
 
