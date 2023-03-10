@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Task } from '../types/task';
 import { environment } from '../../../environments/environment';
 import { TaskResult } from '../types/task-result';

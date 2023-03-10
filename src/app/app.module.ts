@@ -34,7 +34,7 @@ import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.compo
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
 import { NewTaskPopUpComponent } from './modals/new-task-pop-up/new-task-pop-up.component';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from "@angular/material/select";
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -74,7 +74,7 @@ import { MatSelectModule } from "@angular/material/select";
     HttpClientModule,
     MatIconModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [
     TaskService,
