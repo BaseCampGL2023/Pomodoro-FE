@@ -9,16 +9,10 @@
     [formGroup]="editTaskForm"
     #form="ngForm"
     (ngSubmit)="onSubmit()"
-    (reset)="resetForm()"
   >
-    <ul
-      class="text-danger list-unstyled mt-1"
-      *ngIf="!editTaskResult?.success && editTaskResult?.errors?.length"
-    >
-      <li *ngFor="let error of editTaskResult?.errors">
-        {{ error }}
-      </li>
-    </ul>
+    <span class="text-danger list-unstyled mt-1" *ngIf="!!editTaskError">{{
+      editTaskError
+    }}</span>
     <div class="form-group">
       <label>Task title</label>
       <input class="form-control" formControlName="title" />

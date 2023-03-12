@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { catchError, Observable, of, Subject, throwError } from 'rxjs';
 import { TrackerService } from '../tracker/tracker.service';
 import { TrackerDurationEnum } from '../tracker/types/tracker-duration.enum';
 import { TaskFrequenciesEnum } from '../enums/task-frequencies.enum';
@@ -8,6 +8,7 @@ import { TrackerEvent } from '../tracker/types/tracker-event';
 import { TrackerEventEnum } from '../tracker/types/tracker-event.enum';
 import { Task } from '../types/task';
 import { TaskForList } from '../types/task-for-list';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -42,7 +43,10 @@ export class TaskService {
   }
 
   updateTask(task: Task): Observable<any> {
-    return of(console.log(`updates task${task.id} in db`), console.log(task));
+    console.log(`updates task${task.id} in db`);
+    console.log(task);
+    const url = environment.baseUrl + 'tasks/' + this.curTaskId;
+    return this.http.put<any>(url, task).pipe(catchError(this.handleError));
   }
 
   completeCurrentTask(): Observable<any> {
@@ -69,6 +73,11 @@ export class TaskService {
     return of(this.getTasks());
   }
 
+  private handleError(error: HttpErrorResponse) {
+    return throwError(
+      () => new Error(error.message || 'something went wrong!')
+    );
+  }
   private getTasks(): TaskForList[] {
     return [
       {

@@ -22,7 +22,7 @@ export class EditTaskPopUpComponent implements OnInit {
   isCustomizableFrequency = true;
   editTaskForm = <FormGroup>{};
   minDate = new Date();
-  editTaskResult?: any;
+  editTaskError?: string;
 
   constructor(
     private taskService: TaskService,
@@ -60,7 +60,6 @@ export class EditTaskPopUpComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO
     if (this.editTaskForm.valid && this.taskIsChanged()) {
       this.task.title = this.editTaskForm.value.title;
       this.task.initialDate = this.editTaskForm.value.initialDate;
@@ -71,24 +70,18 @@ export class EditTaskPopUpComponent implements OnInit {
       this.task.frequency.every = this.editTaskForm.value.every;
       this.task.frequency.isCustom =
         this.editTaskForm.value.every > 1 ? true : false;
+
       this.taskService.updateTask(this.task).subscribe({
         next: () => {
           this.dialogRef.closeAll();
         },
         error: (error) => {
-          if (!error?.error?.success) {
-            this.editTaskResult = error.error;
-            this.resetForm();
-          }
+          this.editTaskError = error;
         },
       });
     } else {
       this.dialogRef.closeAll();
     }
-  }
-
-  resetForm() {
-    this.editTaskForm.reset();
   }
 
   openDatePicker() {
