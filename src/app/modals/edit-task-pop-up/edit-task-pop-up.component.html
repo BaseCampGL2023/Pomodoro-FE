@@ -57,7 +57,11 @@
     </div>
     <div class="form-group">
       <label>Frequency</label>
-      <mat-select class="form-control" formControlName="frequency">
+      <mat-select
+        class="form-control"
+        formControlName="frequency"
+        (selectionChange)="onSelect()"
+      >
         <mat-option
           class="opt"
           *ngFor="let frequency of frequencies"
@@ -66,6 +70,15 @@
           {{ frequency }}
         </mat-option>
       </mat-select>
+    </div>
+    <div class="form-group" *ngIf="isCustomizableFrequency">
+      <label>Frequency every</label>
+      <input class="form-control" formControlName="every" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *appValidationErrors="editTaskForm; control: 'every'; let err">
+          {{ err }}
+        </li>
+      </ul>
     </div>
     <div class="form-group">
       <label>Allocated time</label>

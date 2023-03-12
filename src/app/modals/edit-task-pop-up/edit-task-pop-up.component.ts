@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskFrequenciesEnum } from 'src/app/shared-module/enums/task-frequencies.enum';
@@ -19,6 +24,7 @@ export class EditTaskPopUpComponent implements OnInit {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
   task = <Task>{};
   frequencies = Object.values(TaskFrequenciesEnum);
+  isCustomizableFrequency = true;
   editTaskForm = <FormGroup>{};
   minDate = new Date();
   editTaskResult?: any;
@@ -45,14 +51,21 @@ export class EditTaskPopUpComponent implements OnInit {
         this.task.allocatedTime,
         [Validators.required, NumberValidator.number(0, 1440)],
       ],
-      frequency: [this.task.frequency, Validators.required],
+      frequency: [this.task.frequency.frequencyType, Validators.required],
+      every: [this.task.frequency.every, NumberValidator.number(1, 100)],
     });
   }
 
   onSubmit() {
     // TODO
     if (this.editTaskForm.valid && this.taskIsChanged()) {
-      Object.assign(this.task, this.editTaskForm.value);
+      this.task.title = this.editTaskForm.value.title;
+      this.task.initialDate = this.editTaskForm.value.initialDate;
+      this.task.allocatedTime = this.editTaskForm.value.allocatedTime;
+      this.task.frequency.frequencyType = this.editTaskForm.value.frequency;
+      this.task.frequency.every = this.editTaskForm.value.every;
+      this.task.frequency.isCustom =
+        this.editTaskForm.value.every > 1 ? true : false;
       this.taskService.updateTask(this.task).subscribe({
         next: () => {
           this.dialogRef.closeAll();
@@ -81,8 +94,21 @@ export class EditTaskPopUpComponent implements OnInit {
     return (
       this.task.title !== this.editTaskForm.value.title ||
       this.task.initialDate !== this.editTaskForm.value.initialDate ||
-      this.task.frequency !== this.editTaskForm.value.frequency ||
+      this.task.frequency.frequencyType !== this.editTaskForm.value.frequency ||
+      this.task.frequency.every !== this.editTaskForm.value.every ||
       this.task.allocatedTime !== this.editTaskForm.value.allocatedTime
     );
+  }
+
+  onSelect() {
+    if (
+      this.editTaskForm.value.frequency === TaskFrequenciesEnum.Day ||
+      this.editTaskForm.value.frequency === TaskFrequenciesEnum.Month ||
+      this.editTaskForm.value.frequency === TaskFrequenciesEnum.Year
+    ) {
+      this.isCustomizableFrequency = true;
+    } else {
+      this.isCustomizableFrequency = false;
+    }
   }
 }

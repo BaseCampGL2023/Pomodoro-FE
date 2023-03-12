@@ -155,7 +155,12 @@ export class TaskService {
     return {
       id: '11',
       title: 'task11',
-      frequency: TaskFrequenciesEnum.None,
+      frequency: {
+        id: '145',
+        frequencyType: TaskFrequenciesEnum.Day,
+        every: 1,
+        isCustom: false,
+      },
       allocatedTime: 1100,
       initialDate: new Date(2023, 1, 20),
     };
