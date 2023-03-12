@@ -1,16 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskFrequenciesEnum } from 'src/app/shared-module/enums/task-frequencies.enum';
 import { TaskService } from 'src/app/shared-module/services/task.service';
+import { TrackerSettingsService } from 'src/app/shared-module/tracker/tracker-settings.service';
 import { Task } from 'src/app/shared-module/types/task';
-import { NumberValidator } from 'src/app/shared-module/validation/number';
 
 @Component({
   selector: 'app-edit-task-pop-up',
@@ -32,7 +27,8 @@ export class EditTaskPopUpComponent implements OnInit {
   constructor(
     private taskService: TaskService,
     private fb: FormBuilder,
-    private dialogRef: MatDialog
+    private dialogRef: MatDialog,
+    private settings: TrackerSettingsService
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +45,17 @@ export class EditTaskPopUpComponent implements OnInit {
       initialDate: [this.task.initialDate, Validators.required],
       allocatedTime: [
         this.task.allocatedTime,
-        [Validators.required, NumberValidator.number(0, 1440)],
+        [
+          Validators.required,
+          Validators.min(this.settings.pomodoro),
+          Validators.max(1440),
+        ],
       ],
       frequency: [this.task.frequency.frequencyType, Validators.required],
-      every: [this.task.frequency.every, NumberValidator.number(1, 100)],
+      every: [
+        this.task.frequency.every,
+        [Validators.required, Validators.min(1), Validators.max(100)],
+      ],
     });
   }
 
@@ -62,7 +65,9 @@ export class EditTaskPopUpComponent implements OnInit {
       this.task.title = this.editTaskForm.value.title;
       this.task.initialDate = this.editTaskForm.value.initialDate;
       this.task.allocatedTime = this.editTaskForm.value.allocatedTime;
-      this.task.frequency.frequencyType = this.editTaskForm.value.frequency;
+      this.task.frequency.frequencyType = this.getFrequenciesEnumKeyByValue(
+        this.editTaskForm.value.frequency
+      );
       this.task.frequency.every = this.editTaskForm.value.every;
       this.task.frequency.isCustom =
         this.editTaskForm.value.every > 1 ? true : false;
@@ -110,5 +115,13 @@ export class EditTaskPopUpComponent implements OnInit {
     } else {
       this.isCustomizableFrequency = false;
     }
+  }
+
+  getFrequenciesEnumKeyByValue(value: string) {
+    const indexOfS = Object.values(TaskFrequenciesEnum).indexOf(
+      value as unknown as TaskFrequenciesEnum
+    );
+    const key = Object.keys(TaskFrequenciesEnum)[indexOfS];
+    return key;
   }
 }
