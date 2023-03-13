@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,7 +39,6 @@ import { EditTaskPopUpComponent } from './modals/edit-task-pop-up/edit-task-pop-
 import { MatSelectModule } from '@angular/material/select';
 import { CompleteTaskPopUpComponent } from './modals/complete-task-pop-up/complete-task-pop-up.component';
 import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-task-pop-up.component';
-
 
 @NgModule({
   declarations: [
@@ -80,6 +80,7 @@ import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-tas
     ReactiveFormsModule,
     HttpClientModule,
     MatIconModule,
+    MatSlideToggleModule,
     MatMenuModule,
     MatSelectModule,
   ],
