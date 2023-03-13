@@ -1,4 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, Subject, throwError } from 'rxjs';
 import { TrackerService } from '../tracker/tracker.service';
@@ -38,8 +42,9 @@ export class TaskService {
   }
 
   addPomodoro(taskId: string) {
-    // todo: request to backend
     console.log(`add pomodoro to task${taskId} in db`);
+    const url = environment.baseUrl + 'tasks/AddPomodoro' + this.curTaskId;
+    return this.http.put<any>(url, null).pipe(catchError(this.handleError));
   }
 
   updateTask(task: Task): Observable<any> {
@@ -50,11 +55,15 @@ export class TaskService {
   }
 
   completeCurrentTask(): Observable<any> {
-    return of(console.log(`completes task${this.curTaskId} in db`));
+    console.log(`completes task${this.curTaskId} in db`);
+    const url = environment.baseUrl + 'tasks/complete' + this.curTaskId;
+    return this.http.put<any>(url, null).pipe(catchError(this.handleError));
   }
 
   deleteCurrentTask(): Observable<any> {
-    return of(console.log(`deletes task${this.curTaskId} in db`));
+    console.log(`deletes task${this.curTaskId} in db`);
+    const url = environment.baseUrl + 'tasks/' + this.curTaskId;
+    return this.http.delete<any>(url).pipe(catchError(this.handleError));
   }
 
   getCurrentTask(): Observable<Task> {
@@ -63,14 +72,23 @@ export class TaskService {
 
   getTaskById(taskId: string): Observable<Task> {
     return of(this.getTask());
+    // const url = environment.baseUrl + 'tasks/' + this.curTaskId;
+    // return this.http.get<any>(url).pipe(catchError(this.handleError));
   }
 
   getTodayTasks(): Observable<TaskForList[]> {
-    return of(this.getTasks());
+    return this.getTasksOnDate(new Date());
   }
 
   getTasksOnDate(date: Date): Observable<TaskForList[]> {
     return of(this.getTasks());
+    // let queryParams = new HttpParams();
+    // queryParams = queryParams.append('startDate', date.toString());
+    // queryParams = queryParams.append('endDate', date.toString());
+    // const url = environment.baseUrl + 'tasks/ByDate';
+    // return this.http
+    //   .get<any>(url, { params: queryParams })
+    //   .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -78,6 +96,7 @@ export class TaskService {
       () => new Error(error.message || 'something went wrong!')
     );
   }
+
   private getTasks(): TaskForList[] {
     return [
       {
