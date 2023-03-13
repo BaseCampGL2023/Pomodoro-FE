@@ -2,6 +2,9 @@
   <div class="header-row">
     <h4>Are you sure to delete the task?</h4>
   </div>
+  <span class="text-danger list-unstyled mt-1" *ngIf="!!deleteTaskError">{{
+    deleteTaskError
+  }}</span>
   <div class="buttons">
     <button type="button" class="btn btn-danger" (click)="onSubmit()">
       Yes
@@ -10,13 +13,4 @@
       No
     </button>
   </div>
-
-  <ul
-    class="text-danger list-unstyled mt-1"
-    *ngIf="!deleteTaskResult?.success && deleteTaskResult?.errors?.length"
-  >
-    <li *ngFor="let error of deleteTaskResult?.errors">
-      {{ error }}
-    </li>
-  </ul>
 </div>

@@ -11,20 +11,17 @@ import { TaskService } from 'src/app/shared-module/services/task.service';
   ],
 })
 export class DeleteTaskPopUpComponent {
-  deleteTaskResult?: any;
+  deleteTaskError?: string;
 
   constructor(private taskService: TaskService, private dialogRef: MatDialog) {}
 
   onSubmit() {
-    // TODO
     this.taskService.deleteCurrentTask().subscribe({
       next: () => {
         this.dialogRef.closeAll();
       },
       error: (error) => {
-        if (!error?.error?.success) {
-          this.deleteTaskResult = error.error;
-        }
+        this.deleteTaskError = error;
       },
     });
   }
