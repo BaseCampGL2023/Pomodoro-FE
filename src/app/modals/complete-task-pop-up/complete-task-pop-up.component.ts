@@ -8,20 +8,17 @@ import { TaskService } from 'src/app/shared-module/services/task.service';
   styleUrls: ['./complete-task-pop-up.component.scss'],
 })
 export class CompleteTaskPopUpComponent {
-  completeTaskResult?: any;
+  completeTaskError?: string;
 
   constructor(private taskService: TaskService, private dialogRef: MatDialog) {}
 
   onSubmit() {
-    // TODO
     this.taskService.completeCurrentTask().subscribe({
       next: () => {
         this.dialogRef.closeAll();
       },
       error: (error) => {
-        if (!error?.error?.success) {
-          this.completeTaskResult = error.error;
-        }
+        this.completeTaskError = error;
       },
     });
   }

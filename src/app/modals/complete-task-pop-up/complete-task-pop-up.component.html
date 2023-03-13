@@ -2,6 +2,9 @@
   <div class="header-row">
     <h4>Did you complete the task?</h4>
   </div>
+  <span class="text-danger list-unstyled mt-1" *ngIf="!!completeTaskError">{{
+    completeTaskError
+  }}</span>
   <div class="buttons">
     <button type="button" class="btn btn-success" (click)="onSubmit()">
       Yes
@@ -10,13 +13,4 @@
       No
     </button>
   </div>
-
-  <ul
-    class="text-danger list-unstyled mt-1"
-    *ngIf="!completeTaskResult?.success && completeTaskResult?.errors?.length"
-  >
-    <li *ngFor="let error of completeTaskResult?.errors">
-      {{ error }}
-    </li>
-  </ul>
 </div>
