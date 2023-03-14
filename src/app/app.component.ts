@@ -27,16 +27,38 @@ export class AppComponent implements OnInit {
       );
     });
     this.tracker.event.subscribe((event) => {
-      if (
-        event.eventType === TrackerEventEnum.finish ||
-        event.eventType === TrackerEventEnum.reset
-      ) {
-        this.title.setTitle(this.defaultTitle);
-      } else {
-        this.title.setTitle(
-          `${this.tracker.strMin}:${this.tracker.strSec} | ${this.tracker.mode}`
-        );
-      }
+      this.setTitle(event.eventType);
+      this.playNotification(event.eventType);
     });
+  }
+
+  private setTitle(event: TrackerEventEnum) {
+    if(event === TrackerEventEnum.finish || event === TrackerEventEnum.reset){
+      this.title.setTitle(this.defaultTitle);
+    } else {
+      this.title.setTitle(`${this.tracker.strMin}:${this.tracker.strSec} | ${this.tracker.mode}`);
+    }
+  }
+
+  private playNotification(event: TrackerEventEnum) {
+    switch (event) {
+      case TrackerEventEnum.start:
+      case TrackerEventEnum.autostart:
+        this.playSound('../assets/sound/start.mp3');
+        break;
+      case TrackerEventEnum.finish:
+        this.playSound('../assets/sound/stop.mp3');
+        break;
+      case TrackerEventEnum.stop:
+        this.playSound('../assets/sound/stop.mp3');
+        break;
+      case TrackerEventEnum.reset:
+        this.playSound('../assets/sound/stop.mp3');
+    }
+  }
+
+  private playSound(url: string) {
+    const audio = new Audio(url);
+    audio.play();
   }
 }
