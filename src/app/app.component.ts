@@ -33,10 +33,12 @@ export class AppComponent implements OnInit {
   }
 
   private setTitle(event: TrackerEventEnum) {
-    if(event === TrackerEventEnum.finish || event === TrackerEventEnum.reset){
+    if (event === TrackerEventEnum.finish || event === TrackerEventEnum.reset) {
       this.title.setTitle(this.defaultTitle);
     } else {
-      this.title.setTitle(`${this.tracker.strMin}:${this.tracker.strSec} | ${this.tracker.mode}`);
+      this.title.setTitle(
+        `${this.tracker.strMin}:${this.tracker.strSec} | ${this.tracker.mode}`
+      );
     }
   }
 
