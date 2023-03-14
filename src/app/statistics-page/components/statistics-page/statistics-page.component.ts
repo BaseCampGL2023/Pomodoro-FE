@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/shared-module/services/task.service';
-import { Task } from 'src/app/shared-module/types/task';
+import { TaskForList } from 'src/app/shared-module/types/task-for-list';
 
 @Component({
   selector: 'app-statistics-page',
@@ -10,7 +10,7 @@ import { Task } from 'src/app/shared-module/types/task';
 export class StatisticsPageComponent implements OnInit {
   constructor(private taskService: TaskService) {}
 
-  taskList: Task[] = [];
+  taskList: TaskForList[] = [];
 
   ngOnInit() {
     this.taskService

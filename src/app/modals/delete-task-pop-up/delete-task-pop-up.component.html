@@ -1,0 +1,16 @@
+<div class="confirmation-modal">
+  <div class="header-row">
+    <h4>Are you sure to delete the task?</h4>
+  </div>
+  <span class="text-danger list-unstyled mt-1" *ngIf="!!deleteTaskError">{{
+    deleteTaskError
+  }}</span>
+  <div class="buttons">
+    <button type="button" class="btn btn-danger" (click)="onSubmit()">
+      Yes
+    </button>
+    <button type="button" class="btn btn-secondary" [mat-dialog-close]="true">
+      No
+    </button>
+  </div>
+</div>

@@ -35,6 +35,12 @@ export class ValidationHelper implements PipeTransform {
             `The ${name} value must match with ${errors['match'].matchTo} value`
           );
           break;
+        case 'min':
+          messages.push(`Number must be more then ${errors[errorName].min}`);
+          break;
+        case 'max':
+          messages.push(`Number must be less then ${errors[errorName].max}`);
+          break;
       }
     }
     return messages;

@@ -1,0 +1,26 @@
+@import "../../../assets/styles/variables";
+
+.confirmation-modal {
+  width: 30vw;
+  padding: 1.25em 2.125em 2.125em;
+
+  .header-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .buttons {
+    margin-top: 1em;
+    padding: 0 1.75em;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      width: 10vw;
+    }
+  }
+}
+
+.btn-success {
+  background-color: $green-color;
+}
