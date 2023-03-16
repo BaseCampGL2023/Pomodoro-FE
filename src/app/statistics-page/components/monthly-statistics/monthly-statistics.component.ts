@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { StatisticsService } from '../../services/statistics.service';
+import { Component, Input } from '@angular/core';
 import { MonthlyStatistics } from '../../types/monthly-statistics';
 import { secondsToHmsFormat } from '../../utils/time-utils';
 
@@ -8,20 +7,12 @@ import { secondsToHmsFormat } from '../../utils/time-utils';
   templateUrl: './monthly-statistics.component.html',
   styleUrls: ['./monthly-statistics.component.scss'],
 })
-export class MonthlyStatisticsComponent implements OnInit {
-  constructor(private statisticsService: StatisticsService) {}
-
-  monthlyStatistics?: MonthlyStatistics;
-
-  ngOnInit(): void {
-    this.statisticsService
-      .getMonthlyStatistics()
-      .subscribe((result) => (this.monthlyStatistics = result));
-  }
+export class MonthlyStatisticsComponent {
+  @Input() statistics?: MonthlyStatistics;
 
   get timeSpent(): string {
-    return this.monthlyStatistics == null
+    return this.statistics == null
       ? '00:00'
-      : secondsToHmsFormat(this.monthlyStatistics.timeSpent);
+      : secondsToHmsFormat(this.statistics.timeSpent);
   }
 }
