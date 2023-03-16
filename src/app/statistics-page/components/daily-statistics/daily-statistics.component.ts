@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import {
   BarPlotUnitVM,
@@ -15,6 +15,7 @@ import { secondsToMsFormat } from '../../utils/time-utils';
 })
 export class DailyStatisticsComponent implements OnInit {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
+  @Output() dateSelectedEvent = new EventEmitter<Date>();
 
   maxDate: Date;
   barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
@@ -36,6 +37,7 @@ export class DailyStatisticsComponent implements OnInit {
   set selectedDay(value: Date) {
     this._selectedDay = value;
     this.loadDailyStatistics();
+    this.dateSelectedEvent.emit(value);
   }
 
   get dateInputRightArrowState(): string {

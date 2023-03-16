@@ -23,6 +23,10 @@ export class StatisticsPageComponent implements OnInit {
     this.loadMonthlyStatistics(new Date());
   }
 
+  dateOnSelect(date: Date) {
+    this.loadTasks(date);
+  }
+
   monthOnSelect(month: Date) {
     this.loadMonthlyStatistics(month);
   }

@@ -1,7 +1,7 @@
 <div class="container overflow-hidden">
   <div class="row row-cols-lg-2 gy-3 gx-5">
     <div class="col-lg order-lg-1">
-      <app-daily-statistics></app-daily-statistics>
+      <app-daily-statistics (dateSelectedEvent)="dateOnSelect($event)"></app-daily-statistics>
     </div>
     <div class="col-lg order-lg-3">
       <div class="container">

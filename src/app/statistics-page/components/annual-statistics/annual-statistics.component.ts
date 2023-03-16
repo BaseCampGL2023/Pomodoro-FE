@@ -38,7 +38,7 @@ export class AnnualStatisticsComponent implements OnInit {
   set selectedMonth(value: Date) {
     this._selectedMonth = value;
     this.loadAnnualStatistics();
-    this.monthSelectedEvent.emit(this.selectedMonth);
+    this.monthSelectedEvent.emit(value);
   }
 
   get dateInputRightArrowState(): string {
