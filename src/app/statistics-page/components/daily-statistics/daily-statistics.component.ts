@@ -17,26 +17,25 @@ import { secondsToMsFormat } from '../../utils/time-utils';
 export class DailyStatisticsComponent implements OnInit {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
 
-  private _selectedDay: Date = new Date();
-  get selectedDay(): Date {
-    return this._selectedDay;
-  }
-  set selectedDay(value: Date) {
-    this._selectedDay = value;
-    this.taskService.getTasksOnDate(value);
-  }
-
   maxDate: Date;
-  dailyStatistics?: DailyStatistics;
-
   barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
 
   constructor(
-    private statisticsService: StatisticsService,
-    private taskService: TaskService
+    private statisticsService: StatisticsService
   ) {
     this.maxDate = new Date();
     this.maxDate.setHours(0, 0, 0, 0);
+  }
+
+  private _selectedDay: Date = new Date();
+
+  get selectedDay(): Date {
+    return this._selectedDay;
+  }
+
+  set selectedDay(value: Date) {
+    this._selectedDay = value;
+    this.loadDailyStatistics();
   }
 
   get dateInputRightArrowState(): string {
@@ -44,10 +43,7 @@ export class DailyStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.statisticsService.getDailyStatistics().subscribe((result) => {
-      this.dailyStatistics = result;
-      this.updateBarPlotVM(this.dailyStatistics);
-    });
+    this.loadDailyStatistics();
   }
 
   formatTime(seconds: number): string {
@@ -76,6 +72,17 @@ export class DailyStatisticsComponent implements OnInit {
         currDate + 1
       );
     }
+  }
+
+  private loadDailyStatistics(): void {
+    this.statisticsService
+      .getDailyStatistics(this._selectedDay)
+      .subscribe((result) => {
+        if (result) {
+          console.log(result);
+          this.updateBarPlotVM(result);
+        }
+      });
   }
 
   private updateBarPlotVM(data: DailyStatistics) {
