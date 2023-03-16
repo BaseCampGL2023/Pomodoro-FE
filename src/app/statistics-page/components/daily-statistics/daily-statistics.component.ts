@@ -79,7 +79,6 @@ export class DailyStatisticsComponent implements OnInit {
       .getDailyStatistics(this._selectedDay)
       .subscribe((result) => {
         if (result) {
-          console.log(result);
           this.updateBarPlotVM(result);
           this.statisticsNotFound = this.barPlotVM.isEmpty();
         }

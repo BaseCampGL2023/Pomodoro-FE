@@ -32,7 +32,6 @@ export class StatisticsPageComponent implements OnInit {
       .getMonthlyStatistics(date.getFullYear(), date.getMonth())
       .subscribe(res => {
         if (res) {
-          console.log(res);
           this.monthlyStatistics = res;
         }
       });
