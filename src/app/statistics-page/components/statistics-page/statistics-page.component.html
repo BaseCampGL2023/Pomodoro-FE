@@ -10,10 +10,10 @@
       </div>
     </div>
     <div class="col-lg order-lg-2">
-      <app-annual-statistics></app-annual-statistics>
+      <app-annual-statistics (monthSelectedEvent)="monthOnSelect($event)"></app-annual-statistics>
     </div>
     <div class="col-lg order-lg-4">
-      <app-monthly-statistics></app-monthly-statistics>
+      <app-monthly-statistics [statistics]="monthlyStatistics"></app-monthly-statistics>
     </div>
   </div>
 </div>

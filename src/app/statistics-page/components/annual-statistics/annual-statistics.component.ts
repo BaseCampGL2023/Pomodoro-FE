@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import {
   BarPlotUnitVM,
@@ -15,11 +15,9 @@ import { Month } from '../../types/month';
 })
 export class AnnualStatisticsComponent implements OnInit {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
+  @Output() monthSelectedEvent = new EventEmitter<Date>();
 
   maxDate: Date;
-  selectedMonth: Date;
-
-  annualStatistics?: AnnualStatistics;
   Month = Month;
 
   barPlotVM = new BarPlotVM('Pomodoro (times)', 'Month', 'Overall');
@@ -28,8 +26,18 @@ export class AnnualStatisticsComponent implements OnInit {
     this.maxDate = new Date();
     this.maxDate.setDate(1);
     this.maxDate.setHours(0, 0, 0, 0);
+  }
 
-    this.selectedMonth = new Date();
+  private _selectedMonth = new Date();
+
+  get selectedMonth(): Date {
+    return this._selectedMonth;
+  }
+
+  set selectedMonth(value: Date) {
+    this._selectedMonth = value;
+    this.loadAnnualStatistics();
+    this.monthSelectedEvent.emit(this.selectedMonth);
   }
 
   get dateInputRightArrowState(): string {
@@ -37,10 +45,7 @@ export class AnnualStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.statisticsService.getAnnualStatistics().subscribe((result) => {
-      this.annualStatistics = result;
-      this.updateBarPlotVM(this.annualStatistics);
-    });
+    this.loadAnnualStatistics();
   }
 
   openDatePicker() {
@@ -68,6 +73,17 @@ export class AnnualStatisticsComponent implements OnInit {
         currMonth + 1
       );
     }
+  }
+
+  private loadAnnualStatistics() {
+    this.statisticsService
+      .getAnnualStatistics(this._selectedMonth.getFullYear())
+      .subscribe((result) => {
+        if (result) {
+          console.log(result);
+          this.updateBarPlotVM(result);
+        }
+      });
   }
 
   private updateBarPlotVM(data: AnnualStatistics) {
