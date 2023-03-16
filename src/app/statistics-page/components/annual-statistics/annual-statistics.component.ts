@@ -21,6 +21,7 @@ export class AnnualStatisticsComponent implements OnInit {
   Month = Month;
 
   barPlotVM = new BarPlotVM('Pomodoro (times)', 'Month', 'Overall');
+  statisticsNotFound = false;
 
   constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();
@@ -82,6 +83,7 @@ export class AnnualStatisticsComponent implements OnInit {
         if (result) {
           console.log(result);
           this.updateBarPlotVM(result);
+          this.statisticsNotFound = this.barPlotVM.isEmpty();
         }
       });
   }

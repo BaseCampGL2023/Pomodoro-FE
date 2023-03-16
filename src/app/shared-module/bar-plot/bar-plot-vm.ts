@@ -5,6 +5,10 @@ export class BarPlotVM {
     public tooltipTitle?: string,
     public dataSequence: BarPlotUnitVM[] = []
   ) {}
+
+  isEmpty(): boolean {
+    return this.dataSequence.every(entry => entry.value === 0);
+  }
 }
 
 export class BarPlotUnitVM {

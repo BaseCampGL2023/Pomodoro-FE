@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { TaskService } from 'src/app/shared-module/services/task.service';
 import {
   BarPlotUnitVM,
   BarPlotVM,
@@ -19,6 +18,7 @@ export class DailyStatisticsComponent implements OnInit {
 
   maxDate: Date;
   barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
+  statisticsNotFound = false;
 
   constructor(
     private statisticsService: StatisticsService
@@ -81,6 +81,7 @@ export class DailyStatisticsComponent implements OnInit {
         if (result) {
           console.log(result);
           this.updateBarPlotVM(result);
+          this.statisticsNotFound = this.barPlotVM.isEmpty();
         }
       });
   }

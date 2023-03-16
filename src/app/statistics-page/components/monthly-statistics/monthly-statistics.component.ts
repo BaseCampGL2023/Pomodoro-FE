@@ -15,4 +15,8 @@ export class MonthlyStatisticsComponent {
       ? '00:00'
       : secondsToHmsFormat(this.statistics.timeSpent);
   }
+
+  get statisticsNotFound(): boolean {
+    return this.statistics?.pomodorosDone === 0;
+  }
 }
