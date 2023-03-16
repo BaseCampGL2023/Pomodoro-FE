@@ -34,7 +34,7 @@ export class StatisticsPageComponent implements OnInit {
   private loadMonthlyStatistics(date: Date): void {
     this.statisticsService
       .getMonthlyStatistics(date.getFullYear(), date.getMonth())
-      .subscribe(res => {
+      .subscribe((res) => {
         if (res) {
           this.monthlyStatistics = res;
         }

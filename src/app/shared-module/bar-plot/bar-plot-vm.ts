@@ -7,7 +7,7 @@ export class BarPlotVM {
   ) {}
 
   isEmpty(): boolean {
-    return this.dataSequence.every(entry => entry.value === 0);
+    return this.dataSequence.every((entry) => entry.value === 0);
   }
 }
 

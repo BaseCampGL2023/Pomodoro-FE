@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import {
   BarPlotUnitVM,
@@ -21,9 +27,7 @@ export class DailyStatisticsComponent implements OnInit {
   barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
   statisticsNotFound = false;
 
-  constructor(
-    private statisticsService: StatisticsService
-  ) {
+  constructor(private statisticsService: StatisticsService) {
     this.maxDate = new Date();
     this.maxDate.setHours(0, 0, 0, 0);
   }
