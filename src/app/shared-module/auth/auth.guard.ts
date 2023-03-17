@@ -4,23 +4,19 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  Router,
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService } from './auth.service';
 import { LoginPopUpComponent } from 'src/app/modals/login-pop-up/login-pop-up.component';
+import { AuthMatDialogData } from '../types/auth-mat-dialog-data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private dialogRef: MatDialog
-  ) {}
+  constructor(private authService: AuthService, private dialogRef: MatDialog) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -34,8 +30,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
     this.dialogRef.open(LoginPopUpComponent, {
-      data: {
-        url: state.url,
+      data: <AuthMatDialogData>{
+        returnUrl: state.url,
       },
     });
     return false;

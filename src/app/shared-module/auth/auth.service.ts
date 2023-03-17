@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import jwt_decode from 'jwt-decode';
@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { SignupRequest } from '../types/signup-request';
 import { SignupResult } from '../types/signup-result';
 import { Guid } from '../types/guid';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,10 @@ export class AuthService {
   private _authStatus = new Subject<boolean>();
   public authStatus = this._authStatus.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   isAuthenticated(): boolean {
     return this.getToken() !== null;
@@ -45,13 +49,17 @@ export class AuthService {
     }
   }
 
+  completeAuth(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+    this.setAuthStatus(true);
+  }
+
   login(item: LoginRequest): Observable<LoginResult> {
     const url = environment.baseUrl + 'account/login';
     return this.http.post<LoginResult>(url, item).pipe(
       tap((loginResult) => {
         if (loginResult.success && loginResult.token) {
-          localStorage.setItem(this.tokenKey, loginResult.token);
-          this.setAuthStatus(true);
+          this.completeAuth(loginResult.token);
         }
       })
     );
@@ -60,6 +68,12 @@ export class AuthService {
   signup(item: SignupRequest): Observable<SignupResult> {
     const url = environment.baseUrl + 'account/registration';
     return this.http.post<SignupResult>(url, item);
+  }
+
+  externalLogin(provider: string, returnUrl: string): void {
+    this.document.location.href =
+      environment.baseUrl +
+      `account/external-login?provider=${provider}&returnUrl=${returnUrl}`;
   }
 
   logout() {
