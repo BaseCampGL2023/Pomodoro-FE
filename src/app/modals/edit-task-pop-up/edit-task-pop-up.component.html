@@ -5,11 +5,7 @@
       ><mat-icon fontIcon="close" inline="true"></mat-icon
     ></span>
   </div>
-  <form
-    [formGroup]="editTaskForm"
-    #form="ngForm"
-    (ngSubmit)="onSubmit()"
-  >
+  <form [formGroup]="editTaskForm" #form="ngForm" (ngSubmit)="onSubmit()">
     <span class="text-danger list-unstyled mt-1" *ngIf="!!editTaskError">{{
       editTaskError
     }}</span>
