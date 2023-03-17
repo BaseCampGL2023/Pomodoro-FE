@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Task } from '../types/task';
+import { TaskService } from '../services/task.service';
+import { TaskForList } from '../types/task-for-list';
 
 @Component({
   selector: 'app-task-list',
@@ -7,11 +8,25 @@ import { Task } from '../types/task';
   styleUrls: ['./task-list.component.scss'],
 })
 export class TaskListComponent {
-  @Input() tasks: Task[] = [];
+  @Input() tasks: TaskForList[] = [];
+  @Input() isSelectable = false;
+
+  constructor(private taskService: TaskService) {}
 
   initionalCountOfTasksForShow = 3;
 
   isShowAllTasks = false;
+
+  selectedTaskId: string | null = null;
+
+  setTaskId(taskId: string) {
+    if (this.selectedTaskId == null || this.selectedTaskId != taskId) {
+      this.selectedTaskId = taskId;
+    } else {
+      this.selectedTaskId = null;
+    }
+    this.taskService.setCurTaskId(this.selectedTaskId);
+  }
 
   getTotalAllocatedTime() {
     return this.tasks

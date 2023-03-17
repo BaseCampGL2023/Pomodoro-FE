@@ -1,50 +1,76 @@
-<form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
-  <div class="frame9-frame9">
-    <span class="frame9-text">Pomodoro settings</span>
-    <div class="relative">
-      <a class="close" mat-button [mat-dialog-close]="true"></a>
-    </div>
-    <label class="frame9-text02">Time (minutes)</label>
-    <label class="frame9-text04" for="pomodoro">Pomodoro</label>
-    <input
-      class="frame9-frame10"
-      id="pomodoro"
-      formControlName="pomodoro"
-      type="number"
-      step="1"
-      min="1"
-      max="60"
-      value="25"
-    />
-    <label class="frame9-text08" for="shortbreak">Short break</label>
-    <input
-      class="frame9-frame11"
-      id="shortbreak"
-      formControlName="shortbreak"
-      type="number"
-      step="1"
-      min="1"
-      max="60"
-      value="5"
-    />
-    <label class="frame9-text10" for="longbreak">Long break</label>
-    <input
-      class="frame9-frame12"
-      id="pomodoro"
-      formControlName="longbreak"
-      type="number"
-      step="1"
-      min="1"
-      max="60"
-      value="15"
-    />
-    <label class="frame9-text06">Autostart next round</label>
-    <div class="frame9-ellipse1">
-      <label class="switch">
-        <input type="checkbox" checked />
-        <span class="slider round"></span>
-      </label>
-      <hr class="sline" />
-    </div>
+<div class="settings">
+  <div class="header-row">
+    <h4>Pomodoro settings</h4>
+    <span class="icon" mat-dialog-close>
+      <mat-icon fontIcon="close" inline="true"></mat-icon
+    ></span>
   </div>
-</form>
+  <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+    <span class="unit-label">Time (minutes)</span>
+    <div class="form-row-group">
+      <div class="form-group">
+        <label>Pomodoro</label>
+        <input
+          class="form-control"
+          formControlName="pomodoro"
+          type="number"
+          step="5"
+          min="0"
+          max="255"
+        />
+      </div>
+      <div class="form-group">
+        <label>Short break</label>
+        <input
+          class="form-control"
+          formControlName="shortBreak"
+          type="number"
+          step="5"
+          min="0"
+          max="255"
+        />
+      </div>
+      <div class="form-group">
+        <label>Long break</label>
+        <input
+          class="form-control"
+          formControlName="longBreak"
+          type="number"
+          step="5"
+          min="0"
+          max="255"
+        />
+      </div>
+    </div>
+    <div class="form-inline-group">
+      Long break after
+      <input
+        class="form-control inline"
+        formControlName="pomodorosBeforeLongBreak"
+        type="number"
+        step="5"
+        min="0"
+        max="255"
+      />
+      pomodoros
+    </div>
+    <div class="text-danger list-unstyled error-msg">
+      <div *appValidationErrors="settingsForm; let err">
+        {{ err }}
+      </div>
+    </div>
+    <div class="divider">
+      <hr />
+    </div>
+    <div class="form-row-group">
+      <label>Autostart next round</label>
+      <mat-slide-toggle
+        color="warn"
+        formControlName="autostartEnabled"
+      ></mat-slide-toggle>
+    </div>
+    <button class="btn btn-primary" [disabled]="settingsForm.invalid">
+      Save changes
+    </button>
+  </form>
+</div>

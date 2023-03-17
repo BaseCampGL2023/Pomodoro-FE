@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +33,12 @@ import { TodayTasksComponent } from './home-page/components/today-tasks/today-ta
 import { BarPlotComponent } from './shared-module/bar-plot/bar-plot.component';
 import { SignupPopUpComponent } from './modals/signup-pop-up/signup-pop-up.component';
 import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badge.directive';
+import { TaskMenuComponent } from './shared-module/task-menu/task-menu.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { EditTaskPopUpComponent } from './modals/edit-task-pop-up/edit-task-pop-up.component';
+import { MatSelectModule } from '@angular/material/select';
+import { CompleteTaskPopUpComponent } from './modals/complete-task-pop-up/complete-task-pop-up.component';
+import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-task-pop-up.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +60,10 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
     BarPlotComponent,
     SignupPopUpComponent,
     PomodoroBadgeDirective,
+    TaskMenuComponent,
+    EditTaskPopUpComponent,
+    CompleteTaskPopUpComponent,
+    DeleteTaskPopUpComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +80,9 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
     ReactiveFormsModule,
     HttpClientModule,
     MatIconModule,
+    MatSlideToggleModule,
+    MatMenuModule,
+    MatSelectModule,
   ],
   providers: [
     TaskService,
@@ -77,6 +91,7 @@ import { PomodoroBadgeDirective } from './shared-module/directives/pomodoro-badg
       useClass: AuthInterceptor,
       multi: true,
     },
+    Title,
   ],
   bootstrap: [AppComponent],
 })

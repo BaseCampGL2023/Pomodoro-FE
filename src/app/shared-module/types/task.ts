@@ -1,6 +1,9 @@
+import { Frequency } from './frequency';
+
 export interface Task {
+  id: string;
   title: string;
-  frequency: string;
+  frequency: Frequency;
   allocatedTime: number;
-  progress: number;
+  initialDate: Date;
 }

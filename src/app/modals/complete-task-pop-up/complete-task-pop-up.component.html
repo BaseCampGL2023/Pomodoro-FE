@@ -1,0 +1,16 @@
+<div class="confirmation-modal">
+  <div class="header-row">
+    <h4>Did you complete the task?</h4>
+  </div>
+  <span class="text-danger list-unstyled mt-1" *ngIf="!!completeTaskError">{{
+    completeTaskError
+  }}</span>
+  <div class="buttons">
+    <button type="button" class="btn btn-success" (click)="onSubmit()">
+      Yes
+    </button>
+    <button type="button" class="btn btn-secondary" [mat-dialog-close]="true">
+      No
+    </button>
+  </div>
+</div>
