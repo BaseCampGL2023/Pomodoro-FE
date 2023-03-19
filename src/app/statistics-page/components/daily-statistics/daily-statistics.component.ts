@@ -32,6 +32,10 @@ export class DailyStatisticsComponent implements OnInit {
     this.maxDate.setHours(0, 0, 0, 0);
   }
 
+  private readonly dailyStatisticsXAxis = [
+    '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22'
+  ];
+
   private _selectedDay: Date = new Date();
 
   get selectedDay(): Date {
@@ -83,17 +87,17 @@ export class DailyStatisticsComponent implements OnInit {
   private loadDailyStatistics(): void {
     this.statisticsService
       .getDailyStatistics(this._selectedDay)
-      .subscribe((result) => {
-        if (result) {
-          this.updateBarPlotVM(result);
-          this.statisticsNotFound = this.barPlotVM.isEmpty();
-        }
-      });
+      .subscribe((result) => this.updateBarPlotVM(result));
   }
 
   private updateBarPlotVM(data: DailyStatistics) {
-    if (this.barPlotVM.dataSequence.length > 0) {
-      this.barPlotVM.dataSequence.splice(0, this.barPlotVM.dataSequence.length);
+    this.barPlotVM.clearData();
+    this.statisticsNotFound =
+      data.analyticsPerHours.length === 0;
+
+    if (this.statisticsNotFound) {
+      this.barPlotVM.addDefaultData(this.dailyStatisticsXAxis);
+      return;
     }
 
     data.analyticsPerHours.forEach((aph) => {

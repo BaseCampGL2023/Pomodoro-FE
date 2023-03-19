@@ -35,6 +35,10 @@ export class AnnualStatisticsComponent implements OnInit {
     this.maxDate.setHours(0, 0, 0, 0);
   }
 
+  private readonly annualStatisticsXAxis: string[] = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+
   private _selectedMonth = new Date();
 
   get selectedMonth(): Date {
@@ -85,17 +89,17 @@ export class AnnualStatisticsComponent implements OnInit {
   private loadAnnualStatistics() {
     this.statisticsService
       .getAnnualStatistics(this._selectedMonth.getFullYear())
-      .subscribe((result) => {
-        if (result) {
-          this.updateBarPlotVM(result);
-          this.statisticsNotFound = this.barPlotVM.isEmpty();
-        }
-      });
+      .subscribe((result) => this.updateBarPlotVM(result));
   }
 
   private updateBarPlotVM(data: AnnualStatistics) {
-    if (this.barPlotVM.dataSequence.length > 0) {
-      this.barPlotVM.dataSequence.splice(0, this.barPlotVM.dataSequence.length);
+    this.barPlotVM.clearData();
+    this.statisticsNotFound =
+      data.analyticsPerMonths.length === 0;
+
+    if (this.statisticsNotFound) {
+      this.barPlotVM.addDefaultData(this.annualStatisticsXAxis);
+      return;
     }
 
     data.analyticsPerMonths.forEach((apm) => {
