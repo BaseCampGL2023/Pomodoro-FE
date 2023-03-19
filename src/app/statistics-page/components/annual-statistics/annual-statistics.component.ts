@@ -36,7 +36,18 @@ export class AnnualStatisticsComponent implements OnInit {
   }
 
   private readonly annualStatisticsXAxis: string[] = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
 
   private _selectedMonth = new Date();
@@ -94,8 +105,7 @@ export class AnnualStatisticsComponent implements OnInit {
 
   private updateBarPlotVM(data: AnnualStatistics) {
     this.barPlotVM.clearData();
-    this.statisticsNotFound =
-      data.analyticsPerMonths.length === 0;
+    this.statisticsNotFound = data.analyticsPerMonths.length === 0;
 
     if (this.statisticsNotFound) {
       this.barPlotVM.addDefaultData(this.annualStatisticsXAxis);

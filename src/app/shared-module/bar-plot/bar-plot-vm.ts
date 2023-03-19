@@ -15,10 +15,8 @@ export class BarPlotVM {
   }
 
   addDefaultData(xAxis: string[]): void {
-    xAxis.forEach(xTitle => {
-      this.dataSequence.push(
-        new BarPlotUnitVM(xTitle, 0)
-      );
+    xAxis.forEach((xTitle) => {
+      this.dataSequence.push(new BarPlotUnitVM(xTitle, 0));
     });
   }
 }
