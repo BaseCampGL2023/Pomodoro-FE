@@ -39,6 +39,7 @@ import { EditTaskPopUpComponent } from './modals/edit-task-pop-up/edit-task-pop-
 import { MatSelectModule } from '@angular/material/select';
 import { CompleteTaskPopUpComponent } from './modals/complete-task-pop-up/complete-task-pop-up.component';
 import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-task-pop-up.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-tas
       multi: true,
     },
     Title,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

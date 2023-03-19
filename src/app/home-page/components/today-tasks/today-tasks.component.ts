@@ -14,7 +14,7 @@ export class TodayTasksComponent implements OnInit {
 
   ngOnInit() {
     this.taskService
-      .getTodayTasks()
+      .getTasksOnDate(new Date())
       .subscribe((tasks) => (this.taskList = this.moveDoneTaskToEnd(tasks)));
   }
 

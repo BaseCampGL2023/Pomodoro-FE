@@ -1,10 +1,6 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, Observable, of, Subject, tap, throwError } from 'rxjs';
 import { TrackerService } from '../tracker/tracker.service';
 import { TrackerDurationEnum } from '../tracker/types/tracker-duration.enum';
 import { TaskFrequenciesEnum } from '../enums/task-frequencies.enum';
@@ -13,25 +9,32 @@ import { TrackerEventEnum } from '../tracker/types/tracker-event.enum';
 import { Task } from '../types/task';
 import { TaskForList } from '../types/task-for-list';
 import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
+import { Pomodoro } from '../types/pomodoro';
+import { TrackerSettingsService } from '../tracker/tracker-settings.service';
+import { Guid } from '../types/guid';
+import { Frequency } from '../types/frequency';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
   constructor(
     private http: HttpClient,
-    private trackerService: TrackerService
+    private trackerService: TrackerService,
+    private settings: TrackerSettingsService,
+    private datePipe: DatePipe
   ) {
     this.trackerService.event.subscribe((trackerEvent: TrackerEvent) => {
       if (
-        this.curTaskId != null &&
         trackerEvent.duration == TrackerDurationEnum.pomodoro &&
         trackerEvent.eventType == TrackerEventEnum.finish
       ) {
-        this.addPomodoro(this.curTaskId);
+        this.addPomodoro();
       }
     });
   }
 
   private curTaskId: string | null = null;
+  private lastPomodoroId: string | null = null;
 
   setCurTaskId(taskId: string | null) {
     if (this.curTaskId == taskId) {
@@ -41,54 +44,74 @@ export class TaskService {
     this.trackerService.reload();
   }
 
-  addPomodoro(taskId: string) {
-    console.log(`add pomodoro to task${taskId} in db`);
-    const url = environment.baseUrl + 'tasks/AddPomodoro' + this.curTaskId;
+  addPomodoro() {
+    if (this.curTaskId === null) {
+      console.log(`error when adding pomodoro: task wasn't set`);
+      return;
+    }
+
+    const pomodoro: Pomodoro = {
+      id: '',
+      taskId: this.curTaskId,
+      actuallDate:
+        this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") ??
+        '',
+      timeSpent: this.settings.pomodoro,
+    };
+
+    const url = environment.baseUrl + 'tasks/' + this.curTaskId + '/pomodoros';
+
+    this.http
+      .post<string>(url, pomodoro)
+      .pipe(
+        catchError(async (error) => {
+          console.log('error when adding pomodoro: ' + error.message);
+          return '';
+        })
+      )
+      .subscribe((pomodoroId) => {
+        if (pomodoroId !== '') {
+          this.lastPomodoroId = pomodoroId;
+        }
+      });
+  }
+
+  completeCurrentTask(): Observable<any> {
+    const url =
+      environment.baseUrl +
+      'tasks/' +
+      this.curTaskId +
+      '/pomodoros/' +
+      this.lastPomodoroId;
     return this.http.put<any>(url, null).pipe(catchError(this.handleError));
   }
 
+  createTask(task: Task): Observable<any> {
+    const url = environment.baseUrl + 'tasks/';
+    return this.http.post<any>(url, task).pipe(catchError(this.handleError));
+  }
+
   updateTask(task: Task): Observable<any> {
-    console.log(`updates task${task.id} in db`);
-    console.log(task);
     const url = environment.baseUrl + 'tasks/' + this.curTaskId;
     return this.http.put<any>(url, task).pipe(catchError(this.handleError));
   }
 
-  completeCurrentTask(): Observable<any> {
-    console.log(`completes task${this.curTaskId} in db`);
-    const url = environment.baseUrl + 'tasks/complete' + this.curTaskId;
-    return this.http.put<any>(url, null).pipe(catchError(this.handleError));
-  }
-
   deleteCurrentTask(): Observable<any> {
-    console.log(`deletes task${this.curTaskId} in db`);
     const url = environment.baseUrl + 'tasks/' + this.curTaskId;
     return this.http.delete<any>(url).pipe(catchError(this.handleError));
   }
 
   getCurrentTask(): Observable<Task> {
-    return this.getTaskById(this.curTaskId!);
-  }
-
-  getTaskById(taskId: string): Observable<Task> {
-    return of(this.getTask());
     // const url = environment.baseUrl + 'tasks/' + this.curTaskId;
-    // return this.http.get<any>(url).pipe(catchError(this.handleError));
-  }
-
-  getTodayTasks(): Observable<TaskForList[]> {
-    return this.getTasksOnDate(new Date());
+    // return this.http.get<Task>(url).pipe(catchError(this.handleError));
+    return of(this.getTask());
   }
 
   getTasksOnDate(date: Date): Observable<TaskForList[]> {
+    // let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
+    // const url = environment.baseUrl + 'tasks/' + dateString;
+    // return this.http.get<TaskForList[]>(url).pipe(catchError(this.handleError));
     return of(this.getTasks());
-    // let queryParams = new HttpParams();
-    // queryParams = queryParams.append('startDate', date.toString());
-    // queryParams = queryParams.append('endDate', date.toString());
-    // const url = environment.baseUrl + 'tasks/ByDate';
-    // return this.http
-    //   .get<any>(url, { params: queryParams })
-    //   .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
