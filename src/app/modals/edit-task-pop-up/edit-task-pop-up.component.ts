@@ -61,17 +61,21 @@ export class EditTaskPopUpComponent implements OnInit {
 
   onSubmit() {
     if (this.editTaskForm.valid && this.taskIsChanged()) {
-      this.task.title = this.editTaskForm.value.title;
-      this.task.initialDate = this.editTaskForm.value.initialDate;
-      this.task.allocatedTime = this.editTaskForm.value.allocatedTime;
-      this.task.frequency.frequencyType = this.getFrequenciesEnumKeyByValue(
-        this.editTaskForm.value.frequency
-      );
-      this.task.frequency.every = this.editTaskForm.value.every;
-      this.task.frequency.isCustom =
-        this.editTaskForm.value.every > 1 ? true : false;
-
-      this.taskService.updateTask(this.task).subscribe({
+      const updatedtask: Task = {
+        id: this.task.id,
+        title: this.editTaskForm.value.title,
+        initialDate: this.editTaskForm.value.initialDate,
+        allocatedTime: this.editTaskForm.value.allocatedTime,
+        frequency: {
+          id: this.task.frequency.id,
+          frequencyType: this.getFrequenciesEnumKeyByValue(
+            this.editTaskForm.value.frequency
+          ),
+          every: this.editTaskForm.value.every,
+          isCustom: this.editTaskForm.value.every > 1 ? true : false,
+        },
+      };
+      this.taskService.updateTask(updatedtask).subscribe({
         next: () => {
           this.dialogRef.closeAll();
         },
