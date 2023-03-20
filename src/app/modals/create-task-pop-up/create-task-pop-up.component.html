@@ -1,0 +1,105 @@
+<div class="create-task">
+  <div class="header-row">
+    <h4>Create task</h4>
+    <span class="icon" [mat-dialog-close]="true"
+      ><mat-icon fontIcon="close" inline="true"></mat-icon
+    ></span>
+  </div>
+  <form [formGroup]="createTaskForm" #form="ngForm" (ngSubmit)="onSubmit()">
+    <span class="text-danger list-unstyled mt-1" *ngIf="!!createTaskError">{{
+      createTaskError
+    }}</span>
+    <div class="form-group">
+      <label>Task title</label>
+      <input class="form-control" formControlName="title" />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *appValidationErrors="createTaskForm; control: 'title'; let err">
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <div class="date-picker">
+        <div class="form-control" (click)="openDatePicker()">
+          <span class="label">{{
+            createTaskForm.controls["initialDate"].value | date : "d MMM y"
+          }}</span>
+          <input
+            class="hidden"
+            matInput
+            [min]="minDate"
+            [matDatepicker]="picker"
+            formControlName="initialDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>
+              <img
+                class="icon"
+                src="assets/icons/calendar.svg"
+                alt="Calendar"
+              />
+            </mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Frequency</label>
+      <mat-select
+        class="form-control"
+        formControlName="frequency"
+        (selectionChange)="onSelect()"
+      >
+        <mat-option
+          class="opt"
+          *ngFor="let frequency of frequencies"
+          [value]="frequency"
+        >
+          {{ frequency }}
+        </mat-option>
+      </mat-select>
+    </div>
+    <div class="form-group" *ngIf="isCustomizableFrequency">
+      <label>Frequency every</label>
+      <input
+        class="form-control"
+        formControlName="every"
+        type="number"
+        min="1"
+        max="100"
+      />
+      <ul class="text-danger list-unstyled mt-1">
+        <li *appValidationErrors="createTaskForm; control: 'every'; let err">
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <label>Allocated time</label>
+      <input
+        class="form-control"
+        formControlName="allocatedTime"
+        type="number"
+        step="settings.pomodoro"
+        min="settings.pomodoro"
+        max="1440"
+      />
+      <ul class="text-danger list-unstyled mt-1">
+        <li
+          *appValidationErrors="
+            createTaskForm;
+            control: 'allocatedTime';
+            let err
+          "
+        >
+          {{ err }}
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-primary" [disabled]="form.invalid">
+      Save changes
+    </button>
+  </form>
+</div>

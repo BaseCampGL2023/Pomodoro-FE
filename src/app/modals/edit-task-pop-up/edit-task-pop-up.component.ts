@@ -61,7 +61,7 @@ export class EditTaskPopUpComponent implements OnInit {
 
   onSubmit() {
     if (this.editTaskForm.valid && this.taskIsChanged()) {
-      const updatedtask: Task = {
+      const updatedTask: Task = {
         id: this.task.id,
         title: this.editTaskForm.value.title,
         initialDate: this.editTaskForm.value.initialDate,
@@ -75,7 +75,7 @@ export class EditTaskPopUpComponent implements OnInit {
           isCustom: this.editTaskForm.value.every > 1 ? true : false,
         },
       };
-      this.taskService.updateTask(updatedtask).subscribe({
+      this.taskService.updateTask(updatedTask).subscribe({
         next: () => {
           this.dialogRef.closeAll();
         },
