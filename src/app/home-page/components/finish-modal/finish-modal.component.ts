@@ -16,24 +16,15 @@ export class FinishModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.tracker.event.subscribe((event) => {
-      if (event.eventType === TrackerEventEnum.finish)
-        {
-          if(event.duration === TrackerDurationEnum.pomodoro){
-            this.pomodoro_visibility = false;
-            setTimeout(() => (this.pomodoro_visibility = true), 7000);
-          } 
-          else if(event.duration === TrackerDurationEnum.longBreak)
-          {
-            this.break_visibility = false;
-            setTimeout(() => (this.break_visibility = true), 10000);
-          }
-          else if(event.duration === TrackerDurationEnum.shortBreak)
-          {
-            this.break_visibility = false;
-            setTimeout(() => (this.break_visibility = true), 10000);
+      if (event.eventType === TrackerEventEnum.finish) {
+        if (event.duration === TrackerDurationEnum.pomodoro) {
+          this.pomodoro_visibility = false;
+          setTimeout(() => (this.pomodoro_visibility = true), 7000);
+        } else {
+          this.break_visibility = false;
+          setTimeout(() => (this.break_visibility = true), 10000);
+        } 
       }
-    }
-     
     });
   }
 }
