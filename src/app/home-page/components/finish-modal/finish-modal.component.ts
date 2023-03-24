@@ -23,7 +23,7 @@ export class FinishModalComponent implements OnInit {
         } else {
           this.break_visibility = false;
           setTimeout(() => (this.break_visibility = true), 10000);
-        } 
+        }
       }
     });
   }
