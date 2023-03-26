@@ -1,6 +1,6 @@
 export interface Frequency {
   id: string;
-  frequencyType: string;
+  frequencyValue: string;
   every: number;
   isCustom: boolean;
 }

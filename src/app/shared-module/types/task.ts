@@ -6,4 +6,5 @@ export interface Task {
   frequency: Frequency;
   allocatedTime: number;
   initialDate: Date;
+  progress: number;
 }

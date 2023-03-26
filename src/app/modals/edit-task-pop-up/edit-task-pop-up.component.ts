@@ -51,7 +51,7 @@ export class EditTaskPopUpComponent implements OnInit {
           Validators.max(1440),
         ],
       ],
-      frequency: [this.task.frequency.frequencyType, Validators.required],
+      frequency: [this.task.frequency.frequencyValue, Validators.required],
       every: [
         this.task.frequency.every,
         [Validators.required, Validators.min(1), Validators.max(100)],
@@ -68,12 +68,13 @@ export class EditTaskPopUpComponent implements OnInit {
         allocatedTime: this.editTaskForm.value.allocatedTime,
         frequency: {
           id: this.task.frequency.id,
-          frequencyType: this.getFrequenciesEnumKeyByValue(
+          frequencyValue: this.getFrequenciesEnumKeyByValue(
             this.editTaskForm.value.frequency
           ),
           every: this.editTaskForm.value.every,
           isCustom: this.editTaskForm.value.every > 1 ? true : false,
         },
+        progress: this.task.progress,
       };
       this.taskService.updateTask(updatedTask).subscribe({
         next: () => {
@@ -96,7 +97,8 @@ export class EditTaskPopUpComponent implements OnInit {
     return (
       this.task.title !== this.editTaskForm.value.title ||
       this.task.initialDate !== this.editTaskForm.value.initialDate ||
-      this.task.frequency.frequencyType !== this.editTaskForm.value.frequency ||
+      this.task.frequency.frequencyValue !==
+        this.editTaskForm.value.frequency ||
       this.task.frequency.every !== this.editTaskForm.value.every ||
       this.task.allocatedTime !== this.editTaskForm.value.allocatedTime
     );

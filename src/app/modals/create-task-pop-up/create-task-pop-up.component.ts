@@ -60,12 +60,13 @@ export class CreateTaskPopUpComponent implements OnInit {
         allocatedTime: this.createTaskForm.value.allocatedTime,
         frequency: {
           id: '00000000-0000-0000-0000-000000000000',
-          frequencyType: this.getFrequenciesEnumKeyByValue(
+          frequencyValue: this.getFrequenciesEnumKeyByValue(
             this.createTaskForm.value.frequency
           ),
           every: this.createTaskForm.value.every,
           isCustom: this.createTaskForm.value.every > 1 ? true : false,
         },
+        progress: 0,
       };
       this.taskService.createTask(newTask).subscribe({
         next: () => {

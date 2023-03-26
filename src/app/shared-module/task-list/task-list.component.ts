@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TaskService } from '../services/task.service';
-import { TaskForList } from '../types/task-for-list';
+import { Task } from '../types/task';
 
 @Component({
   selector: 'app-task-list',
@@ -8,7 +8,7 @@ import { TaskForList } from '../types/task-for-list';
   styleUrls: ['./task-list.component.scss'],
 })
 export class TaskListComponent {
-  @Input() tasks: TaskForList[] = [];
+  @Input() tasks: Task[] = [];
   @Input() isSelectable = false;
 
   constructor(private taskService: TaskService) {}
