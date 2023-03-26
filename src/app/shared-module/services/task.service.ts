@@ -112,6 +112,12 @@ export class TaskService {
     return this.http.get<TaskForList[]>(url).pipe(catchError(this.handleError));
   }
 
+  getCompletedTasksOnDate(date: Date): Observable<TaskForList[]> {
+    let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
+    const url = environment.baseUrl + 'tasks/getCompletedByDate/' + dateString;
+    return this.http.get<TaskForList[]>(url).pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(
       () => new Error(error.message || 'something went wrong!')

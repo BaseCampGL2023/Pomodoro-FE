@@ -14,7 +14,7 @@ export class StatisticsPageComponent implements OnInit {
 
   ngOnInit() {
     this.taskService
-      .getTasksOnDate(new Date())
+      .getCompletedTasksOnDate(new Date())
       .subscribe((tasks) => (this.taskList = tasks));
   }
 }
