@@ -87,7 +87,7 @@ export class TaskService {
   }
 
   createTask(task: Task): Observable<any> {
-    const url = environment.baseUrl + 'tasks/';
+    const url = environment.baseUrl + 'tasks';
     return this.http.post<any>(url, task).pipe(catchError(this.handleError));
   }
 
@@ -102,16 +102,14 @@ export class TaskService {
   }
 
   getCurrentTask(): Observable<Task> {
-    // const url = environment.baseUrl + 'tasks/' + this.curTaskId;
-    // return this.http.get<Task>(url).pipe(catchError(this.handleError));
-    return of(this.getTask());
+    const url = environment.baseUrl + 'tasks/getById/' + this.curTaskId;
+    return this.http.get<Task>(url).pipe(catchError(this.handleError));
   }
 
   getTasksOnDate(date: Date): Observable<TaskForList[]> {
-    // let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
-    // const url = environment.baseUrl + 'tasks/' + dateString;
-    // return this.http.get<TaskForList[]>(url).pipe(catchError(this.handleError));
-    return of(this.getTasks());
+    let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
+    const url = environment.baseUrl + 'tasks/getByDate/' + dateString;
+    return this.http.get<TaskForList[]>(url).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

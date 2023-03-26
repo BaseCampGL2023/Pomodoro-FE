@@ -54,12 +54,12 @@ export class CreateTaskPopUpComponent implements OnInit {
   onSubmit() {
     if (this.createTaskForm.valid) {
       const newTask: Task = {
-        id: '',
+        id: '00000000-0000-0000-0000-000000000000',
         title: this.createTaskForm.value.title,
         initialDate: this.createTaskForm.value.initialDate,
         allocatedTime: this.createTaskForm.value.allocatedTime,
         frequency: {
-          id: '',
+          id: '00000000-0000-0000-0000-000000000000',
           frequencyType: this.getFrequenciesEnumKeyByValue(
             this.createTaskForm.value.frequency
           ),
