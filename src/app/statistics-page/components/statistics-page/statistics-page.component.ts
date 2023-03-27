@@ -13,8 +13,10 @@ export class StatisticsPageComponent implements OnInit {
   taskList: Task[] = [];
 
   ngOnInit() {
-    this.taskService
-      .getCompletedTasksOnDate(new Date())
-      .subscribe((tasks) => (this.taskList = tasks));
+    this.taskService.getCompletedTasksOnDate(new Date()).subscribe({
+      next: (tasks: Task[]) => (this.taskList = tasks),
+      error: (err: Error) =>
+        console.log('Error on statistics page: ', err.message),
+    });
   }
 }

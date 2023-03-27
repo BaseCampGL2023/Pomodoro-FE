@@ -18,7 +18,6 @@ export class TodayTasksComponent implements OnInit {
     this.taskService.taskListChanged.subscribe(
       (tasks) => (this.taskList = this.moveDoneTaskToEnd(tasks))
     );
-    this.taskService.getTasksOnDate(new Date());
   }
 
   onCreateTask() {

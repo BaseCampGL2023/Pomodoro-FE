@@ -37,6 +37,7 @@ export class EditTaskPopUpComponent implements OnInit {
       this.task = result;
     }
     this.editTaskForm = this.buildFormGroup();
+    this.onSelect();
     this.minDate = this.task.initialDate;
   }
 
@@ -78,7 +79,9 @@ export class EditTaskPopUpComponent implements OnInit {
         progress: this.task.progress,
       };
       this.taskService.updateTask(updatedTask).subscribe({
-        next: () => {
+        next: (task: Task) => {
+          console.log(task);
+          this.taskService.changeTodayTaskList();
           this.dialogRef.closeAll();
         },
         error: (error) => {

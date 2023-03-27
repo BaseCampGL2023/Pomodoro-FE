@@ -5,6 +5,7 @@ import {
   catchError,
   map,
   Observable,
+  of,
   tap,
   throwError,
 } from 'rxjs';
@@ -34,10 +35,14 @@ export class TaskService {
         this.addPomodoro();
       }
     });
+
+    this.getTasksOnDate(new Date()).subscribe((tasks) => {
+      this.todayTaskList = tasks;
+      this.changeTodayTaskList();
+    });
   }
 
   private curTaskId: string | null = null;
-  private lastPomodoroId: string | null = null;
   private todayTaskList: Task[] = [];
   private taskListSource = new BehaviorSubject<Task[]>(this.todayTaskList);
   taskListChanged = this.taskListSource.asObservable();
@@ -54,99 +59,119 @@ export class TaskService {
     this.trackerService.reload();
   }
 
-  addPomodoro() {
+  addPomodoro(): void {
     if (this.curTaskId === null) {
-      console.log(`error when adding pomodoro: task wasn't set`);
-      return;
+      console.log('You must do at least one pomodoro!');
     }
 
-    const pomodoro: Pomodoro = {
-      id: '',
-      taskId: this.curTaskId,
+    let pomodoro: Pomodoro = {
+      id: '00000000-0000-0000-0000-000000000000',
+      taskId: this.curTaskId
+        ? this.curTaskId
+        : '00000000-0000-0000-0000-000000000000',
       actuallDate:
         this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") ??
         '',
-      timeSpent: this.settings.pomodoro,
+      timeSpent: this.settings.pomodoro * 100,
+      isDone: false,
     };
 
-    const url = environment.baseUrl + 'tasks/' + this.curTaskId + '/pomodoros';
-
-    this.http
-      .post<string>(url, pomodoro)
-      .pipe(
-        catchError(async (error) => {
-          console.log('error when adding pomodoro: ' + error.message);
-          return '';
-        })
-      )
-      .subscribe((pomodoroId) => {
-        if (pomodoroId !== '') {
-          this.lastPomodoroId = pomodoroId;
-        }
-      });
+    const url = environment.baseUrl + 'tasks/pomodoros';
+    this.http.post<Task>(url, pomodoro).subscribe({
+      next: (task: Task) => {
+        this.todayTaskList.forEach((t, i) => {
+          if (t.id == task.id) {
+            this.todayTaskList[i].progress = task.progress;
+          }
+        });
+        this.changeTodayTaskList();
+        this.trackerService.reload();
+      },
+      error: (error: Error) => {
+        console.log('Error occurred while adding pomodoro: ' + error.message);
+      },
+    });
   }
 
   completeCurrentTask(): Observable<any> {
-    const url =
-      environment.baseUrl +
-      'tasks/' +
-      this.curTaskId +
-      '/pomodoros/' +
-      this.lastPomodoroId;
-    return this.http.put<any>(url, null).pipe(catchError(this.handleError));
+    if (this.curTaskId === null) {
+      return throwError(() => new Error('Task was not set!'));
+    }
+    const taskIndex = this.todayTaskList.findIndex(
+      (t) => t.id === this.curTaskId
+    );
+    if (this.todayTaskList[taskIndex].progress === 0) {
+      return throwError(() => new Error('You must do at least one pomodoro!'));
+    } else {
+      const url =
+        environment.baseUrl + 'tasks/' + this.curTaskId + '/completeTodayTask';
+      return this.http.put<any>(url, null).pipe(
+        map(() => {
+          this.todayTaskList.forEach((t, i) => {
+            if (t.id === this.curTaskId) {
+              this.todayTaskList[i].progress = 100;
+            }
+          });
+          this.curTaskId = null;
+          this.trackerService.reload();
+        }),
+        catchError(this.handleError)
+      );
+    }
   }
 
   createTask(task: Task): Observable<any> {
-    console.log('created:');
-    console.log(task);
     const url = environment.baseUrl + 'tasks';
     return this.http.post<Task>(url, task).pipe(
       map((newTask: Task) => {
-        this.todayTaskList.push(newTask),
-          console.log('returned:'),
-          console.log(newTask);
+        this.todayTaskList.push(newTask);
       }),
       catchError(this.handleError)
     );
   }
 
   updateTask(task: Task): Observable<any> {
+    if (this.curTaskId === null) {
+      return throwError(() => new Error('Task was not set!'));
+    }
     const url = environment.baseUrl + 'tasks/' + this.curTaskId;
-    return this.http.put<any>(url, task).pipe(catchError(this.handleError));
-  }
-
-  deleteCurrentTask(): Observable<any> {
-    const url = environment.baseUrl + 'tasks/' + this.curTaskId;
-    return this.http.delete<any>(url).pipe(
-      map(() => {
-        this.todayTaskList = [...this.todayTaskList].filter((task) => {
-          return task.id !== this.curTaskId;
+    return this.http.put<Task>(url, task).pipe(
+      map((updatedTask: Task) => {
+        this.todayTaskList.forEach((t, i) => {
+          if (t.id === updatedTask.id) {
+            this.todayTaskList[i] = updatedTask;
+          }
         });
       }),
       catchError(this.handleError)
     );
+  }
 
-    //   (
-    //   tap(
-    //     () =>
-    //       (this.todayTaskList = this.todayTaskList.filter((task) => {
-    //         return task.id !== this.curTaskId;
-    //       }))
-    //   )
-    // );
+  deleteCurrentTask(): Observable<any> {
+    if (this.curTaskId === null) {
+      return throwError(() => new Error('Task was not set!'));
+    }
+    const url = environment.baseUrl + 'tasks/' + this.curTaskId;
+    return this.http.delete<any>(url).pipe(
+      map(() => {
+        this.todayTaskList = [...this.todayTaskList].filter((t) => {
+          return t.id !== this.curTaskId;
+        });
+        this.curTaskId = null;
+        this.trackerService.reload();
+      }),
+      catchError(this.handleError)
+    );
   }
 
   getCurrentTask(): Task | undefined {
     return this.todayTaskList.find((t) => t.id === this.curTaskId);
   }
 
-  getTasksOnDate(date: Date): void {
+  getTasksOnDate(date: Date): Observable<Task[]> {
     let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
     const url = environment.baseUrl + 'tasks/getByDate/' + dateString;
-    this.http.get<Task[]>(url).subscribe((tasks) => {
-      this.todayTaskList = tasks;
-      this.changeTodayTaskList();
-    });
+    return this.http.get<Task[]>(url).pipe(catchError(this.handleError));
   }
 
   getCompletedTasksOnDate(date: Date): Observable<Task[]> {
@@ -156,106 +181,8 @@ export class TaskService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.log(error);
     return throwError(
       () => new Error(error.message || 'something went wrong!')
     );
   }
-
-  // private getTasks(): TaskForList[] {
-  //   return [
-  //     {
-  //       id: '1',
-  //       title: 'task1',
-  //       frequency: 'Day',
-  //       allocatedTime: 1000,
-  //       progress: 50,
-  //     },
-  //     {
-  //       id: '2',
-  //       title: 'task2',
-  //       frequency: 'Week',
-  //       allocatedTime: 600,
-  //       progress: 10,
-  //     },
-  //     {
-  //       id: '3',
-  //       title: 'task3',
-  //       frequency: 'Month',
-  //       allocatedTime: 30,
-  //       progress: 25,
-  //     },
-  //     {
-  //       id: '4',
-  //       title: 'task4',
-  //       frequency: 'Day',
-  //       allocatedTime: 1500,
-  //       progress: 100,
-  //     },
-  //     {
-  //       id: '5',
-  //       title: 'task5',
-  //       frequency: 'Day',
-  //       allocatedTime: 1100,
-  //       progress: 60,
-  //     },
-  //     {
-  //       id: '6',
-  //       title: 'task6',
-  //       frequency: 'Day',
-  //       allocatedTime: 1100,
-  //       progress: 100,
-  //     },
-  //     {
-  //       id: '7',
-  //       title: 'task7',
-  //       frequency: 'Day',
-  //       allocatedTime: 1100,
-  //       progress: 35,
-  //     },
-  //     {
-  //       id: '8',
-  //       title: 'task8',
-  //       frequency: 'Day',
-  //       allocatedTime: 1600,
-  //       progress: 40,
-  //     },
-  //     {
-  //       id: '9',
-  //       title: 'task9',
-  //       frequency: 'Day',
-  //       allocatedTime: 1100,
-  //       progress: 55,
-  //     },
-  //     {
-  //       id: '10',
-  //       title: 'task10',
-  //       frequency: 'Day',
-  //       allocatedTime: 1100,
-  //       progress: 80,
-  //     },
-  //     {
-  //       id: '11',
-  //       title: 'task11',
-  //       frequency: 'Day',
-  //       allocatedTime: 1100,
-  //       progress: 95,
-  //     },
-  //   ];
-  // }
-
-  // private getTask(): Task {
-  //   return {
-  //     id: '11',
-  //     title: 'task11',
-  //     frequency: {
-  //       id: '145',
-  //       frequencyType: TaskFrequenciesEnum.Day,
-  //       every: 1,
-  //       isCustom: false,
-  //     },
-  //     allocatedTime: 1100,
-  //     initialDate: new Date(2023, 1, 20),
-  //   };
-  // }
 }

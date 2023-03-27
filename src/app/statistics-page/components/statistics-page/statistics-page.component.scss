@@ -1,4 +1,4 @@
-@import '/src/assets/styles/variables';
+@import "/src/assets/styles/variables";
 
 .container {
   font-family: $font-family;
@@ -9,4 +9,12 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 26px;
+}
+
+.info {
+  text-align: center;
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
 }

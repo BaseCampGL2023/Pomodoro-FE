@@ -5,8 +5,13 @@
     </div>
     <div class="col-lg order-lg-3">
       <div class="container">
-        <h2 class="title">Tasks I have done that day</h2>
-        <app-task-list [tasks]="taskList"></app-task-list>
+        <div class="info" *ngIf="taskList.length === 0; else listNotEmptyBlock">
+          <span class="title">You don't have any completed tasks! </span>
+        </div>
+        <ng-template #listNotEmptyBlock>
+          <h2 class="title">Tasks I have done that day</h2>
+          <app-task-list [tasks]="taskList"></app-task-list>
+        </ng-template>
       </div>
     </div>
     <div class="col-lg order-lg-2">
