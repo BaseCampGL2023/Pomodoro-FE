@@ -68,8 +68,10 @@ export class CreateTaskPopUpComponent implements OnInit {
         },
         progress: 0,
       };
+      console.log(newTask);
       this.taskService.createTask(newTask).subscribe({
         next: () => {
+          this.taskService.changeTodayTaskList();
           this.dialogRef.closeAll();
         },
         error: (error) => {

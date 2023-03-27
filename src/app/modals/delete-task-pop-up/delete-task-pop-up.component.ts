@@ -18,6 +18,7 @@ export class DeleteTaskPopUpComponent {
   onSubmit() {
     this.taskService.deleteCurrentTask().subscribe({
       next: () => {
+        this.taskService.changeTodayTaskList();
         this.dialogRef.closeAll();
       },
       error: (error) => {

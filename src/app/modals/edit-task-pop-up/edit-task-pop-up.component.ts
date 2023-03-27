@@ -32,11 +32,12 @@ export class EditTaskPopUpComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.taskService.getCurrentTask().subscribe((result) => {
+    const result = this.taskService.getCurrentTask();
+    if (result !== undefined) {
       this.task = result;
-      this.editTaskForm = this.buildFormGroup();
-      this.minDate = this.task.initialDate;
-    });
+    }
+    this.editTaskForm = this.buildFormGroup();
+    this.minDate = this.task.initialDate;
   }
 
   buildFormGroup(): FormGroup {

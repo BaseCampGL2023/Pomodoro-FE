@@ -1,6 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 import { TrackerService } from '../tracker/tracker.service';
 import { TrackerDurationEnum } from '../tracker/types/tracker-duration.enum';
 import { TrackerEvent } from '../tracker/types/tracker-event';
@@ -90,8 +97,17 @@ export class TaskService {
   }
 
   createTask(task: Task): Observable<any> {
+    console.log('created:');
+    console.log(task);
     const url = environment.baseUrl + 'tasks';
-    return this.http.post<any>(url, task).pipe(catchError(this.handleError));
+    return this.http.post<Task>(url, task).pipe(
+      map((newTask: Task) => {
+        this.todayTaskList.push(newTask),
+          console.log('returned:'),
+          console.log(newTask);
+      }),
+      catchError(this.handleError)
+    );
   }
 
   updateTask(task: Task): Observable<any> {
@@ -101,12 +117,27 @@ export class TaskService {
 
   deleteCurrentTask(): Observable<any> {
     const url = environment.baseUrl + 'tasks/' + this.curTaskId;
-    return this.http.delete<any>(url).pipe(catchError(this.handleError));
+    return this.http.delete<any>(url).pipe(
+      map(() => {
+        this.todayTaskList = [...this.todayTaskList].filter((task) => {
+          return task.id !== this.curTaskId;
+        });
+      }),
+      catchError(this.handleError)
+    );
+
+    //   (
+    //   tap(
+    //     () =>
+    //       (this.todayTaskList = this.todayTaskList.filter((task) => {
+    //         return task.id !== this.curTaskId;
+    //       }))
+    //   )
+    // );
   }
 
-  getCurrentTask(): Observable<Task> {
-    const url = environment.baseUrl + 'tasks/getById/' + this.curTaskId;
-    return this.http.get<Task>(url).pipe(catchError(this.handleError));
+  getCurrentTask(): Task | undefined {
+    return this.todayTaskList.find((t) => t.id === this.curTaskId);
   }
 
   getTasksOnDate(date: Date): void {
@@ -125,6 +156,7 @@ export class TaskService {
   }
 
   private handleError(error: HttpErrorResponse) {
+    console.log(error);
     return throwError(
       () => new Error(error.message || 'something went wrong!')
     );
