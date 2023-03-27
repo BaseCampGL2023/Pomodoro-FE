@@ -1,6 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { TaskService } from 'src/app/shared-module/services/task.service';
 import {
   BarPlotUnitVM,
   BarPlotVM,
@@ -16,27 +21,42 @@ import { secondsToMsFormat } from '../../utils/time-utils';
 })
 export class DailyStatisticsComponent implements OnInit {
   @ViewChild('picker') datePicker?: MatDatepicker<Date>;
+  @Output() dateSelectedEvent = new EventEmitter<Date>();
+
+  maxDate: Date;
+  barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
+  statisticsNotFound = false;
+
+  constructor(private statisticsService: StatisticsService) {
+    this.maxDate = new Date();
+    this.maxDate.setHours(0, 0, 0, 0);
+  }
+
+  private readonly dailyStatisticsXAxis = [
+    '0',
+    '2',
+    '4',
+    '6',
+    '8',
+    '10',
+    '12',
+    '14',
+    '16',
+    '18',
+    '20',
+    '22',
+  ];
 
   private _selectedDay: Date = new Date();
+
   get selectedDay(): Date {
     return this._selectedDay;
   }
+
   set selectedDay(value: Date) {
     this._selectedDay = value;
-    this.taskService.getTasksOnDate(value);
-  }
-
-  maxDate: Date;
-  dailyStatistics?: DailyStatistics;
-
-  barPlotVM = new BarPlotVM('Pomodoro (times)', 'Hour', 'Time spent');
-
-  constructor(
-    private statisticsService: StatisticsService,
-    private taskService: TaskService
-  ) {
-    this.maxDate = new Date();
-    this.maxDate.setHours(0, 0, 0, 0);
+    this.loadDailyStatistics();
+    this.dateSelectedEvent.emit(value);
   }
 
   get dateInputRightArrowState(): string {
@@ -44,10 +64,7 @@ export class DailyStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.statisticsService.getDailyStatistics().subscribe((result) => {
-      this.dailyStatistics = result;
-      this.updateBarPlotVM(this.dailyStatistics);
-    });
+    this.loadDailyStatistics();
   }
 
   formatTime(seconds: number): string {
@@ -78,9 +95,19 @@ export class DailyStatisticsComponent implements OnInit {
     }
   }
 
+  private loadDailyStatistics(): void {
+    this.statisticsService
+      .getDailyStatistics(this._selectedDay)
+      .subscribe((result) => this.updateBarPlotVM(result));
+  }
+
   private updateBarPlotVM(data: DailyStatistics) {
-    if (this.barPlotVM.dataSequence.length > 0) {
-      this.barPlotVM.dataSequence.splice(0, this.barPlotVM.dataSequence.length);
+    this.barPlotVM.clearData();
+    this.statisticsNotFound = data.analyticsPerHours.length === 0;
+
+    if (this.statisticsNotFound) {
+      this.barPlotVM.addDefaultData(this.dailyStatisticsXAxis);
+      return;
     }
 
     data.analyticsPerHours.forEach((aph) => {
