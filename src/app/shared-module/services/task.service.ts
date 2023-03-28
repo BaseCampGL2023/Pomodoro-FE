@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { Pomodoro } from '../types/pomodoro';
 import { TrackerSettingsService } from '../tracker/tracker-settings.service';
+import { TaskFrequenciesEnum } from '../enums/task-frequencies.enum';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -36,9 +37,14 @@ export class TaskService {
       }
     });
 
-    this.getTasksOnDate(new Date()).subscribe((tasks) => {
-      this.todayTaskList = tasks;
-      this.changeTodayTaskList();
+    this.getTasksOnDate(new Date()).subscribe({
+      next: (tasks: Task[]) => {
+        this.todayTaskList = tasks;
+        this.changeTodayTaskList();
+      },
+      error: (error: Error) => {
+        console.log('Error occurred while getting tasks: ' + error.message);
+      },
     });
   }
 
@@ -46,6 +52,10 @@ export class TaskService {
   private todayTaskList: Task[] = [];
   private taskListSource = new BehaviorSubject<Task[]>(this.todayTaskList);
   taskListChanged = this.taskListSource.asObservable();
+
+  get tasks() {
+    return this.todayTaskList;
+  }
 
   changeTodayTaskList() {
     this.taskListSource.next(this.todayTaskList);
@@ -69,9 +79,7 @@ export class TaskService {
       taskId: this.curTaskId
         ? this.curTaskId
         : '00000000-0000-0000-0000-000000000000',
-      actuallDate:
-        this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") ??
-        '',
+      actuallDate: this.formateDate(new Date()),
       timeSpent: this.settings.pomodoro * 100,
       isDone: false,
     };
@@ -121,10 +129,11 @@ export class TaskService {
   }
 
   createTask(task: Task): Observable<any> {
+    task.initialDate = this.formateDate(task.initialDate);
     const url = environment.baseUrl + 'tasks';
     return this.http.post<Task>(url, task).pipe(
       map((newTask: Task) => {
-        this.todayTaskList.push(newTask);
+        this.todayTaskList.push(this.setFrequencyValueForTask(newTask));
       }),
       catchError(this.handleError)
     );
@@ -134,12 +143,13 @@ export class TaskService {
     if (this.curTaskId === null) {
       return throwError(() => new Error('Task was not set!'));
     }
+    task.initialDate = this.formateDate(task.initialDate);
     const url = environment.baseUrl + 'tasks/' + this.curTaskId;
     return this.http.put<Task>(url, task).pipe(
       map((updatedTask: Task) => {
         this.todayTaskList.forEach((t, i) => {
           if (t.id === updatedTask.id) {
-            this.todayTaskList[i] = updatedTask;
+            this.todayTaskList[i] = this.setFrequencyValueForTask(updatedTask);
           }
         });
       }),
@@ -171,7 +181,14 @@ export class TaskService {
   getTasksOnDate(date: Date): Observable<Task[]> {
     let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
     const url = environment.baseUrl + 'tasks/getByDate/' + dateString;
-    return this.http.get<Task[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<Task[]>(url).pipe(
+      map((tasks) =>
+        tasks.map((t) => {
+          return this.setFrequencyValueForTask(t);
+        })
+      ),
+      catchError(this.handleError)
+    );
   }
 
   getCompletedTasksOnDate(date: Date): Observable<Task[]> {
@@ -180,9 +197,23 @@ export class TaskService {
     return this.http.get<Task[]>(url).pipe(catchError(this.handleError));
   }
 
+  private setFrequencyValueForTask(task: Task): Task {
+    const freqValue = (TaskFrequenciesEnum as any)[
+      task.frequency.frequencyValue
+    ];
+    task.frequency.frequencyValue = freqValue;
+    return task;
+  }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(
       () => new Error(error.message || 'something went wrong!')
     );
+  }
+
+  private formateDate(date: Date): Date {
+    const dateString =
+      this.datePipe.transform(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") ?? '';
+    return new Date(dateString);
   }
 }

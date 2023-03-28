@@ -68,6 +68,9 @@
   align-items: center;
   overflow: hidden;
   padding: 0 12px;
+  span {
+    overflow: hidden;
+  }
 }
 
 .left .inner {
@@ -79,18 +82,21 @@
 }
 
 .task-title {
+  width: 40%;
   font-weight: 500;
   font-size: 16px;
   text-align: left;
 }
 
 .task-frequency {
+  width: 20%;
   font-weight: 400;
   font-size: 15px;
   text-align: center;
 }
 
 .task-time {
+  width: 40%;
   font-weight: 500;
   font-size: 20px;
   text-align: right;
