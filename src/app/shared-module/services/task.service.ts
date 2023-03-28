@@ -121,7 +121,9 @@ export class TaskService {
     const url = environment.baseUrl + 'tasks';
     return this.http.post<Task>(url, task).pipe(
       map((newTask: Task) => {
-        this.todayTaskList.push(this.setFrequencyValueForTask(newTask));
+        if (this.isTaskForToday(newTask)) {
+          this.todayTaskList.push(this.setFrequencyValueForTask(newTask));
+        }
       }),
       catchError(this.handleError)
     );
@@ -137,7 +139,11 @@ export class TaskService {
       map((updatedTask: Task) => {
         this.todayTaskList.forEach((t, i) => {
           if (t.id === updatedTask.id) {
-            this.todayTaskList[i] = this.setFrequencyValueForTask(updatedTask);
+            if (this.isTaskForToday(updatedTask)) {
+              this.todayTaskList[i] =
+                this.setFrequencyValueForTask(updatedTask);
+            }
+            this.todayTaskList.splice(i, 1);
           }
         });
       }),
@@ -203,5 +209,19 @@ export class TaskService {
     const dateString =
       this.datePipe.transform(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") ?? '';
     return new Date(dateString);
+  }
+
+  private isTaskForToday(task: Task): boolean {
+    let today = new Date();
+    if (task.initialDate.getDate > today.getDate) {
+      return false;
+    }
+    if (task.frequency.frequencyValue === TaskFrequenciesEnum.Weekend) {
+      return today.getDay() == 6 || today.getDay() == 0;
+    }
+    if (task.frequency.frequencyValue === TaskFrequenciesEnum.Workday) {
+      return today.getDay() != 6 && today.getDay() != 0;
+    }
+    return false;
   }
 }
