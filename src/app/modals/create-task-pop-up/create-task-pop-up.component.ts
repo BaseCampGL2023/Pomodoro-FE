@@ -57,7 +57,7 @@ export class CreateTaskPopUpComponent implements OnInit {
         id: '00000000-0000-0000-0000-000000000000',
         title: this.createTaskForm.value.title,
         initialDate: this.createTaskForm.value.initialDate,
-        allocatedTime: this.createTaskForm.value.allocatedTime,
+        allocatedTime: this.createTaskForm.value.allocatedTime * 60,
         frequency: {
           id: '00000000-0000-0000-0000-000000000000',
           frequencyValue: this.getFrequenciesEnumKeyByValue(

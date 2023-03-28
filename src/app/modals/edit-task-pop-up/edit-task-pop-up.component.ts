@@ -46,7 +46,7 @@ export class EditTaskPopUpComponent implements OnInit {
       title: [this.task.title, [Validators.required, Validators.minLength(3)]],
       initialDate: [this.task.initialDate, Validators.required],
       allocatedTime: [
-        this.task.allocatedTime,
+        this.task.allocatedTime / 60,
         [
           Validators.required,
           Validators.min(this.settings.pomodoro),
@@ -67,7 +67,7 @@ export class EditTaskPopUpComponent implements OnInit {
         id: this.task.id,
         title: this.editTaskForm.value.title,
         initialDate: this.editTaskForm.value.initialDate,
-        allocatedTime: this.editTaskForm.value.allocatedTime,
+        allocatedTime: this.editTaskForm.value.allocatedTime * 60,
         frequency: {
           id: this.task.frequency.id,
           frequencyValue: this.getFrequenciesEnumKeyByValue(

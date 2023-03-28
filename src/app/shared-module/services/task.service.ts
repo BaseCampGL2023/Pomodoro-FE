@@ -1,14 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  catchError,
-  map,
-  Observable,
-  of,
-  tap,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { TrackerService } from '../tracker/tracker.service';
 import { TrackerDurationEnum } from '../tracker/types/tracker-duration.enum';
 import { TrackerEvent } from '../tracker/types/tracker-event';
@@ -53,10 +45,6 @@ export class TaskService {
   private taskListSource = new BehaviorSubject<Task[]>(this.todayTaskList);
   taskListChanged = this.taskListSource.asObservable();
 
-  get tasks() {
-    return this.todayTaskList;
-  }
-
   changeTodayTaskList() {
     this.taskListSource.next(this.todayTaskList);
   }
@@ -80,7 +68,7 @@ export class TaskService {
         ? this.curTaskId
         : '00000000-0000-0000-0000-000000000000',
       actuallDate: this.formateDate(new Date()),
-      timeSpent: this.settings.pomodoro * 100,
+      timeSpent: this.settings.pomodoro * 60,
       isDone: false,
     };
 
