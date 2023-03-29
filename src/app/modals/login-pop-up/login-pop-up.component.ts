@@ -9,6 +9,7 @@ import { LoginResult } from 'src/app/shared-module/types/login-result';
 import { SignupPopUpComponent } from '../signup-pop-up/signup-pop-up.component';
 import { ExternalLoginProviders } from 'src/app/shared-module/types/external-login-providers';
 import { AuthMatDialogData } from 'src/app/shared-module/types/auth-mat-dialog-data';
+import { TaskService } from 'src/app/shared-module/services/task.service';
 
 @Component({
   selector: 'app-login-pop-up',
@@ -35,6 +36,7 @@ export class LoginPopUpComponent {
     private router: Router,
     private authService: AuthService,
     private dialog: MatDialog,
+    private taskService: TaskService,
     @Inject(MAT_DIALOG_DATA) private authMatDialogData?: AuthMatDialogData
   ) {
     this.loginForm.reset(this.loginRequest);
@@ -49,6 +51,7 @@ export class LoginPopUpComponent {
         next: (result) => {
           this.loginResult = result;
           if (result.success) {
+            this.taskService.changeTodayTaskList();
             this.dialog.closeAll();
             this.router.navigate([this.returnUrl]);
           }

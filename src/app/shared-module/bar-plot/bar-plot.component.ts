@@ -18,7 +18,13 @@ export class BarPlotComponent {
     return this.calcYAxis(this.viewModel.dataSequence.map((ds) => ds.value));
   }
 
+  private readonly defaultYAxis = ['0', '0', '0', '0', '0'];
+
   calcYAxis(values: number[]): string[] {
+    if (values.length === 0) {
+      return this.defaultYAxis;
+    }
+
     let max = Math.max(...values);
     let fixedTo: number;
 

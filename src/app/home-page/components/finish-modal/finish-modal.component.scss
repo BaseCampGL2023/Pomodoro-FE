@@ -1,0 +1,36 @@
+.after-pomodoro-frame {
+    top: 5%;
+    left: 19%;
+    width: 62%;
+    height: 7%;
+    position: absolute;
+    text-align: center;
+    border-radius: 6px;
+    background-color: rgba(51, 179, 85, 0.9599999785423279);
+  }
+.after-break-frame{
+    top: 5%;
+    left: 19%;
+    width: 62%;
+    height: 7%;
+    position: absolute;
+    border-radius: 6px;
+    background-color: rgba(179, 62, 51, 0.96);
+    text-align: center;
+}
+.text {
+    top: 25%;
+    color: rgba(255, 255, 255, 1);
+    position: relative;
+    font-size: 16px;
+    font-style: normal;
+    font-family: 'DM Sans';
+    font-weight: 500;
+    line-height: 20px;
+    
+}
+.stealth
+  {
+    display: none;
+  }
+  

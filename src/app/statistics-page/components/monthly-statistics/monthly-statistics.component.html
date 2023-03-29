@@ -1,8 +1,11 @@
 <div class="container">
+  <div *ngIf="statisticsNotFound" class="text-danger list-unstyled mb-1">
+    No statistics found for the selected month.
+  </div>
   <div class="row gx-3 gy-3">
     <div class="col-md">
       <div class="analytics-item">
-        <span class="value">{{ monthlyStatistics?.tasksCompleted }}</span>
+        <span class="value">{{ statistics?.tasksCompleted }}</span>
         <span class="unit">tasks completed</span>
       </div>
     </div>
@@ -14,7 +17,7 @@
     </div>
     <div class="col-md">
       <div class="analytics-item">
-        <span class="value">{{ monthlyStatistics?.pomodorosDone }}</span>
+        <span class="value">{{ statistics?.pomodorosDone }}</span>
         <span class="unit">pomodoros done</span>
       </div>
     </div>

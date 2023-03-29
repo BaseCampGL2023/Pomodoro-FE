@@ -1,7 +1,7 @@
 export interface Pomodoro {
   id: string;
   taskId: string;
-  actuallDate: Date;
+  actuallDate: string;
   timeSpent: number;
   isDone: boolean;
 }

@@ -41,5 +41,8 @@
       />
     </div>
   </div>
+  <div *ngIf="statisticsNotFound" class="text-danger list-unstyled mt-1">
+    No statistics found for the selected year.
+  </div>
   <app-bar-plot [viewModel]="barPlotVM"></app-bar-plot>
 </div>

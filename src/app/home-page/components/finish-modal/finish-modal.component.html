@@ -1,0 +1,14 @@
+<div [ngClass]="{ stealth: pomodoro_visibility }">
+  <div class="after-pomodoro-frame">
+    <span class="text">
+      Great work. You have just finished 1 set of pomodoro. Take a short break!
+    </span>
+  </div>
+</div>
+<div [ngClass]="{ stealth: break_visibility }">
+  <div class="after-break-frame">
+    <span class="text">
+      You have just finished your break. It's time to start working!
+    </span>
+  </div>
+</div>

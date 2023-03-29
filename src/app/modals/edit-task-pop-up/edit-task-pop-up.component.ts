@@ -23,6 +23,7 @@ export class EditTaskPopUpComponent implements OnInit {
   editTaskForm = <FormGroup>{};
   minDate = new Date();
   editTaskError?: string;
+  maxAllocatedTime = 540;
 
   constructor(
     private taskService: TaskService,
@@ -38,7 +39,7 @@ export class EditTaskPopUpComponent implements OnInit {
     }
     this.editTaskForm = this.buildFormGroup();
     this.onSelect();
-    this.minDate = this.task.initialDate;
+    this.minDate = new Date(this.task.initialDate);
   }
 
   buildFormGroup(): FormGroup {
@@ -50,7 +51,7 @@ export class EditTaskPopUpComponent implements OnInit {
         [
           Validators.required,
           Validators.min(this.settings.pomodoro),
-          Validators.max(1440),
+          Validators.max(this.maxAllocatedTime),
         ],
       ],
       frequency: [this.task.frequency.frequencyValue, Validators.required],
@@ -63,21 +64,7 @@ export class EditTaskPopUpComponent implements OnInit {
 
   onSubmit() {
     if (this.editTaskForm.valid && this.taskIsChanged()) {
-      const updatedTask: Task = {
-        id: this.task.id,
-        title: this.editTaskForm.value.title,
-        initialDate: this.editTaskForm.value.initialDate,
-        allocatedTime: this.editTaskForm.value.allocatedTime * 60,
-        frequency: {
-          id: this.task.frequency.id,
-          frequencyValue: this.getFrequenciesEnumKeyByValue(
-            this.editTaskForm.value.frequency
-          ),
-          every: this.editTaskForm.value.every,
-          isCustom: this.editTaskForm.value.every > 1 ? true : false,
-        },
-        progress: this.task.progress,
-      };
+      const updatedTask: Task = this.getTaskFromForm();
       this.taskService.updateTask(updatedTask).subscribe({
         next: (task: Task) => {
           console.log(task);
@@ -97,17 +84,6 @@ export class EditTaskPopUpComponent implements OnInit {
     this.datePicker?.open();
   }
 
-  taskIsChanged(): boolean {
-    return (
-      this.task.title !== this.editTaskForm.value.title ||
-      this.task.initialDate !== this.editTaskForm.value.initialDate ||
-      this.task.frequency.frequencyValue !==
-        this.editTaskForm.value.frequency ||
-      this.task.frequency.every !== this.editTaskForm.value.every ||
-      this.task.allocatedTime !== this.editTaskForm.value.allocatedTime
-    );
-  }
-
   onSelect() {
     if (
       this.editTaskForm.value.frequency === TaskFrequenciesEnum.Day ||
@@ -120,7 +96,36 @@ export class EditTaskPopUpComponent implements OnInit {
     }
   }
 
-  getFrequenciesEnumKeyByValue(value: string) {
+  private getTaskFromForm(): Task {
+    return {
+      id: this.task.id,
+      title: this.editTaskForm.value.title,
+      initialDate: this.editTaskForm.value.initialDate,
+      allocatedTime: this.editTaskForm.value.allocatedTime * 60,
+      frequency: {
+        id: this.task.frequency.id,
+        frequencyValue: this.getFrequenciesEnumKeyByValue(
+          this.editTaskForm.value.frequency
+        ),
+        every: this.editTaskForm.value.every,
+        isCustom: this.editTaskForm.value.every > 1 ? true : false,
+      },
+      progress: this.task.progress,
+    };
+  }
+
+  private taskIsChanged(): boolean {
+    return (
+      this.task.title !== this.editTaskForm.value.title ||
+      this.task.initialDate !== this.editTaskForm.value.initialDate ||
+      this.task.frequency.frequencyValue !==
+        this.editTaskForm.value.frequency ||
+      this.task.frequency.every !== this.editTaskForm.value.every ||
+      this.task.allocatedTime !== this.editTaskForm.value.allocatedTime
+    );
+  }
+
+  private getFrequenciesEnumKeyByValue(value: string) {
     const indexOfS = Object.values(TaskFrequenciesEnum).indexOf(
       value as unknown as TaskFrequenciesEnum
     );

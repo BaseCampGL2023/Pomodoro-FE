@@ -28,7 +28,6 @@ export class TaskService {
         this.addPomodoro();
       }
     });
-
     this.getTasksOnDate(new Date()).subscribe({
       next: (tasks: Task[]) => {
         this.todayTaskList = tasks;
@@ -67,7 +66,7 @@ export class TaskService {
       taskId: this.curTaskId
         ? this.curTaskId
         : '00000000-0000-0000-0000-000000000000',
-      actuallDate: this.formateDate(new Date()),
+      actuallDate: new Date().toISOString(),
       timeSpent: this.settings.pomodoro * 60,
       isDone: false,
     };
@@ -100,7 +99,7 @@ export class TaskService {
       return throwError(() => new Error('You must do at least one pomodoro!'));
     } else {
       const url =
-        environment.baseUrl + 'tasks/' + this.curTaskId + '/completeTodayTask';
+        environment.baseUrl + 'tasks/' + this.curTaskId + '/completeTask';
       return this.http.put<any>(url, null).pipe(
         map(() => {
           this.todayTaskList.forEach((t, i) => {
@@ -117,7 +116,6 @@ export class TaskService {
   }
 
   createTask(task: Task): Observable<any> {
-    task.initialDate = this.formateDate(task.initialDate);
     const url = environment.baseUrl + 'tasks';
     return this.http.post<Task>(url, task).pipe(
       map((newTask: Task) => {
@@ -133,7 +131,6 @@ export class TaskService {
     if (this.curTaskId === null) {
       return throwError(() => new Error('Task was not set!'));
     }
-    task.initialDate = this.formateDate(task.initialDate);
     const url = environment.baseUrl + 'tasks/' + this.curTaskId;
     return this.http.put<Task>(url, task).pipe(
       map((updatedTask: Task) => {
@@ -205,15 +202,14 @@ export class TaskService {
     );
   }
 
-  private formateDate(date: Date): Date {
-    const dateString =
-      this.datePipe.transform(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") ?? '';
-    return new Date(dateString);
-  }
-
   private isTaskForToday(task: Task): boolean {
+    let taskDate = new Date(task.initialDate);
     let today = new Date();
-    if (task.initialDate.getDate > today.getDate) {
+    if (
+      taskDate.getFullYear() >= today.getFullYear() &&
+      taskDate.getMonth() >= today.getMonth() &&
+      taskDate.getDate() > today.getDate()
+    ) {
       return false;
     }
     if (task.frequency.frequencyValue === TaskFrequenciesEnum.Weekend) {
@@ -222,6 +218,6 @@ export class TaskService {
     if (task.frequency.frequencyValue === TaskFrequenciesEnum.Workday) {
       return today.getDay() != 6 && today.getDay() != 0;
     }
-    return false;
+    return true;
   }
 }
