@@ -61,7 +61,7 @@ export class TaskService {
       console.log('You must do at least one pomodoro!');
     }
 
-    let pomodoro: Pomodoro = {
+    const pomodoro: Pomodoro = {
       id: '00000000-0000-0000-0000-000000000000',
       taskId: this.curTaskId
         ? this.curTaskId
@@ -107,7 +107,6 @@ export class TaskService {
               this.todayTaskList[i].progress = 100;
             }
           });
-          this.curTaskId = null;
           this.trackerService.reload();
         }),
         catchError(this.handleError)
@@ -170,7 +169,7 @@ export class TaskService {
   }
 
   getTasksOnDate(date: Date): Observable<Task[]> {
-    let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
+    const dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
     const url = environment.baseUrl + 'tasks/getByDate/' + dateString;
     return this.http.get<Task[]>(url).pipe(
       map((tasks) =>
@@ -183,7 +182,7 @@ export class TaskService {
   }
 
   getCompletedTasksOnDate(date: Date): Observable<Task[]> {
-    let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
+    const dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
     const url = environment.baseUrl + 'tasks/getCompletedByDate/' + dateString;
     return this.http.get<Task[]>(url).pipe(catchError(this.handleError));
   }
@@ -203,8 +202,8 @@ export class TaskService {
   }
 
   private isTaskForToday(task: Task): boolean {
-    let taskDate = new Date(task.initialDate);
-    let today = new Date();
+    const taskDate = new Date(task.initialDate);
+    const today = new Date();
     if (
       taskDate.getFullYear() >= today.getFullYear() &&
       taskDate.getMonth() >= today.getMonth() &&

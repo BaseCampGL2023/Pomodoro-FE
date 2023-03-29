@@ -44,8 +44,10 @@ export class StatisticsPageComponent implements OnInit {
   private loadTasks(date: Date): void {
     this.taskService.getCompletedTasksOnDate(date).subscribe({
       next: (tasks: Task[]) => (this.taskList = tasks),
-      error: (err: Error) =>
-        console.log('Error on statistics page: ', err.message),
+      error: (err: Error) => {
+        this.taskList = [];
+        console.log('Error on statistics page: ', err.message);
+      },
     });
   }
 }
