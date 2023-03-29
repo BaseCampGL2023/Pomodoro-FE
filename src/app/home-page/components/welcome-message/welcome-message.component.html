@@ -1,11 +1,7 @@
 <div class="container">
   <div class="auth-msg" *ngIf="isLoggedIn; else nonauthMsg">
-    <h4>
-      Welcome back, {{ userName }}!
-    </h4>
-    <p>
-      Now you can create tasks and track your progress.
-    </p>
+    <h4>Welcome back, {{ userName }}!</h4>
+    <p>Now you can create tasks and track your progress.</p>
   </div>
   <ng-template #nonauthMsg>
     <h3>

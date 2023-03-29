@@ -17,7 +17,8 @@ import { DOCUMENT } from '@angular/common';
 export class AuthService {
   private readonly tokenKey = 'token';
   private readonly userIdClaim = 'userId';
-  private readonly userNameClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name';
+  private readonly userNameClaim =
+    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name';
 
   private _authStatus = new Subject<boolean>();
   public authStatus = this._authStatus.asObservable();

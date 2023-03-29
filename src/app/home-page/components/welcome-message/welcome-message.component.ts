@@ -11,7 +11,7 @@ export class WelcomeMessageComponent implements OnInit {
   userName?: string;
 
   constructor(private readonly authService: AuthService) {}
-  
+
   ngOnInit(): void {
     this.userName = this.authService.getUserName();
   }
