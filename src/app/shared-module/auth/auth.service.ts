@@ -17,6 +17,7 @@ import { DOCUMENT } from '@angular/common';
 export class AuthService {
   private readonly tokenKey = 'token';
   private readonly userIdClaim = 'userId';
+  private readonly userNameClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name';
 
   private _authStatus = new Subject<boolean>();
   public authStatus = this._authStatus.asObservable();
@@ -35,12 +36,11 @@ export class AuthService {
   }
 
   getUserId(): string {
-    const token = this.getToken();
-    if (token) {
-      const decodedToken: any = jwt_decode(token);
-      return decodedToken[this.userIdClaim];
-    }
-    return Guid.empty;
+    return this.getClaim(this.userIdClaim) ?? Guid.empty;
+  }
+
+  getUserName(): string {
+    return this.getClaim(this.userNameClaim) ?? '';
   }
 
   init(): void {
@@ -83,5 +83,14 @@ export class AuthService {
 
   private setAuthStatus(isAuthenticated: boolean): void {
     this._authStatus.next(isAuthenticated);
+  }
+
+  private getClaim(claim: string): string | null {
+    const token = this.getToken();
+    if (token) {
+      const decodedToken: any = jwt_decode(token);
+      return decodedToken[claim];
+    }
+    return null;
   }
 }

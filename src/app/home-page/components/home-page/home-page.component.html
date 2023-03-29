@@ -1,6 +1,6 @@
 <div class="row no-gutters">
   <div class="col-xs-12 col-md-7">
-    <app-welcome-message *ngIf="!isLoggedIn"></app-welcome-message>
+    <app-welcome-message [isLoggedIn]="isLoggedIn"></app-welcome-message>
     <div class="container" *ngIf="isLoggedIn">
       <app-today-tasks></app-today-tasks>
     </div>
