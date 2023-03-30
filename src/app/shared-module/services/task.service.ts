@@ -138,8 +138,9 @@ export class TaskService {
             if (this.isTaskForToday(updatedTask)) {
               this.todayTaskList[i] =
                 this.setFrequencyValueForTask(updatedTask);
+            } else {
+              this.todayTaskList.splice(i, 1);
             }
-            this.todayTaskList.splice(i, 1);
           }
         });
       }),

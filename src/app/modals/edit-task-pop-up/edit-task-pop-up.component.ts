@@ -67,7 +67,6 @@ export class EditTaskPopUpComponent implements OnInit {
       const updatedTask: Task = this.getTaskFromForm();
       this.taskService.updateTask(updatedTask).subscribe({
         next: (task: Task) => {
-          console.log(task);
           this.taskService.changeTodayTaskList();
           this.dialogRef.closeAll();
         },
@@ -121,7 +120,7 @@ export class EditTaskPopUpComponent implements OnInit {
       this.task.frequency.frequencyValue !==
         this.editTaskForm.value.frequency ||
       this.task.frequency.every !== this.editTaskForm.value.every ||
-      this.task.allocatedTime !== this.editTaskForm.value.allocatedTime
+      this.task.allocatedTime !== this.editTaskForm.value.allocatedTime * 60
     );
   }
 
