@@ -80,7 +80,6 @@ export class TaskService {
           }
         });
         this.changeTodayTaskList();
-        this.trackerService.reload();
       },
       error: (error: Error) => {
         console.log('Error occurred while adding pomodoro: ' + error.message);
