@@ -97,21 +97,23 @@ export class TaskService {
     );
     if (this.todayTaskList[taskIndex].progress === 0) {
       return throwError(() => new Error('You must do at least one pomodoro!'));
-    } else {
-      const url =
-        environment.baseUrl + 'tasks/' + this.curTaskId + '/completeTask';
-      return this.http.put<any>(url, null).pipe(
-        map(() => {
-          this.todayTaskList.forEach((t, i) => {
-            if (t.id === this.curTaskId) {
-              this.todayTaskList[i].progress = 100;
-            }
-          });
-          this.trackerService.reload();
-        }),
-        catchError(this.handleError)
-      );
     }
+    if (this.todayTaskList[taskIndex].progress === 100) {
+      return throwError(() => new Error('This task is already completed!'));
+    }
+    const url =
+      environment.baseUrl + 'tasks/' + this.curTaskId + '/completeTask';
+    return this.http.put<any>(url, null).pipe(
+      map(() => {
+        this.todayTaskList.forEach((t, i) => {
+          if (t.id === this.curTaskId) {
+            this.todayTaskList[i].progress = 100;
+          }
+        });
+        this.trackerService.reload();
+      }),
+      catchError(this.handleError)
+    );
   }
 
   createTask(task: Task): Observable<any> {
