@@ -64,19 +64,9 @@ export class TaskService {
 
   addPomodoro(): void {
     if (this.curTaskId === null) {
-      console.log('You must do at least one pomodoro!');
+      return;
     }
-
-    const pomodoro: Pomodoro = {
-      id: '00000000-0000-0000-0000-000000000000',
-      taskId: this.curTaskId
-        ? this.curTaskId
-        : '00000000-0000-0000-0000-000000000000',
-      actuallDate: new Date().toISOString(),
-      timeSpent: this.settings.pomodoro * 60,
-      isDone: false,
-    };
-
+    const pomodoro = this.createPomodoro();
     const url = environment.baseUrl + 'tasks/pomodoros';
     this.http.post<Task>(url, pomodoro).subscribe({
       next: (task: Task) => {
@@ -226,5 +216,17 @@ export class TaskService {
       return today.getDay() != 6 && today.getDay() != 0;
     }
     return true;
+  }
+
+  private createPomodoro(): Pomodoro {
+    return {
+      id: '00000000-0000-0000-0000-000000000000',
+      taskId: this.curTaskId
+        ? this.curTaskId
+        : '00000000-0000-0000-0000-000000000000',
+      actuallDate: new Date().toISOString(),
+      timeSpent: this.settings.pomodoro * 60,
+      isDone: false,
+    };
   }
 }
