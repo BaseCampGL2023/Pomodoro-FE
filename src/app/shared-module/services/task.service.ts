@@ -43,9 +43,14 @@ export class TaskService {
   private todayTaskList: Task[] = [];
   private taskListSource = new BehaviorSubject<Task[]>(this.todayTaskList);
   taskListChanged = this.taskListSource.asObservable();
+  private curTaskIdSource = new BehaviorSubject<string | null>(null);
+  curTaskIdChanged = this.curTaskIdSource.asObservable();
 
   changeTodayTaskList() {
     this.taskListSource.next(this.todayTaskList);
+  }
+  changeCurTaskIdList() {
+    this.curTaskIdSource.next(this.curTaskId);
   }
 
   setCurTaskId(taskId: string | null) {
@@ -53,6 +58,7 @@ export class TaskService {
       return;
     }
     this.curTaskId = taskId;
+    this.changeCurTaskIdList();
     this.trackerService.reload();
   }
 

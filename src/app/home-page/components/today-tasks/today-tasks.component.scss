@@ -48,3 +48,17 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+.warning {
+  text-align: center;
+  margin: 0.75rem 0;
+  cursor: default;
+  span {
+    // font-weight: 300;
+    background-color: #ffb174;
+    // background-color: $base-color;
+    // color: red;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+}

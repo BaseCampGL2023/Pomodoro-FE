@@ -13,10 +13,14 @@ export class TodayTasksComponent implements OnInit {
   constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
   taskList: Task[] = [];
+  curTaskId: string | null = null;
 
   ngOnInit() {
     this.taskService.taskListChanged.subscribe(
       (tasks) => (this.taskList = this.moveDoneTaskToEnd(tasks))
+    );
+    this.taskService.curTaskIdChanged.subscribe(
+      (taskId) => (this.curTaskId = taskId)
     );
   }
 
