@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/shared-module/services/task.service';
-import { TaskForList } from 'src/app/shared-module/types/task-for-list';
+import { Task } from 'src/app/shared-module/types/task';
 import { StatisticsService } from '../../services/statistics.service';
 import { MonthlyStatistics } from '../../types/monthly-statistics';
 
@@ -15,7 +15,7 @@ export class StatisticsPageComponent implements OnInit {
     private statisticsService: StatisticsService
   ) {}
 
-  taskList: TaskForList[] = [];
+  taskList: Task[] = [];
   monthlyStatistics?: MonthlyStatistics;
 
   ngOnInit() {
@@ -42,8 +42,12 @@ export class StatisticsPageComponent implements OnInit {
   }
 
   private loadTasks(date: Date): void {
-    this.taskService
-      .getTasksOnDate(date)
-      .subscribe((tasks) => (this.taskList = tasks));
+    this.taskService.getCompletedTasksOnDate(date).subscribe({
+      next: (tasks: Task[]) => (this.taskList = tasks),
+      error: (err: Error) => {
+        this.taskList = [];
+        console.log('Error on statistics page: ', err.message);
+      },
+    });
   }
 }

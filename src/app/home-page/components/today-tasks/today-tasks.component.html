@@ -13,6 +13,11 @@
   </div>
 
   <ng-template #listNotEmptyBlock>
+    <div class="warning" *ngIf="curTaskId === null">
+      <span>
+        You shoud select task from list if you want to save your progress!
+      </span>
+    </div>
     <app-task-list [tasks]="taskList" [isSelectable]="true"></app-task-list>
   </ng-template>
 </div>

@@ -1,19 +1,17 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, Subject, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { TrackerService } from '../tracker/tracker.service';
 import { TrackerDurationEnum } from '../tracker/types/tracker-duration.enum';
-import { TaskFrequenciesEnum } from '../enums/task-frequencies.enum';
 import { TrackerEvent } from '../tracker/types/tracker-event';
 import { TrackerEventEnum } from '../tracker/types/tracker-event.enum';
 import { Task } from '../types/task';
-import { TaskForList } from '../types/task-for-list';
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { Pomodoro } from '../types/pomodoro';
 import { TrackerSettingsService } from '../tracker/tracker-settings.service';
+import { TaskFrequenciesEnum } from '../enums/task-frequencies.enum';
 import { Guid } from '../types/guid';
-import { Frequency } from '../types/frequency';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -31,87 +29,169 @@ export class TaskService {
         this.addPomodoro();
       }
     });
+    this.getTasksOnDate(new Date()).subscribe({
+      next: (tasks: Task[]) => {
+        this.todayTaskList = tasks;
+        this.changeTodayTaskList();
+      },
+      error: (error: Error) => {
+        console.log('Error occurred while getting tasks: ' + error.message);
+      },
+    });
   }
 
   private curTaskId: string | null = null;
-  private lastPomodoroId: string | null = null;
+  private todayTaskList: Task[] = [];
+  private taskListSource = new BehaviorSubject<Task[]>(this.todayTaskList);
+  taskListChanged = this.taskListSource.asObservable();
+  private curTaskIdSource = new BehaviorSubject<string | null>(null);
+  curTaskIdChanged = this.curTaskIdSource.asObservable();
+
+  changeTodayTaskList() {
+    this.taskListSource.next(this.todayTaskList);
+  }
+  changeCurTaskIdList() {
+    this.curTaskIdSource.next(this.curTaskId);
+  }
 
   setCurTaskId(taskId: string | null) {
     if (this.curTaskId == taskId) {
       return;
     }
     this.curTaskId = taskId;
+    this.changeCurTaskIdList();
     this.trackerService.reload();
   }
 
-  addPomodoro() {
+  addPomodoro(): void {
     if (this.curTaskId === null) {
-      console.log(`error when adding pomodoro: task wasn't set`);
       return;
     }
-
-    const pomodoro: Pomodoro = {
-      id: '',
-      taskId: this.curTaskId,
-      actuallDate:
-        this.datePipe.transform(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") ??
-        '',
-      timeSpent: this.settings.pomodoro,
-    };
-
-    const url = environment.baseUrl + 'tasks/' + this.curTaskId + '/pomodoros';
-
-    this.http
-      .post<string>(url, pomodoro)
-      .pipe(
-        catchError(async (error) => {
-          console.log('error when adding pomodoro: ' + error.message);
-          return '';
-        })
-      )
-      .subscribe((pomodoroId) => {
-        if (pomodoroId !== '') {
-          this.lastPomodoroId = pomodoroId;
-        }
-      });
+    const pomodoro = this.createPomodoro();
+    const url = environment.baseUrl + 'tasks/pomodoros';
+    this.http.post<Task>(url, pomodoro).subscribe({
+      next: (task: Task) => {
+        this.todayTaskList.forEach((t, i) => {
+          if (t.id == task.id) {
+            this.todayTaskList[i].progress = task.progress;
+          }
+        });
+        this.changeTodayTaskList();
+      },
+      error: (error: Error) => {
+        console.log('Error occurred while adding pomodoro: ' + error.message);
+      },
+    });
   }
 
   completeCurrentTask(): Observable<any> {
+    if (this.curTaskId === null) {
+      return throwError(() => new Error('Task was not set!'));
+    }
+    const taskIndex = this.todayTaskList.findIndex(
+      (t) => t.id === this.curTaskId
+    );
+    if (this.todayTaskList[taskIndex].progress === 0) {
+      return throwError(() => new Error('You must do at least one pomodoro!'));
+    }
+    if (this.todayTaskList[taskIndex].progress === 100) {
+      return throwError(() => new Error('This task is already completed!'));
+    }
     const url =
-      environment.baseUrl +
-      'tasks/' +
-      this.curTaskId +
-      '/pomodoros/' +
-      this.lastPomodoroId;
-    return this.http.put<any>(url, null).pipe(catchError(this.handleError));
+      environment.baseUrl + 'tasks/' + this.curTaskId + '/completeTask';
+    return this.http.put<any>(url, null).pipe(
+      map(() => {
+        this.todayTaskList.forEach((t, i) => {
+          if (t.id === this.curTaskId) {
+            this.todayTaskList[i].progress = 100;
+          }
+        });
+        this.trackerService.reload();
+      }),
+      catchError(this.handleError)
+    );
   }
 
   createTask(task: Task): Observable<any> {
-    const url = environment.baseUrl + 'tasks/';
-    return this.http.post<any>(url, task).pipe(catchError(this.handleError));
+    const url = environment.baseUrl + 'tasks';
+    return this.http.post<Task>(url, task).pipe(
+      map((newTask: Task) => {
+        if (this.isTaskForToday(newTask)) {
+          this.todayTaskList.push(this.setFrequencyValueForTask(newTask));
+        }
+      }),
+      catchError(this.handleError)
+    );
   }
 
   updateTask(task: Task): Observable<any> {
+    if (this.curTaskId === null) {
+      return throwError(() => new Error('Task was not set!'));
+    }
     const url = environment.baseUrl + 'tasks/' + this.curTaskId;
-    return this.http.put<any>(url, task).pipe(catchError(this.handleError));
+    return this.http.put<Task>(url, task).pipe(
+      map((updatedTask: Task) => {
+        this.todayTaskList.forEach((t, i) => {
+          if (t.id === updatedTask.id) {
+            if (this.isTaskForToday(updatedTask)) {
+              this.todayTaskList[i] =
+                this.setFrequencyValueForTask(updatedTask);
+            } else {
+              this.todayTaskList.splice(i, 1);
+            }
+          }
+        });
+      }),
+      catchError(this.handleError)
+    );
   }
 
   deleteCurrentTask(): Observable<any> {
+    if (this.curTaskId === null) {
+      return throwError(() => new Error('Task was not set!'));
+    }
     const url = environment.baseUrl + 'tasks/' + this.curTaskId;
-    return this.http.delete<any>(url).pipe(catchError(this.handleError));
+    return this.http.delete<any>(url).pipe(
+      map(() => {
+        this.todayTaskList = [...this.todayTaskList].filter((t) => {
+          return t.id !== this.curTaskId;
+        });
+        this.curTaskId = null;
+        this.trackerService.reload();
+      }),
+      catchError(this.handleError)
+    );
   }
 
-  getCurrentTask(): Observable<Task> {
-    // const url = environment.baseUrl + 'tasks/' + this.curTaskId;
-    // return this.http.get<Task>(url).pipe(catchError(this.handleError));
-    return of(this.getTask());
+  getCurrentTask(): Task | undefined {
+    return this.todayTaskList.find((t) => t.id === this.curTaskId);
   }
 
-  getTasksOnDate(date: Date): Observable<TaskForList[]> {
-    // let dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
-    // const url = environment.baseUrl + 'tasks/' + dateString;
-    // return this.http.get<TaskForList[]>(url).pipe(catchError(this.handleError));
-    return of(this.getTasks());
+  getTasksOnDate(date: Date): Observable<Task[]> {
+    const dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
+    const url = environment.baseUrl + 'tasks/getByDate/' + dateString;
+    return this.http.get<Task[]>(url).pipe(
+      map((tasks) =>
+        tasks.map((t) => {
+          return this.setFrequencyValueForTask(t);
+        })
+      ),
+      catchError(this.handleError)
+    );
+  }
+
+  getCompletedTasksOnDate(date: Date): Observable<Task[]> {
+    const dateString = this.datePipe.transform(date, 'yyyy-MM-dd');
+    const url = environment.baseUrl + 'tasks/getCompletedByDate/' + dateString;
+    return this.http.get<Task[]>(url).pipe(catchError(this.handleError));
+  }
+
+  private setFrequencyValueForTask(task: Task): Task {
+    const freqValue = (TaskFrequenciesEnum as any)[
+      task.frequency.frequencyValue
+    ];
+    task.frequency.frequencyValue = freqValue;
+    return task;
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -120,100 +200,32 @@ export class TaskService {
     );
   }
 
-  private getTasks(): TaskForList[] {
-    return [
-      {
-        id: '1',
-        title: 'task1',
-        frequency: 'Day',
-        allocatedTime: 1000,
-        progress: 50,
-      },
-      {
-        id: '2',
-        title: 'task2',
-        frequency: 'Week',
-        allocatedTime: 600,
-        progress: 10,
-      },
-      {
-        id: '3',
-        title: 'task3',
-        frequency: 'Month',
-        allocatedTime: 30,
-        progress: 25,
-      },
-      {
-        id: '4',
-        title: 'task4',
-        frequency: 'Day',
-        allocatedTime: 1500,
-        progress: 100,
-      },
-      {
-        id: '5',
-        title: 'task5',
-        frequency: 'Day',
-        allocatedTime: 1100,
-        progress: 60,
-      },
-      {
-        id: '6',
-        title: 'task6',
-        frequency: 'Day',
-        allocatedTime: 1100,
-        progress: 100,
-      },
-      {
-        id: '7',
-        title: 'task7',
-        frequency: 'Day',
-        allocatedTime: 1100,
-        progress: 35,
-      },
-      {
-        id: '8',
-        title: 'task8',
-        frequency: 'Day',
-        allocatedTime: 1600,
-        progress: 40,
-      },
-      {
-        id: '9',
-        title: 'task9',
-        frequency: 'Day',
-        allocatedTime: 1100,
-        progress: 55,
-      },
-      {
-        id: '10',
-        title: 'task10',
-        frequency: 'Day',
-        allocatedTime: 1100,
-        progress: 80,
-      },
-      {
-        id: '11',
-        title: 'task11',
-        frequency: 'Day',
-        allocatedTime: 1100,
-        progress: 95,
-      },
-    ];
+  private isTaskForToday(task: Task): boolean {
+    const taskDate = new Date(task.initialDate);
+    const today = new Date();
+    if (
+      taskDate.getFullYear() >= today.getFullYear() &&
+      taskDate.getMonth() >= today.getMonth() &&
+      taskDate.getDate() > today.getDate()
+    ) {
+      return false;
+    }
+    if (task.frequency.frequencyValue === TaskFrequenciesEnum.Weekend) {
+      return today.getDay() == 6 || today.getDay() == 0;
+    }
+    if (task.frequency.frequencyValue === TaskFrequenciesEnum.Workday) {
+      return today.getDay() != 6 && today.getDay() != 0;
+    }
+    return true;
   }
 
-  private getTask(): Task {
+  private createPomodoro(): Pomodoro {
     return {
-      id: '11',
-      title: 'task11',
-      frequency: {
-        id: '145',
-        frequencyType: TaskFrequenciesEnum.Day,
-        every: 1,
-        isCustom: false,
-      },
-      allocatedTime: 1100,
-      initialDate: new Date(2023, 1, 20),
+      id: Guid.empty,
+      taskId: this.curTaskId ? this.curTaskId : Guid.empty,
+      actuallDate: new Date().toISOString(),
+      timeSpent: this.settings.pomodoro * 60,
+      isDone: false,
     };
   }
 }

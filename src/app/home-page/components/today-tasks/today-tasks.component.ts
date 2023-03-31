@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateTaskPopUpComponent } from 'src/app/modals/create-task-pop-up/create-task-pop-up.component';
+import { Task } from 'src/app/shared-module/types/task';
 import { TaskService } from '../../../shared-module/services/task.service';
-import { TaskForList } from '../../../shared-module/types/task-for-list';
 
 @Component({
   selector: 'app-today-tasks',
@@ -12,12 +12,16 @@ import { TaskForList } from '../../../shared-module/types/task-for-list';
 export class TodayTasksComponent implements OnInit {
   constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
-  taskList: TaskForList[] = [];
+  taskList: Task[] = [];
+  curTaskId: string | null = null;
 
   ngOnInit() {
-    this.taskService
-      .getTasksOnDate(new Date())
-      .subscribe((tasks) => (this.taskList = this.moveDoneTaskToEnd(tasks)));
+    this.taskService.taskListChanged.subscribe(
+      (tasks) => (this.taskList = this.moveDoneTaskToEnd(tasks))
+    );
+    this.taskService.curTaskIdChanged.subscribe(
+      (taskId) => (this.curTaskId = taskId)
+    );
   }
 
   onCreateTask() {
@@ -25,7 +29,7 @@ export class TodayTasksComponent implements OnInit {
     this.dialog.open(CreateTaskPopUpComponent);
   }
 
-  moveDoneTaskToEnd(arr: TaskForList[]) {
+  moveDoneTaskToEnd(arr: Task[]) {
     const notDone = arr.filter((task) => task.progress !== 100);
     const done = arr.filter((task) => task.progress === 100);
     return notDone.concat(done);

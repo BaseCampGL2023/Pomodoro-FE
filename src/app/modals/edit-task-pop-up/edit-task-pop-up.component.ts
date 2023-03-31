@@ -23,6 +23,7 @@ export class EditTaskPopUpComponent implements OnInit {
   editTaskForm = <FormGroup>{};
   minDate = new Date();
   editTaskError?: string;
+  maxAllocatedTime = 540;
 
   constructor(
     private taskService: TaskService,
@@ -32,11 +33,13 @@ export class EditTaskPopUpComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.taskService
-      .getCurrentTask()
-      .subscribe((result) => (this.task = result));
+    const result = this.taskService.getCurrentTask();
+    if (result !== undefined) {
+      this.task = result;
+    }
     this.editTaskForm = this.buildFormGroup();
-    this.minDate = this.task.initialDate;
+    this.onSelect();
+    this.minDate = new Date(this.task.initialDate);
   }
 
   buildFormGroup(): FormGroup {
@@ -44,14 +47,14 @@ export class EditTaskPopUpComponent implements OnInit {
       title: [this.task.title, [Validators.required, Validators.minLength(3)]],
       initialDate: [this.task.initialDate, Validators.required],
       allocatedTime: [
-        this.task.allocatedTime,
+        this.task.allocatedTime / 60,
         [
           Validators.required,
           Validators.min(this.settings.pomodoro),
-          Validators.max(1440),
+          Validators.max(this.maxAllocatedTime),
         ],
       ],
-      frequency: [this.task.frequency.frequencyType, Validators.required],
+      frequency: [this.task.frequency.frequencyValue, Validators.required],
       every: [
         this.task.frequency.every,
         [Validators.required, Validators.min(1), Validators.max(100)],
@@ -61,22 +64,10 @@ export class EditTaskPopUpComponent implements OnInit {
 
   onSubmit() {
     if (this.editTaskForm.valid && this.taskIsChanged()) {
-      const updatedTask: Task = {
-        id: this.task.id,
-        title: this.editTaskForm.value.title,
-        initialDate: this.editTaskForm.value.initialDate,
-        allocatedTime: this.editTaskForm.value.allocatedTime,
-        frequency: {
-          id: this.task.frequency.id,
-          frequencyType: this.getFrequenciesEnumKeyByValue(
-            this.editTaskForm.value.frequency
-          ),
-          every: this.editTaskForm.value.every,
-          isCustom: this.editTaskForm.value.every > 1 ? true : false,
-        },
-      };
+      const updatedTask: Task = this.getTaskFromForm();
       this.taskService.updateTask(updatedTask).subscribe({
-        next: () => {
+        next: (task: Task) => {
+          this.taskService.changeTodayTaskList();
           this.dialogRef.closeAll();
         },
         error: (error) => {
@@ -92,16 +83,6 @@ export class EditTaskPopUpComponent implements OnInit {
     this.datePicker?.open();
   }
 
-  taskIsChanged(): boolean {
-    return (
-      this.task.title !== this.editTaskForm.value.title ||
-      this.task.initialDate !== this.editTaskForm.value.initialDate ||
-      this.task.frequency.frequencyType !== this.editTaskForm.value.frequency ||
-      this.task.frequency.every !== this.editTaskForm.value.every ||
-      this.task.allocatedTime !== this.editTaskForm.value.allocatedTime
-    );
-  }
-
   onSelect() {
     if (
       this.editTaskForm.value.frequency === TaskFrequenciesEnum.Day ||
@@ -114,7 +95,36 @@ export class EditTaskPopUpComponent implements OnInit {
     }
   }
 
-  getFrequenciesEnumKeyByValue(value: string) {
+  private getTaskFromForm(): Task {
+    return {
+      id: this.task.id,
+      title: this.editTaskForm.value.title,
+      initialDate: this.editTaskForm.value.initialDate,
+      allocatedTime: this.editTaskForm.value.allocatedTime * 60,
+      frequency: {
+        id: this.task.frequency.id,
+        frequencyValue: this.getFrequenciesEnumKeyByValue(
+          this.editTaskForm.value.frequency
+        ),
+        every: this.editTaskForm.value.every,
+        isCustom: this.editTaskForm.value.every > 1 ? true : false,
+      },
+      progress: this.task.progress,
+    };
+  }
+
+  private taskIsChanged(): boolean {
+    return (
+      this.task.title !== this.editTaskForm.value.title ||
+      this.task.initialDate !== this.editTaskForm.value.initialDate ||
+      this.task.frequency.frequencyValue !==
+        this.editTaskForm.value.frequency ||
+      this.task.frequency.every !== this.editTaskForm.value.every ||
+      this.task.allocatedTime !== this.editTaskForm.value.allocatedTime * 60
+    );
+  }
+
+  private getFrequenciesEnumKeyByValue(value: string) {
     const indexOfS = Object.values(TaskFrequenciesEnum).indexOf(
       value as unknown as TaskFrequenciesEnum
     );

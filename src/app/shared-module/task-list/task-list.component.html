@@ -24,7 +24,9 @@
         <ng-template #templateForProgressBar>
           <div class="inner" (click)="!isSelectable || setTaskId(task.id)">
             <span class="task-title">{{ task.title }}</span>
-            <span class="task-frequency">{{ task.frequency }}</span>
+            <span class="task-frequency">{{
+              task.frequency.frequencyValue
+            }}</span>
             <span class="task-time">{{
               task.allocatedTime * 1000 | date : "HH:mm:ss" : "UTC"
             }}</span>
