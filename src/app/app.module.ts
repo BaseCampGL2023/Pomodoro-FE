@@ -40,7 +40,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { CompleteTaskPopUpComponent } from './modals/complete-task-pop-up/complete-task-pop-up.component';
 import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-task-pop-up.component';
 import { DatePipe } from '@angular/common';
-import { CreateTaskPopUpComponent } from './modals/create-task-pop-up/create-task-pop-up.component';import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
+import { CreateTaskPopUpComponent } from './modals/create-task-pop-up/create-task-pop-up.component';
+import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -92,7 +93,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [
