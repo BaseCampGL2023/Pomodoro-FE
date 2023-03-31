@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { Pomodoro } from '../types/pomodoro';
 import { TrackerSettingsService } from '../tracker/tracker-settings.service';
 import { TaskFrequenciesEnum } from '../enums/task-frequencies.enum';
+import { Guid } from '../types/guid';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -220,10 +221,8 @@ export class TaskService {
 
   private createPomodoro(): Pomodoro {
     return {
-      id: '00000000-0000-0000-0000-000000000000',
-      taskId: this.curTaskId
-        ? this.curTaskId
-        : '00000000-0000-0000-0000-000000000000',
+      id: Guid.empty,
+      taskId: this.curTaskId ? this.curTaskId : Guid.empty,
       actuallDate: new Date().toISOString(),
       timeSpent: this.settings.pomodoro * 60,
       isDone: false,

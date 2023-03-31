@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskFrequenciesEnum } from 'src/app/shared-module/enums/task-frequencies.enum';
 import { TaskService } from 'src/app/shared-module/services/task.service';
 import { TrackerSettingsService } from 'src/app/shared-module/tracker/tracker-settings.service';
+import { Guid } from 'src/app/shared-module/types/guid';
 import { Task } from 'src/app/shared-module/types/task';
 
 @Component({
@@ -87,12 +88,12 @@ export class CreateTaskPopUpComponent implements OnInit {
 
   private getTaskFromForm(): Task {
     return {
-      id: '00000000-0000-0000-0000-000000000000',
+      id: Guid.empty,
       title: this.createTaskForm.value.title,
       initialDate: this.createTaskForm.value.initialDate.toISOString(),
       allocatedTime: this.createTaskForm.value.allocatedTime * 60,
       frequency: {
-        id: '00000000-0000-0000-0000-000000000000',
+        id: Guid.empty,
         frequencyValue: this.getFrequenciesEnumKeyByValue(
           this.createTaskForm.value.frequency
         ),
