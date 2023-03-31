@@ -1,7 +1,7 @@
 {
   "name": "pomodoro",
   "short_name": "pomodoro",
-  "theme_color": "#34b456",
+  "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
