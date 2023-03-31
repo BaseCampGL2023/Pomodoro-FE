@@ -40,7 +40,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { CompleteTaskPopUpComponent } from './modals/complete-task-pop-up/complete-task-pop-up.component';
 import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-task-pop-up.component';
 import { DatePipe } from '@angular/common';
-import { CreateTaskPopUpComponent } from './modals/create-task-pop-up/create-task-pop-up.component';import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
+import { CreateTaskPopUpComponent } from './modals/create-task-pop-up/create-task-pop-up.component';
+import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
 
 @NgModule({
   declarations: [
