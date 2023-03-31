@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
+    "@angular/service-worker": "^15.0.0",
     "@fontsource/dm-sans": "^4.5.9",
     "bootstrap": "^5.2.3",
     "husky-init": "^8.0.0",
