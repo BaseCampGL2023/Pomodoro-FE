@@ -6,6 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { LoginPopUpComponent } from 'src/app/modals/login-pop-up/login-pop-up.component';
 import { SettingsPopUpComponent } from 'src/app/modals/settings-pop-up/settings-pop-up.component';
 import { AuthService } from '../auth/auth.service';
+import { ConnectionService } from '../services/connection.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -16,17 +17,21 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   isCollapsed = true;
   private destroySubject = new Subject();
   isLoggedIn = false;
+  public connected = true;
 
   constructor(
     private dialogRef: MatDialog,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private connection: ConnectionService
   ) {
     this.authService.authStatus
       .pipe(takeUntil(this.destroySubject))
       .subscribe((result) => {
         this.isLoggedIn = result;
       });
+    this.connected = this.connection.connected;
+    connection.Changes.subscribe((state) => (this.connected = state));
   }
 
   ngOnInit(): void {
