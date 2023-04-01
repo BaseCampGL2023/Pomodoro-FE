@@ -13,14 +13,14 @@
 }
 
 .container {
-  padding-top: 70px;
+  padding-top: 40px;
   padding-left: 130px;
-  height: 70vh;
+  height: 63vh;
 }
 
 @media (min-width: 768px) {
   .container {
-    padding-top: min(70px, 20%);
+    padding-top: min(40px, 20%);
     padding-left: min(130px, 20%);
   }
 }

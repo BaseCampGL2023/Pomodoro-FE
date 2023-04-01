@@ -15,6 +15,7 @@ export class CompleteTaskPopUpComponent {
   onSubmit() {
     this.taskService.completeCurrentTask().subscribe({
       next: () => {
+        this.taskService.changeTodayTaskList();
         this.dialogRef.closeAll();
       },
       error: (error) => {

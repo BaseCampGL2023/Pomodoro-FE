@@ -1,3 +1,11 @@
-<h3>
-  Pomodoro tracker is your customizable timer that works on desktop browser.
-</h3>
+<div class="container">
+  <div class="auth-msg" *ngIf="isLoggedIn; else nonauthMsg">
+    <h4>Welcome back, {{ userName }}!</h4>
+    <p>Now you can create tasks and track your progress.</p>
+  </div>
+  <ng-template #nonauthMsg>
+    <h3>
+      Pomodoro tracker is your customizable timer that works on desktop browser.
+    </h3>
+  </ng-template>
+</div>

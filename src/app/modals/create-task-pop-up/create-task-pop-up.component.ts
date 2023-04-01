@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskFrequenciesEnum } from 'src/app/shared-module/enums/task-frequencies.enum';
 import { TaskService } from 'src/app/shared-module/services/task.service';
 import { TrackerSettingsService } from 'src/app/shared-module/tracker/tracker-settings.service';
+import { Guid } from 'src/app/shared-module/types/guid';
 import { Task } from 'src/app/shared-module/types/task';
 
 @Component({
@@ -22,6 +23,7 @@ export class CreateTaskPopUpComponent implements OnInit {
   createTaskForm = <FormGroup>{};
   minDate = new Date();
   createTaskError?: string;
+  maxAllocatedTime = 540;
 
   constructor(
     private taskService: TaskService,
@@ -43,7 +45,7 @@ export class CreateTaskPopUpComponent implements OnInit {
         [
           Validators.required,
           Validators.min(this.settings.pomodoro),
-          Validators.max(1440),
+          Validators.max(this.maxAllocatedTime),
         ],
       ],
       frequency: [TaskFrequenciesEnum.None, Validators.required],
@@ -53,22 +55,10 @@ export class CreateTaskPopUpComponent implements OnInit {
 
   onSubmit() {
     if (this.createTaskForm.valid) {
-      const newTask: Task = {
-        id: '',
-        title: this.createTaskForm.value.title,
-        initialDate: this.createTaskForm.value.initialDate,
-        allocatedTime: this.createTaskForm.value.allocatedTime,
-        frequency: {
-          id: '',
-          frequencyType: this.getFrequenciesEnumKeyByValue(
-            this.createTaskForm.value.frequency
-          ),
-          every: this.createTaskForm.value.every,
-          isCustom: this.createTaskForm.value.every > 1 ? true : false,
-        },
-      };
+      const newTask: Task = this.getTaskFromForm();
       this.taskService.createTask(newTask).subscribe({
         next: () => {
+          this.taskService.changeTodayTaskList();
           this.dialogRef.closeAll();
         },
         error: (error) => {
@@ -96,7 +86,25 @@ export class CreateTaskPopUpComponent implements OnInit {
     }
   }
 
-  getFrequenciesEnumKeyByValue(value: string) {
+  private getTaskFromForm(): Task {
+    return {
+      id: Guid.empty,
+      title: this.createTaskForm.value.title,
+      initialDate: this.createTaskForm.value.initialDate.toISOString(),
+      allocatedTime: this.createTaskForm.value.allocatedTime * 60,
+      frequency: {
+        id: Guid.empty,
+        frequencyValue: this.getFrequenciesEnumKeyByValue(
+          this.createTaskForm.value.frequency
+        ),
+        every: this.createTaskForm.value.every,
+        isCustom: this.createTaskForm.value.every > 1 ? true : false,
+      },
+      progress: 0,
+    };
+  }
+
+  private getFrequenciesEnumKeyByValue(value: string) {
     const indexOfS = Object.values(TaskFrequenciesEnum).indexOf(
       value as unknown as TaskFrequenciesEnum
     );

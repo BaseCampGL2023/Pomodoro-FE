@@ -44,6 +44,7 @@ import { CreateTaskPopUpComponent } from './modals/create-task-pop-up/create-tas
 import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
+
 @NgModule({
   declarations: [
     AppComponent,
