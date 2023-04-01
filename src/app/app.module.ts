@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -41,7 +41,9 @@ import { CompleteTaskPopUpComponent } from './modals/complete-task-pop-up/comple
 import { DeleteTaskPopUpComponent } from './modals/delete-task-pop-up/delete-task-pop-up.component';
 import { DatePipe } from '@angular/common';
 import { CreateTaskPopUpComponent } from './modals/create-task-pop-up/create-task-pop-up.component';
+
 import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -88,6 +90,12 @@ import { FinishModalComponent } from './home-page/components/finish-modal/finish
     MatSlideToggleModule,
     MatMenuModule,
     MatSelectModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [
     TaskService,
