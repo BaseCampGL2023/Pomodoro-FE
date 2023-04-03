@@ -22,6 +22,7 @@ export class TodayTasksComponent implements OnInit {
     this.taskService.curTaskIdChanged.subscribe(
       (taskId) => (this.curTaskId = taskId)
     );
+    this.taskService.changeTodayTaskList();
   }
 
   onCreateTask() {
