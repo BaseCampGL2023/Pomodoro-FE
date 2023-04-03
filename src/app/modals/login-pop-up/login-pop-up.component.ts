@@ -18,6 +18,7 @@ import { AuthMatDialogData } from 'src/app/shared-module/types/auth-mat-dialog-d
 export class LoginPopUpComponent {
   loginRequest = <LoginRequest>{};
   loginResult = <LoginResult>{};
+  public forgotPassword = false;
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', {
@@ -56,11 +57,20 @@ export class LoginPopUpComponent {
         error: (error) => {
           if (error.status == 401) {
             this.loginResult = error.error;
-            this.resetForm();
+            if (error.error.message.toLowerCase() === 'invalid password.') {
+              this.forgotPassword = true;
+              this.loginForm.controls['password'].reset();
+            } else {
+              this.resetForm();
+            }
           }
         },
       });
     }
+  }
+
+  public onForgotPassword() {
+    console.log('make request');
   }
 
   onSignUp() {

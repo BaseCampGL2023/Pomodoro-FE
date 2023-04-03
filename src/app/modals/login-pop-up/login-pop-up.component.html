@@ -35,6 +35,22 @@
     </div>
     <button class="btn btn-primary" [disabled]="form.invalid">Sign In</button>
   </form>
+  <div class="divider" *ngIf="forgotPassword">
+    <hr />
+    <div>
+      <p>
+        If you forget password click belove button, and we send to your email
+        link for reset password form
+      </p>
+      <button
+        class="btn btn-primary"
+        [disabled]="loginForm.controls['email'].invalid"
+        (click)="onForgotPassword()"
+      >
+        Forgot password?
+      </button>
+    </div>
+  </div>
   <div class="divider">
     <hr />
     <span>or</span>
