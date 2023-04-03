@@ -18,7 +18,8 @@ import { AuthMatDialogData } from 'src/app/shared-module/types/auth-mat-dialog-d
 export class LoginPopUpComponent {
   loginRequest = <LoginRequest>{};
   loginResult = <LoginResult>{};
-  public forgotPassword = false;
+  forgotPassword = false;
+  showResetMessage = false;
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', {
@@ -69,8 +70,20 @@ export class LoginPopUpComponent {
     }
   }
 
-  public onForgotPassword() {
-    console.log('make request');
+  onForgotPassword() {
+    if (this.loginForm.controls['email'].valid) {
+      this.authService
+        .forgotPassword(this.loginForm.controls['email'].value)
+        .subscribe({
+          next: (r) => {
+            console.log(r);
+            this.showResetMessage = true;
+          },
+          error: (e) => {
+            console.log(e);
+          },
+        });
+    }
   }
 
   onSignUp() {

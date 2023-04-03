@@ -35,8 +35,7 @@
     </div>
     <button class="btn btn-primary" [disabled]="form.invalid">Sign In</button>
   </form>
-  <div class="divider" *ngIf="forgotPassword">
-    <hr />
+  <div class="divider" *ngIf="forgotPassword && !showResetMessage">
     <div>
       <p>
         If you forget password click belove button, and we send to your email
@@ -49,6 +48,11 @@
       >
         Forgot password?
       </button>
+    </div>
+  </div>
+  <div class="divider" *ngIf="showResetMessage">
+    <div>
+      <p>Check your mailbox, link for reset password in email.</p>
     </div>
   </div>
   <div class="divider">
