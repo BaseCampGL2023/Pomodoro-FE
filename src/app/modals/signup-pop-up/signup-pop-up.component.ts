@@ -9,6 +9,7 @@ import { SignupResult } from 'src/app/shared-module/types/signup-result';
 
 import { MatchValidator } from 'src/app/shared-module/validation/match';
 import { LoginPopUpComponent } from '../login-pop-up/login-pop-up.component';
+import { ConfirmEmailPopUpComponent } from '../confirm-email-pop-up/confirm-email-pop-up.component';
 
 @Component({
   selector: 'app-signup-pop-up',
@@ -64,7 +65,7 @@ export class SignupPopUpComponent {
         next: (result) => {
           this.signupResult = result;
           if (result.success) {
-            this.toSignIn();
+            this.toConfirmEmail();
           }
         },
         error: (error) => {
@@ -91,6 +92,13 @@ export class SignupPopUpComponent {
       ExternalLoginProviders.Google,
       this.returnUrl
     );
+  }
+
+  private toConfirmEmail() {
+    this.dialog.closeAll();
+    this.dialog.open(ConfirmEmailPopUpComponent, {
+      data: this.authMatDialogData,
+    });
   }
 
   private toSignIn() {
