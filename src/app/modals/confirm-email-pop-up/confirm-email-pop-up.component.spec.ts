@@ -8,9 +8,8 @@ describe('ConfirmEmailPopUpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfirmEmailPopUpComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfirmEmailPopUpComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ConfirmEmailPopUpComponent);
     component = fixture.componentInstance;
