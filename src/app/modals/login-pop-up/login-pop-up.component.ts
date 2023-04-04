@@ -9,7 +9,6 @@ import { LoginResult } from 'src/app/shared-module/types/login-result';
 import { SignupPopUpComponent } from '../signup-pop-up/signup-pop-up.component';
 import { ExternalLoginProviders } from 'src/app/shared-module/types/external-login-providers';
 import { AuthMatDialogData } from 'src/app/shared-module/types/auth-mat-dialog-data';
-import { TaskService } from 'src/app/shared-module/services/task.service';
 
 @Component({
   selector: 'app-login-pop-up',
@@ -19,6 +18,8 @@ import { TaskService } from 'src/app/shared-module/services/task.service';
 export class LoginPopUpComponent {
   loginRequest = <LoginRequest>{};
   loginResult = <LoginResult>{};
+  forgotPassword = false;
+  showResetMessage = false;
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', {
@@ -36,7 +37,6 @@ export class LoginPopUpComponent {
     private router: Router,
     private authService: AuthService,
     private dialog: MatDialog,
-    private taskService: TaskService,
     @Inject(MAT_DIALOG_DATA) private authMatDialogData?: AuthMatDialogData
   ) {
     this.loginForm.reset(this.loginRequest);
@@ -51,7 +51,6 @@ export class LoginPopUpComponent {
         next: (result) => {
           this.loginResult = result;
           if (result.success) {
-            this.taskService.changeTodayTaskList();
             this.dialog.closeAll();
             this.router.navigate([this.returnUrl]);
           }
@@ -59,10 +58,31 @@ export class LoginPopUpComponent {
         error: (error) => {
           if (error.status == 401) {
             this.loginResult = error.error;
-            this.resetForm();
+            if (error.error.message.toLowerCase() === 'invalid password.') {
+              this.forgotPassword = true;
+              this.loginForm.controls['password'].reset();
+            } else {
+              this.resetForm();
+            }
           }
         },
       });
+    }
+  }
+
+  onForgotPassword() {
+    if (this.loginForm.controls['email'].valid) {
+      this.authService
+        .forgotPassword(this.loginForm.controls['email'].value)
+        .subscribe({
+          next: (r) => {
+            console.log(r);
+            this.showResetMessage = true;
+          },
+          error: (e) => {
+            console.log(e);
+          },
+        });
     }
   }
 

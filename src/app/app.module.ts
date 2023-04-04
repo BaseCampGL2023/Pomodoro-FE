@@ -44,6 +44,7 @@ import { CreateTaskPopUpComponent } from './modals/create-task-pop-up/create-tas
 
 import { FinishModalComponent } from './home-page/components/finish-modal/finish-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ConfirmEmailPopUpComponent } from './modals/confirm-email-pop-up/confirm-email-pop-up.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     DeleteTaskPopUpComponent,
     CreateTaskPopUpComponent,
     FinishModalComponent,
+    ConfirmEmailPopUpComponent,
   ],
   imports: [
     BrowserModule,

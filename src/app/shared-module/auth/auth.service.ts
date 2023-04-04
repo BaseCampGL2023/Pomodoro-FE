@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 
@@ -64,6 +64,15 @@ export class AuthService {
         }
       })
     );
+  }
+
+  forgotPassword(mail: string): Observable<any> {
+    const url = environment.baseUrl + 'account/forgetpassword';
+    const email = JSON.stringify(mail);
+    return this.http.post<any>(url, email, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      responseType: 'text' as 'json',
+    });
   }
 
   signup(item: SignupRequest): Observable<SignupResult> {
