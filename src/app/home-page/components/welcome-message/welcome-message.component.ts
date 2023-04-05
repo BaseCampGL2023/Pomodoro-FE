@@ -1,4 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { AuthService } from 'src/app/shared-module/auth/auth.service';
 
 @Component({
@@ -6,13 +12,15 @@ import { AuthService } from 'src/app/shared-module/auth/auth.service';
   templateUrl: './welcome-message.component.html',
   styleUrls: ['./welcome-message.component.scss'],
 })
-export class WelcomeMessageComponent implements OnInit {
+export class WelcomeMessageComponent implements OnChanges {
   @Input() isLoggedIn = false;
   userName?: string;
 
   constructor(private readonly authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.userName = this.authService.getUserName();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isLoggedIn'] && this.isLoggedIn) {
+      this.userName = this.authService.getUserName();
+    }
   }
 }
