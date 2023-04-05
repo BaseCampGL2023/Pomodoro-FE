@@ -19,10 +19,8 @@ export class WelcomeMessageComponent implements OnChanges {
   constructor(private readonly authService: AuthService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isLoggedIn']) {
-      if (this.isLoggedIn) {
-        this.userName = this.authService.getUserName();
-      }
+    if (changes['isLoggedIn'] && this.isLoggedIn) {
+      this.userName = this.authService.getUserName();
     }
   }
 }
